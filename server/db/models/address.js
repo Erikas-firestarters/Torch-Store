@@ -29,7 +29,7 @@ const Address = db.define('address', {
         validate: { len: 5 }
     },
     phone: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true,
     }
 })
