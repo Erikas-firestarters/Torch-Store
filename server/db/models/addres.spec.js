@@ -2,8 +2,6 @@ const { expect } = require('chai')
 const db = require('../index')
 const Address = db.model('address')
 
-
-
 describe('Address model', () => {
 
     beforeEach(() => {
