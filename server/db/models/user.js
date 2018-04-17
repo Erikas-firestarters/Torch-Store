@@ -29,9 +29,16 @@ const User = db.define('user', {
   },
   firstName: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
   lastName: {
     type: Sequelize.STRING,
+    allowNull: false,
+  },
+  fullName: {
+    get() {
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`
+    }
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
