@@ -16,7 +16,7 @@ const Order = db.define('order', {
   total: {
     type: Sequelize.VIRTUAL,
     get() {
-      return this.getDataValue('tax') + this.getDataValue('subtitle');
+      return (this.getDataValue('tax') + this.getDataValue('subtotal'));
     },
   }
 })

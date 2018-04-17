@@ -13,17 +13,18 @@ const Order = require('./order');
  */
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
-Product.belongsTo(CartItem)
+
 
 User.hasOne(Cart)
 Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
-CartItem.hasOne(Product)
+Product.hasOne(CartItem)
 
-Address.hasOne(Order, {as: 'billing'})
+Address.hasOne(Order, {as: 'billing'}) // billingID on orders model
 Address.hasOne(Order, {as: 'shipping'})
+User.hasOne(Order)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
