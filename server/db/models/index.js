@@ -3,6 +3,7 @@ const CartItem = require('./cartItem')
 const Cart = require('./cart')
 const Product = require('./product')
 const Address = require('./address')
+const Photo = require('./photo')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -13,12 +14,14 @@ const Address = require('./address')
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
 Product.belongsTo(CartItem)
+Photo.belongsTo(Product)
 
 User.hasOne(Cart)
 Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
+Product.hasMany(Photo)
 CartItem.hasOne(Product)
 
 /**
@@ -33,4 +36,5 @@ module.exports = {
   CartItem,
   Product,
   Address,
+  Photo,
 }
