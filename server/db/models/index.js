@@ -4,6 +4,7 @@ const Cart = require('./cart')
 const Product = require('./product')
 const Address = require('./address')
 const Photo = require('./photo')
+const Review = require('./review')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -24,6 +25,9 @@ Cart.hasMany(CartItem, {
 Product.hasMany(Photo)
 CartItem.hasOne(Product)
 
+Review.belongsTo(Product)
+Review.belongsTo(User)
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -37,4 +41,5 @@ module.exports = {
   Product,
   Address,
   Photo,
+  Review,
 }
