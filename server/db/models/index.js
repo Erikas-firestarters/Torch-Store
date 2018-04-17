@@ -2,8 +2,8 @@ const User = require('./user')
 const CartItem = require('./cartItem')
 const Cart = require('./cart')
 const Product = require('./product')
-const Review = require('./review')
 const Address = require('./address')
+const Review = require('./review')
 
 
 /**

@@ -8,83 +8,83 @@ describe('Review model', () => {
         return db.sync({ force: true })
     })
 
-    var review
+    let review;
     beforeEach(() => {
         review = Review.build({
             title: 'Best review ever',
             content: 'Friggin flames forever with this phenomenal torch from Frys Eternal Torches.',
             rating: 5
         })
+    })
 
-        afterEach(function () {
-            return Promise.all([
-                review.truncate({ cascade: true }),
-            ]);
+    afterEach(function () {
+        return Promise.all([
+            Review.truncate({ cascade: true }),
+        ]);
+    })
+
+    describe('definition', () => {
+
+        it('has expected fields title, content, and rating', () => {
+            return review.save()
+                .then((savedReview) => {
+                    expect(savedReview.title).to.equal('Best review ever')
+                    expect(savedReview.content).to.equal('Friggin flames forever with this phenomenal torch from Frys Eternal Torches.')
+                    expect(savedReview.rating).to.equal(5)
+                })
         });
 
-        describe('definition', () => {
+        it('requires `title`', () => {
 
-            it('has expected all expected fields title, content, and rating', () => {
-                return review.save()
-                    .then((savedReview) => {
-                        expect(savedReview.title).to.equal('Best review ever')
-                        expect(savedReview.content).to.equal('Friggin flames forever with this phenomenal torch from Frys Eternal Torches.')
-                        expect(savedReview.rating).to.equal(5)
-                    })
-            });
+            review.title = null;
 
-            it('requires `title`', () => {
+            return review.validate()
+                .then(() => {
+                    throw new Error('validation should fail when content is null');
+                },
+                    function (result) {
+                        expect(result).to.be.an.instanceOf(Error);
+                    });
+        });
 
-                review.title = null;
+        it('requires `content`', () => {
 
-                return review.validate()
-                    .then(() => {
-                        throw new Error('validation should fail when content is null');
-                    },
-                        function (result) {
-                            expect(result).to.be.an.instanceOf(Error);
-                        });
-            });
+            review.content = null;
 
-            it('requires `content`', () => {
+            return review.validate()
+                .then(() => {
+                    throw new Error('validation should fail when content is null');
+                },
+                    function (result) {
+                        expect(result).to.be.an.instanceOf(Error);
+                    });
+        });
 
-                review.content = null;
+        it('requires `rating` to be less than 5', () => {
 
-                return review.validate()
-                    .then(() => {
-                        throw new Error('validation should fail when content is null');
-                    },
-                        function (result) {
-                            expect(result).to.be.an.instanceOf(Error);
-                        });
-            });
+            review.rating = 6;
 
-            it('requires `rating` to be less than 5', () => {
+            return review.validate()
+                .then(() => {
+                    throw new Error('validation should fail when content is more than 5');
+                },
+                    function (result) {
+                        expect(result).to.be.an.instanceOf(Error);
+                    });
+        });
 
-                review.rating = 6;
+        it('requires `rating` to be more than 0', () => {
 
-                return review.validate()
-                    .then(() => {
-                        throw new Error('validation should fail when content is more than 5');
-                    },
-                        function (result) {
-                            expect(result).to.be.an.instanceOf(Error);
-                        });
-            });
+            review.rating = -1;
 
-            it('requires `rating` to be more than 0', () => {
+            return review.validate()
+                .then(() => {
+                    throw new Error('validation should fail when content is less than 0');
+                },
+                    function (result) {
+                        expect(result).to.be.an.instanceOf(Error);
+                    });
+        });
 
-                review.rating = -1;
-
-                return review.validate()
-                    .then(() => {
-                        throw new Error('validation should fail when content is less than 0');
-                    },
-                        function (result) {
-                            expect(result).to.be.an.instanceOf(Error);
-                        });
-            });
-
-        })
     })
 })
