@@ -1,5 +1,6 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const {expect} = require('chai')
+const db = require('../index')
+const Address = db.model('address')
 
 const Address = db.define('address', {
     fullName: {
@@ -25,10 +26,6 @@ const Address = db.define('address', {
     zipcode: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    phone: {
-        type: Sequelize.INTEGER,
-        allowNull: true
     }
 })
 
