@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const {expect} = require('chai')
 const db = require('../index')
 const Cart = db.model('cart')
@@ -25,7 +26,7 @@ describe('Cart model', () => {
       })
     })
     .then(foundCartItem => {
-      expect(foundCartItem.cartId).to.exist;
+      expect(foundCartItem.cartId).to.equal(1);
     });
 })
 })
