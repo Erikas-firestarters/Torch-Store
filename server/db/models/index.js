@@ -3,6 +3,8 @@ const CartItem = require('./cartItem')
 const Cart = require('./cart')
 const Product = require('./product')
 const Address = require('./address')
+const Order = require('./order');
+const OrderItem = require('./orderItem');
 const Category = require('./category')
 const Photo = require('./photo')
 const Review = require('./review')
@@ -15,19 +17,33 @@ const Review = require('./review')
  */
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
+
 Product.belongsTo(CartItem)
 Photo.belongsTo(Product)
+
 
 User.hasOne(Cart)
 Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
-Product.hasMany(Photo)
 CartItem.hasOne(Product)
+
+Product.hasOne(CartItem)
+Product.hasMany(Photo)
 
 Review.belongsTo(Product)
 Review.belongsTo(User)
+
+User.hasOne(Order)
+Address.hasOne(Order, {as: 'billing'}) // billingID on orders model
+Address.hasOne(Order, {as: 'shipping'})
+
+Order.hasOne(OrderItem);
+Order.hasMany(CartItem, {
+  onDelete: 'cascade',
+  hooks: true
+});
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -41,6 +57,8 @@ module.exports = {
   CartItem,
   Product,
   Address,
+  Order,
+  OrderItem,
   Category,
   Photo,
   Review,
