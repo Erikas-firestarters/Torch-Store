@@ -14,7 +14,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/review', (req, res, next) => {
+router.get('/:id/reviews', (req, res, next) => {
   Review.findAll({
     where: {
       productId: req.params.id
@@ -24,13 +24,7 @@ router.get('/:id/review', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/:id/review', (req, res, next) => {
-  Review.create(req.body)
-    .then(review => res.json(review))
-    .catch(next)
-})
-
-router.post('/:id/review', (req, res, next) => {
+router.post('/:id/reviews', (req, res, next) => {
   Review.create(req.body)
     .then(review => res.json(review))
     .catch(next)
