@@ -3,6 +3,7 @@ const CartItem = require('./cartItem')
 const Cart = require('./cart')
 const Product = require('./product')
 const Address = require('./address')
+const Photo = require('./photo')
 const Review = require('./review')
 
 /**
@@ -14,12 +15,14 @@ const Review = require('./review')
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
 Product.belongsTo(CartItem)
+Photo.belongsTo(Product)
 
 User.hasOne(Cart)
 Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
+Product.hasMany(Photo)
 CartItem.hasOne(Product)
 
 Review.belongsTo(Product)
@@ -37,5 +40,6 @@ module.exports = {
   CartItem,
   Product,
   Address,
+  Photo,
   Review,
 }
