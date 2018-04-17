@@ -3,6 +3,7 @@ const CartItem = require('./cartItem')
 const Cart = require('./cart')
 const Product = require('./product')
 const Address = require('./address')
+const Category = require('./category')
 const Photo = require('./photo')
 const Review = require('./review')
 
@@ -40,6 +41,7 @@ module.exports = {
   CartItem,
   Product,
   Address,
+  Category,
   Photo,
   Review,
 }
