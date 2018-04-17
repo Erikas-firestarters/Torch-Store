@@ -16,7 +16,9 @@ describe('User model', () => {
       beforeEach(() => {
         return User.create({
           email: 'cody@puppybook.com',
-          password: 'bones'
+          password: 'bones',
+          firstName: 'Cody',
+          lastName: 'Bones'
         })
           .then(user => {
             cody = user
@@ -32,4 +34,29 @@ describe('User model', () => {
       })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
+
+    describe('user validations', () => {
+      let davey = {
+        email: '123@gmail.com',
+        password: '123',
+        firstName: 'Davey',
+        lastName: 'Bones'
+      };
+
+      it('should throw error when email field is empty', async () => {
+        try {
+        const user = await User.build();
+        await user.validate()
+        }
+        catch (err) {
+          expect(err).to.be.an.instanceOf(Error)
+        }
+      })
+
+      it('full name getter returns correct name', async () => {
+        const user = await User.create(davey);
+          expect(user.fullName).to.equal('Davey Bones')
+      });
+
+  }) // end describe('getter')
 }) // end describe('User model')
