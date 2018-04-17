@@ -24,3 +24,6 @@ const Product = db.define('product', {
 
 module.exports = Product
 
+Product.prototype.inStock = () => {
+  return this.inventory > 0;
+}
