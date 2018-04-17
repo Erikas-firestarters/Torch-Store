@@ -20,15 +20,17 @@ const Address = db.define('address', {
     },
     state: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: { len: 2 }
     },
     zipcode: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: { len: 5 }
     },
     phone: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
     }
 })
 
