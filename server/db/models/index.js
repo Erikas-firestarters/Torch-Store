@@ -5,7 +5,6 @@ const Product = require('./product')
 const Address = require('./address')
 const Review = require('./review')
 
-
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
