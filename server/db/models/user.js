@@ -26,7 +26,25 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  fullName: {
+    get() {
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`
+    }
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   }
+
 })
 
 module.exports = User
