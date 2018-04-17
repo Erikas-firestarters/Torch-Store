@@ -21,5 +21,6 @@ const Order = db.define('order', {
   }
 })
 
+module.exports = Order;
 
 // ASSOCIATIONS HASONE _ __ userID, shippingAddress billingaddress

@@ -22,8 +22,8 @@ Cart.hasMany(CartItem, {
 })
 CartItem.hasOne(Product)
 
-Address.belongsTo(Order, {as: 'billing'})
-Address.belongsTo(Order, {as: 'shipping'})
+Address.hasOne(Order, {as: 'billing'})
+Address.hasOne(Order, {as: 'shipping'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
