@@ -13,7 +13,7 @@ describe('Order model', () => {
 
     it('should return correct subtotal + tax', async () => {
         const order = await Order.build({
-          status: 'pending',
+          status: 'Processing',
           subtotal: 12.95,
           tax: 1.15
         })

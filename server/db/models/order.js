@@ -3,7 +3,7 @@ const db = require('../db');
 
 const Order = db.define('order', {
   status: {
-    type: Sequelize.ENUM('pending', 'complete'),
+    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed'),
   },
   subtotal: {
     type: Sequelize.DECIMAL(10, 2),
@@ -23,4 +23,3 @@ const Order = db.define('order', {
 
 module.exports = Order;
 
-// ASSOCIATIONS HASONE _ __ userID, shippingAddress billingaddress
