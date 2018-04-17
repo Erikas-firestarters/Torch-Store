@@ -39,7 +39,7 @@ const User = db.define('user', {
     // allowNull: false,
   },
   fullName: {
-    type: Sequelize.STRING,
+    type: Sequelize.VIRTUAL,
     get() {
       return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`
     }
