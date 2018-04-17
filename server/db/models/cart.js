@@ -2,10 +2,15 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Cart = db.define('cart', {
-  placeholder: {
+  quantity: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false,
+    defaultValue: 0,
   }
 })
 
 module.exports = Cart
+
+Cart.prototype.isEmpty = () => {
+  return this.quantity === 0;
+  }

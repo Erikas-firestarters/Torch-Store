@@ -14,7 +14,10 @@ CartItem.belongsTo(Cart)
 Product.belongsTo(CartItem)
 
 User.hasOne(Cart)
-Cart.hasMany(CartItem)
+Cart.hasMany(CartItem, {
+  onDelete: 'cascade',
+  hooks: true
+})
 CartItem.hasOne(Product)
 
 /**
