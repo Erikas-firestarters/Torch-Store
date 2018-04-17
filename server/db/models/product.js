@@ -4,7 +4,6 @@ const db = require('../db')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   description: {
@@ -24,6 +23,6 @@ const Product = db.define('product', {
 
 module.exports = Product
 
-Product.prototype.inStock = () => {
+Product.prototype.inStock = function() {
   return this.inventory > 0;
 }
