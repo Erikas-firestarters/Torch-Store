@@ -5,7 +5,7 @@ const CartItem = db.model('cartItem');
 const Cart = db.define('cart', {
   quatity: {
     type: Sequelize.VIRTUAL,
-    set: function () {
+    get: function () {
       return CartItem.findAll({
         where: {
           cartId: this.id
