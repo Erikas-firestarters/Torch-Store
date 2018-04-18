@@ -30,7 +30,7 @@ function createCategories() {
 }
 
 function seed() {
-  console.log('Syncing products');
+  console.log('Syncing categories');
   return createCategories();
 }
 
