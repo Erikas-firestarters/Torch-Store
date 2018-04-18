@@ -36,21 +36,8 @@ function createAddress() {
 }
 
 function seed() {
+  console.log('Syncing addresses')
   return createAddress();
 }
 
-db
-  .sync({ force: false })
-  .then(() => {
-    console.log('Seeding database');
-    return seed();
-  })
-  .then(() => console.log('Seeding successful'))
-  .catch(err => {
-    console.error('Error while seeding');
-    console.error(err.stack);
-  })
-  .finally(() => {
-    db.close();
-    return null;
-  });
+module.exports = seed;

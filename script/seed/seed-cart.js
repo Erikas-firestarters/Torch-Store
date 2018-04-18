@@ -1,6 +1,30 @@
 const db = require('../../server/db');
 const { Cart, CartItem } = require('../../server/db/models');
 
+const cart = [
+  {
+    //userId: 1
+  },
+  {
+    //userId: 2
+  },
+  {
+    //userId: 3
+  },
+  {
+    //userId: 4
+  },
+  {
+    //userId: 5
+  },
+  {
+    //userId: 6
+  },
+  {
+    //userId: 7
+  }
+];
+
 const cartItems = [
   {
     quantity: 1,
@@ -64,32 +88,10 @@ const cartItems = [
   }
 ];
 
-const cart = [
-  {
-    userId: 1
-  },
-  {
-    userId: 2
-  },
-  // {
-  //   userId: 3
-  // },
-  // {
-  //   userId: 4
-  // },
-  // {
-  //   userId: 5
-  // },
-  // {
-  //   userId: 6
-  // },
-  // {
-  //   userId: 7
-  // }
-];
 
-const seed = () =>
-  Promise.all(cart.map(carts => Cart.create(carts)))
+const seed = () =>{
+  console.log('Syncing carts')
+  return Promise.all(cart.map(carts => Cart.create(carts)))
     .then(() => {
       Promise.all(
         cartItems.map(items => {
@@ -97,23 +99,26 @@ const seed = () =>
         })
       );
     })
-    .catch(error => console.error(error));
-const mainSync = () => {
-  db
-    .sync({ force: false })
-    .then(() => {
-      console.log('Seeding database');
-      return seed();
-    })
-    .then(() => console.log('Seeding successful'))
-    .catch(err => {
-      console.error('Error while seeding');
-      console.error(err.stack);
-    })
-    .finally(() => {
-      db.close();
-      return null;
-    });
-};
+    .catch(error => console.error(error))
+  }
 
-mainSync();
+module.exports = seed
+// const mainSync = () => {
+//   db
+//     .sync({ force: false })
+//     .then(() => {
+//       console.log('Seeding database');
+//       return seed();
+//     })
+//     .then(() => console.log('Seeding successful'))
+//     .catch(err => {
+//       console.error('Error while seeding');
+//       console.error(err.stack);
+//     })
+//     .finally(() => {
+//       db.close();
+//       return null;
+//     });
+// };
+
+// mainSync();
