@@ -1,4 +1,4 @@
-/* eslint react/prefer-stateless-function: 0 class-methods-use-this:0*/
+
 import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react';
 
@@ -9,20 +9,22 @@ const product = {
   img: 'https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715',
 }
 
-export default class ProductItem extends Component {
-  render() {
+
+const ProductItem = () => {
     return (
-      <Card raised="true" >
-        <Image src={product.img} />
-        <Card.Content>
-          <Card.Header>{product.name}</Card.Header>
-          <Card.Meta>
-            <span className="date">{product.price}</span>
-          </Card.Meta>
-        </Card.Content>
-      </Card>
+      <div className="product-list-item">
+        <Card raised >
+          <Image src={product.img} circular />
+          <Card.Content>
+            <Card.Header>{product.name}</Card.Header>
+            <Card.Meta>
+              <span className="date">{product.price}</span>
+            </Card.Meta>
+          </Card.Content>
+        </Card>
+      </div>
     );
   }
-}
 
+export default ProductItem;
 
