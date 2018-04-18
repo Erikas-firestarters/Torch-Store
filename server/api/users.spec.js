@@ -9,7 +9,7 @@ const Cart = db.model('cart');
 const CartItem = db.model('cartItem');
 const Product = db.model('product');
 
-describe.only('User routes', () => {
+describe('User routes', () => {
   const user = {
     email: 'cody@puppybook.com',
     password: 'bones',
