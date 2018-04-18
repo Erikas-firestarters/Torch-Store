@@ -1,6 +1,7 @@
 const chance = require('chance')(123);
-const { Review } = require('.../server/db/models')
-const db = require('../server/db')
+const { Review } = require('../../server/db/models')
+const db = require('../../server/db')
+const Promise = require('bluebird');
 
 const numReviews = 10;
 
@@ -65,4 +66,15 @@ function seed () {
 
 console.log('Syncing reviews');
 
+seed()
+  .catch(err => {
+    console.error(err.message)
+    console.error(err.stack)
+    process.exitCode = 1
+  })
+  .then(() => {
+    console.log('closing db connection')
+    db.close()
+    console.log('db connection closed')
+  })
 module.exports = seed
