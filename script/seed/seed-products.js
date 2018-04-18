@@ -29,7 +29,7 @@ function generateProducts() {
 }
 
 function createProducts() {
-  return Promise.map(generateProducts(), users => users.save());
+  return Promise.map(generateProducts(), products => products.save());
 }
 
 function seed() {
