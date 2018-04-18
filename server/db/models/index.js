@@ -30,6 +30,7 @@ Product.hasMany(Photo);
 
 User.hasMany(Order);
 OrderItem.belongsTo(Order);
+
 Order.hasMany(OrderItem, {
   onDelete: 'cascade',
   hooks: true,
