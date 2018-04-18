@@ -17,6 +17,7 @@ const photoSeed = require('./seed/seed-images')
 const cartSeed = require('./seed/seed-cart')
 const addressSeed = require('./seed/seed-addresses')
 const ordersSeed = require('./seed/seed-orders')
+const categoriesSeed = require('./seed/seed-categories')
 
 
 async function seed() {
@@ -25,6 +26,7 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
   await userSeed()
+  await categoriesSeed()
   await productsSeed()
   await reviewSeed()
   await photoSeed()
