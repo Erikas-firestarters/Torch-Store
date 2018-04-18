@@ -9,11 +9,15 @@ const Category = require('./category')
 const Photo = require('./photo')
 const Review = require('./review')
 
-Product.hasOne(CartItem)
+/**
+ * If we had any associations to make, this would be a great place to put them!
+ * ex. if we had another model called BlogPost, we might say:
+ *
+ *    BlogPost.belongsTo(User)
+ */
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
 
-Product.belongsTo(CartItem)
 Photo.belongsTo(Product)
 
 
@@ -22,18 +26,8 @@ Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
-CartItem.hasOne(Product)
-
-// Product.hasOne(CartItem)
-/*
-*****************
-I had to comment out the above association because I received the below error while seeding
-***************
-
- Error: Cyclic dependency found. cartItems is dependent of itself.
- Dependency chain: cartItems -> products => cartItems
- */
-
+Product.hasOne(OrderItem)
+Product.hasOne(CartItem)
 Product.hasMany(Photo)
 
 Review.belongsTo(Product)
