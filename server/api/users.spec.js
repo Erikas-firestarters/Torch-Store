@@ -10,6 +10,10 @@ const CartItem = db.model('cartItem');
 const Product = db.model('product');
 
 describe('User routes', () => {
+  beforeEach(() => {
+    return db.sync({force: true})
+  })
+
   const user = {
     email: 'cody@puppybook.com',
     password: 'bones',
@@ -24,9 +28,7 @@ describe('User routes', () => {
     price: 40.44,
     inventory: 20
   }
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
+
 
   describe('/api/users/', () => {
     beforeEach(() => {
