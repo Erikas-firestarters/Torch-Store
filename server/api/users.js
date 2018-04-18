@@ -6,7 +6,7 @@ module.exports = router;
 router.param('id', (req, res, next, id) => {
   User.findById(id)
     .then(user => {
-      if (!user) throw HttpError(404);
+      if (!user) throw new HttpError(404);
       req.requestedUser = user;
       next();
     })
@@ -21,6 +21,11 @@ router.get('/', (req, res, next) => {
     attributes: ['id', 'email'],
   })
     .then(users => res.json(users))
+    .catch(next);
+});
+router.post('/', (req, res, next) => {
+  User.create(req.body)
+    .then(user => res.json(user))
     .catch(next);
 });
 router.get('/:id/cart', (req, res, next) => {
@@ -45,7 +50,8 @@ router.delete('/:id/cart', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   req.requestedUser
     .reload(User.options.scopes.safeUser())
-    .then(requestedUser => res.json(requestedUser))
+    .then(requestedUser => {
+      res.json(requestedUser)})
     .catch(next);
 });
 router.put('/:id', (req, res, next) => {
@@ -55,8 +61,17 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 router.delete('/:id', (req, res, next) => {
-  req.requestedUser
-    .destroy()
-    .then(() => res.sendStatus(204))
+  req.requestedUser.destroy()
+    .then(() => res.status(204))
     .catch(next);
 });
+
+
+
+
+
+// {   "email": "cody@puppybook.com",
+//     "password": "bones",
+//     "firstName": "Cody",
+//     "lastName": "Bones"
+// }

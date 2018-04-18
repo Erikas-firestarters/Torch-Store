@@ -57,7 +57,15 @@ describe.only('User routes', () => {
           expect(body.email).to.be.equal('cody@puppybook.com')
       })
     })
+
+    it('DELETE /api/users/1/', (done) => {
+      return request(app)
+        .del('/api/users/1')
+        .expect(204)
+        .end(done());
+    })
   })
+
   describe('/api/users/:id/cart', () => {
 
     beforeEach( async () => {
@@ -78,6 +86,12 @@ describe.only('User routes', () => {
           expect(body).to.be.an('object');
           expect(body.cartItems).to.be.an('array');
         })
+    })
+    it('DELETE /api/users/:id/cart', (done) => {
+      return request(app)
+      .del('/api/users/1/cart')
+      .expect(204)
+      .end(done());
     })
   })
 }) // end describe('User routes')
