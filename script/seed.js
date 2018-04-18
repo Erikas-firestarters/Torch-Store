@@ -16,6 +16,7 @@ const reviewSeed = require('./seed/seed-review')
 const photoSeed = require('./seed/seed-images')
 const cartSeed = require('./seed/seed-cart')
 const addressSeed = require('./seed/seed-addresses')
+const ordersSeed = require('./seed/seed-orders')
 
 
 async function seed() {
@@ -29,6 +30,7 @@ async function seed() {
   await photoSeed()
   await addressSeed()
   await cartSeed()
+  await ordersSeed()
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded successfully`)
