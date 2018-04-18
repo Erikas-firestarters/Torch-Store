@@ -3,25 +3,25 @@ const { Cart, CartItem } = require('../../server/db/models');
 
 const cart = [
   {
-    //userId: 1
+    userId: 1
   },
   {
-    //userId: 2
+    userId: 2
   },
   {
-    //userId: 3
+    userId: 3
   },
   {
-    //userId: 4
+    userId: 4
   },
   {
-    //userId: 5
+    userId: 5
   },
   {
-    //userId: 6
+    userId: 6
   },
   {
-    //userId: 7
+    userId: 7
   }
 ];
 
@@ -89,18 +89,12 @@ const cartItems = [
 ];
 
 
-const seed = () =>{
+const seed = () => {
   console.log('Syncing carts')
   return Promise.all(cart.map(carts => Cart.create(carts)))
-    .then(() => {
-      Promise.all(
-        cartItems.map(items => {
-          return CartItem.create(items);
-        })
-      );
-    })
-    .catch(error => console.error(error))
-  }
+  .then(() => Promise.all(cartItems.map(items => CartItem.create(items))))
+  .catch(error => console.error(error))
+}
 
 module.exports = seed
 // const mainSync = () => {
