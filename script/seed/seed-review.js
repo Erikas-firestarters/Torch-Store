@@ -22,7 +22,7 @@ const content = [
   '10/10fastshipper would do business again!'
 ]
 
-function doTimes (n, fn) {
+function doTimes(n, fn) {
   const results = [];
   while (n--) {
     results.push(fn());
@@ -30,24 +30,24 @@ function doTimes (n, fn) {
   return results;
 }
 
-function randReview () {
+function randReview() {
   return Review.build({
     title: randTitle(),
     content: randContent(),
-    rating: chance.integer({min: 0, max: 5}),
+    rating: chance.integer({ min: 0, max: 5 }),
     //productId: chance.integer({min: 0, max: 10}) //sequelize doesn't like this
   });
 }
 
-function randTitle () {
+function randTitle() {
   return chance.pick(titles)
 }
 
-function randContent () {
+function randContent() {
   return chance.pick(content)
 }
 
-function generateReviews () {
+function generateReviews() {
   const reviews = doTimes(numReviews, randReview);
   reviews.push(Review.build({
     title: 'Meh',
@@ -62,21 +62,9 @@ function createReviews() {
   return Promise.map(generateReviews(), review => review.save());
 }
 
-function seed () {
+function seed() {
+  console.log('Syncing reviews');
   return createReviews()
 }
 
-console.log('Syncing reviews');
-
-seed()
-  .catch(err => {
-    console.error(err.message)
-    console.error(err.stack)
-    process.exitCode = 1
-  })
-  .then(() => {
-    console.log('closing db connection')
-    db.close()
-    console.log('db connection closed')
-  })
 module.exports = seed

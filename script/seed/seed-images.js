@@ -33,18 +33,8 @@ function createImages() {
 }
 
 function seed() {
-  console.log('working photo seed')
+  console.log('Syncing photos')
   return createImages();
 }
 
-seed()
-  .catch(err => {
-    console.error(err.message)
-    console.error(err.stack)
-    process.exitCode = 1
-  })
-  .then(() => {
-    console.log('closing db connection')
-    db.close()
-    console.log('db connection closed')
-  })
+module.exports = seed;
