@@ -18,7 +18,6 @@ const Review = require('./review')
 Cart.belongsTo(User)
 CartItem.belongsTo(Cart)
 
-Product.belongsTo(CartItem)
 Photo.belongsTo(Product)
 
 
@@ -27,7 +26,6 @@ Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
-CartItem.hasOne(Product)
 
 Product.hasOne(CartItem)
 Product.hasMany(Photo)
