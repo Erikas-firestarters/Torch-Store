@@ -3,19 +3,16 @@ const db = require('../db');
 const CartItem = db.model('cartItem');
 
 const Cart = db.define('cart', {
-  quantity: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 0
+  quatity: {
+    type: Sequelize.VIRTUAL,
+    set: function () {
+      return CartItem.findAll({
+        where: {
+          cartId: this.id
+        }
+      }).then(items => items.length)
+     }
   }
 });
 
 module.exports = Cart;
-
-Cart.prototype.cartQuantity = () => {
-  return CartItem.findAll({
-    where: {
-      cartId: this.id
-    }
-  });
-};
