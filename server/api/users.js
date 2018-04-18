@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Cart, CartItem } = require('../db/models');
+const { User, Cart, CartItem, Order, OrderItem, Product } = require('../db/models');
 const HttpError = require('../utils/HttpError');
 module.exports = router;
 
@@ -28,6 +28,23 @@ router.post('/', (req, res, next) => {
     .then(user => res.json(user))
     .catch(next);
 });
+
+router.get('/:id/orders', (req, res, next) => {
+  const { id } = req.requestedUser;
+  Order.findAll({ where: { userId: id}, include: [{all: true}]})
+    .then(orders => {
+      res.json(orders)
+    })
+    .catch(next);
+});
+
+router.get('/:id/orders/:orderId', (req, res, next) => {
+  const { orderId } = req.params;
+  Order.findOne({ where: { id: orderId }, include: [OrderItem] })
+    .then(orders => res.json(orders))
+    .catch(next);
+});
+
 router.get('/:id/cart', (req, res, next) => {
   const { id } = req.requestedUser;
   Cart.findOne({ where: { userId: id }, include: [CartItem] })
