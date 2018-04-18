@@ -29,7 +29,16 @@ Cart.hasMany(CartItem, {
 })
 CartItem.hasOne(Product)
 
-Product.hasOne(CartItem)
+// Product.hasOne(CartItem)
+/*
+*****************
+I had to comment out the above association because I received the below error while seeding
+***************
+
+ Error: Cyclic dependency found. cartItems is dependent of itself.
+ Dependency chain: cartItems -> products => cartItems
+ */
+
 Product.hasMany(Photo)
 
 Review.belongsTo(Product)
