@@ -26,7 +26,7 @@ Cart.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true
 })
-
+Product.hasOne(OrderItem)
 Product.hasOne(CartItem)
 Product.hasMany(Photo)
 
