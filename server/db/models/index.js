@@ -38,10 +38,6 @@ Address.hasOne(Order, {as: 'billing'}) // billingID on orders model
 Address.hasOne(Order, {as: 'shipping'})
 
 Order.hasOne(OrderItem);
-Order.hasMany(CartItem, {
-  onDelete: 'cascade',
-  hooks: true
-});
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
