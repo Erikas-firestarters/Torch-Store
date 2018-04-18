@@ -35,7 +35,8 @@ function randReview() {
     title: randTitle(),
     content: randContent(),
     rating: chance.integer({ min: 0, max: 5 }),
-    //productId: chance.integer({min: 0, max: 10}) //sequelize doesn't like this
+    productId: chance.integer({ min: 1, max: 50 }),
+    userId: chance.integer({ min: 1, max: 50 })
   });
 }
 
@@ -53,7 +54,8 @@ function generateReviews() {
     title: 'Meh',
     content: 'Torch was meh, wouldnt buy again',
     rating: 0,
-    //productId: 1
+    productId: 1,
+    userId: 1
   }));
   return reviews;
 }

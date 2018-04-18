@@ -16,6 +16,8 @@ const reviewSeed = require('./seed/seed-review')
 const photoSeed = require('./seed/seed-images')
 const cartSeed = require('./seed/seed-cart')
 const addressSeed = require('./seed/seed-addresses')
+const ordersSeed = require('./seed/seed-orders')
+const categoriesSeed = require('./seed/seed-categories')
 
 
 async function seed() {
@@ -23,18 +25,16 @@ async function seed() {
   console.log('db synced!')
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
-
-  const models = await Promise.all([
-    userSeed(),
-    productsSeed(),
-    reviewSeed(),
-    photoSeed(),
-    cartSeed(),
-    addressSeed()
-  ])
+  await userSeed()
+  await categoriesSeed()
+  await productsSeed()
+  await reviewSeed()
+  await photoSeed()
+  await addressSeed()
+  await cartSeed()
+  await ordersSeed()
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${models.length} models`)
   console.log(`seeded successfully`)
 }
 

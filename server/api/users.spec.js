@@ -13,6 +13,7 @@ describe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+
   const user = {
     email: 'cody@puppybook.com',
     password: 'bones',
