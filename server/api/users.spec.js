@@ -73,7 +73,7 @@ describe.only('User routes', () => {
       const newProduct = await Product.create(product);
       const newCart = await Cart.create(cart);
       const newCartItem = await CartItem.create(cartItem);
-      newProduct.setCartItem(newCartItem);
+      newCartItem.setProduct(newProduct)
       newCartItem.setCart(newCart);
       newCart.setUser(newUser);
     })

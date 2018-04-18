@@ -1,5 +1,12 @@
 const router = require('express').Router();
-const { User, Cart, CartItem, Order, OrderItem, Product } = require('../db/models');
+const {
+  User,
+  Cart,
+  CartItem,
+  Order,
+  OrderItem,
+  Product,
+} = require('../db/models');
 const HttpError = require('../utils/HttpError');
 module.exports = router;
 
@@ -31,23 +38,33 @@ router.post('/', (req, res, next) => {
 
 router.get('/:id/orders', (req, res, next) => {
   const { id } = req.requestedUser;
-  Order.findAll({ where: { userId: id}, include: [{all: true}]})
+  Order.findAll({
+    where: { userId: id },
+    include: [{ model: OrderItem, include: [Product] }],
+  })
     .then(orders => {
-      res.json(orders)
+      res.json(orders);
     })
     .catch(next);
 });
 
 router.get('/:id/orders/:orderId', (req, res, next) => {
-  const { orderId } = req.params;
-  Order.findOne({ where: { id: orderId }, include: [OrderItem] })
-    .then(orders => res.json(orders))
+  Order.findAll({
+    where: { id: req.params.orderId },
+    include: [{ model: OrderItem, include: [Product] }],
+  })
+    .then(orders => {
+      res.json(orders);
+    })
     .catch(next);
 });
 
 router.get('/:id/cart', (req, res, next) => {
   const { id } = req.requestedUser;
-  Cart.findOne({ where: { userId: id }, include: [CartItem] })
+  Cart.findOne({
+    where: { userId: id },
+    include: [{ model: CartItem, include: [Product] }],
+  })
     .then(cart => res.json(cart))
     .catch(next);
 });
@@ -60,7 +77,7 @@ router.post('/:id/cart', (req, res, next) => {
 });
 router.delete('/:id/cart', (req, res, next) => {
   const { id } = req.requestedUser;
-  Cart.findOne({ where: { userId: id }})
+  Cart.findOne({ where: { userId: id } })
     .then(() => res.sendStatus(204))
     .catch(next);
 });
@@ -68,7 +85,8 @@ router.get('/:id', (req, res, next) => {
   req.requestedUser
     .reload(User.options.scopes.safeUser())
     .then(requestedUser => {
-      res.json(requestedUser)})
+      res.json(requestedUser);
+    })
     .catch(next);
 });
 router.put('/:id', (req, res, next) => {
@@ -78,17 +96,8 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 router.delete('/:id', (req, res, next) => {
-  req.requestedUser.destroy()
+  req.requestedUser
+    .destroy()
     .then(() => res.status(204))
     .catch(next);
 });
-
-
-
-
-
-// {   "email": "cody@puppybook.com",
-//     "password": "bones",
-//     "firstName": "Cody",
-//     "lastName": "Bones"
-// }

@@ -1,13 +1,13 @@
-const User = require('./user')
-const CartItem = require('./cartItem')
-const Cart = require('./cart')
-const Product = require('./product')
-const Address = require('./address')
+const User = require('./user');
+const CartItem = require('./cartItem');
+const Cart = require('./cart');
+const Product = require('./product');
+const Address = require('./address');
 const Order = require('./order');
 const OrderItem = require('./orderItem');
-const Category = require('./category')
-const Photo = require('./photo')
-const Review = require('./review')
+const Category = require('./category');
+const Photo = require('./photo');
+const Review = require('./review');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -15,34 +15,34 @@ const Review = require('./review')
  *
  *    BlogPost.belongsTo(User)
  */
-Cart.belongsTo(User)
-CartItem.belongsTo(Cart)
+Cart.belongsTo(User);
+CartItem.belongsTo(Cart);
 
-Photo.belongsTo(Product)
+Photo.belongsTo(Product);
 
-
-User.hasOne(Cart)
+User.hasOne(Cart);
 Cart.hasMany(CartItem, {
   onDelete: 'cascade',
-  hooks: true
-})
-Product.hasOne(OrderItem)
-Product.hasOne(CartItem)
-Product.hasMany(Photo)
-
-Review.belongsTo(Product)
-Review.belongsTo(User)
-
-User.hasOne(Order)
-Address.hasOne(Order, {as: 'billing'}) // billingID on orders model
-Address.hasOne(Order, {as: 'shipping'})
-
-Order.hasOne(OrderItem);
-Order.hasMany(OrderItem, {
-  onDelete: 'cascade',
-  hooks: true
+  hooks: true,
 });
 
+Product.hasMany(Photo);
+
+User.hasMany(Order);
+OrderItem.belongsTo(Order);
+Order.hasMany(OrderItem, {
+  onDelete: 'cascade',
+  hooks: true,
+});
+
+OrderItem.belongsTo(Product);
+CartItem.belongsTo(Product);
+
+Review.belongsTo(Product);
+Review.belongsTo(User);
+
+Address.hasOne(Order, { as: 'billing' }); // billingID on orders model
+Address.hasOne(Order, { as: 'shipping' });
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -61,4 +61,4 @@ module.exports = {
   Category,
   Photo,
   Review,
-}
+};
