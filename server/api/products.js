@@ -1,11 +1,21 @@
 const router = require('express').Router()
-const { Product, Review } = require('../db/models')
+const { Product, Review, Category } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
   Product.findAll()
     .then(products => res.json(products))
     .catch(next)
+})
+
+router.get('/categories', async (req, res, next) => {
+  try {
+    const categories = await Category.findAll();
+    res.json(categories);
+  }
+  catch (err) {
+    next(err);
+  }
 })
 
 router.get('/:id', (req, res, next) => {
@@ -29,3 +39,4 @@ router.post('/:id/reviews', (req, res, next) => {
     .then(review => res.json(review))
     .catch(next)
 })
+

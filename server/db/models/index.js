@@ -36,14 +36,16 @@ Order.hasMany(OrderItem, {
   hooks: true,
 });
 
+Product.belongsTo(Category);
+
 OrderItem.belongsTo(Product);
 CartItem.belongsTo(Product);
 
 Review.belongsTo(Product);
 Review.belongsTo(User);
 
-Address.hasOne(Order, { as: 'billing' }); // billingID on orders model
-Address.hasOne(Order, { as: 'shipping' });
+Order.belongsTo(Address, { as: 'billing' }); // billingID on orders model
+Order.belongsTo(Address, { as: 'shipping' });
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

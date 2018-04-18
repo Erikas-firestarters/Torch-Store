@@ -22,8 +22,7 @@ describe('OrderItem model', () => {
           price: 12.95,
           qty: 1,
         });
-
-        order.setOrderItem(orderItem);
+        orderItem.setOrder(order);
         expect(orderItem.orderId).to.equal(order.id);
     })
   }) // end describe('getter')

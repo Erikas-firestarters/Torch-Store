@@ -6,6 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const Product = db.model('product')
 const Review = db.model('review')
+const Category = db.model('category');
 
 describe('Product routes', () => {
   beforeEach(() => {
@@ -85,5 +86,31 @@ describe('Product routes', () => {
           expect(foundReview.content).to.equal('catches on fire consistently');
         });
     })
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+  })
+  describe('/api/products/categories', () => {
+    const cat1 = { name: 'analog' };
+    const cat2 = { name: 'gas-based' };
+    const cat3 = { name: 'real-flame' };
+    beforeEach( () => {
+      return Category.create(cat1);
+    })
+    beforeEach( () => {
+      return Category.create(cat2);
+    })
+    beforeEach( () => {
+      return Category.create(cat3);
+    })
+
+    it('GET /api/products/categories', () => {
+      return request(app)
+        .get('/api/products/categories')
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array')
+          expect(res.body[0].name).to.be.equal('analog')
+        })
+    })
+  })
+
+
+})
