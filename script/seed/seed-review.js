@@ -63,8 +63,6 @@ function seed () {
   return createReviews()
 }
 
-seed()
-
 console.log('Syncing reviews');
 
 module.exports = seed
