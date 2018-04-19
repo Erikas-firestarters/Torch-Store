@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Navbar, ProductList} from './components'
 import Routes from './routes'
-import SidebarLeftPush from './sidebar';
+import SidebarLeftPush from './components/sidebarleftpush';
 
 const App = () => {
   return (
