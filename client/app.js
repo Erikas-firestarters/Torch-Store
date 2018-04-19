@@ -2,14 +2,13 @@ import React from 'react'
 
 import {Navbar, ProductList} from './components'
 import Routes from './routes'
-
+import SidebarLeftPush from './sidebar';
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
-      <ProductList />
+      <SidebarLeftPush />
     </div>
   )
 }
