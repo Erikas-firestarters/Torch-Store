@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
-import Routes from './routes'
-import ProductList from './components/product-list'
+import Routes from '../routes'
+import ProductList from './product-list'
 
 export default class SidebarLeftPush extends Component {
   state = { visible: true }
@@ -51,5 +51,5 @@ export default class SidebarLeftPush extends Component {
 }
 
 SidebarLeftPush.propTypes = {
-  handleClick: PropTypes.func.isRequired
+ // handleClick: PropTypes.func.isRequired
 }
