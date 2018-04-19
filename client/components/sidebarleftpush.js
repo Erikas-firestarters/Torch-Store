@@ -12,7 +12,7 @@ import {
 } from 'semantic-ui-react';
 import Routes from '../routes';
 import ProductList from './product-list';
-import { getCategories } from '../store';
+import { getCategories, setActiveCategory } from '../store';
 
 class SidebarLeftPush extends Component {
   state = { visible: true };
@@ -20,18 +20,15 @@ class SidebarLeftPush extends Component {
   componentDidMount() {
     this.props.getCategories();
   }
-
+  handleClick(category) {
+    this.props.setActiveCategory(category);
+    console.log('CLICK', category)
+  }
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
   render() {
     const { visible } = this.state;
-    let categories = [
-      //replace with categories from state
-      'Analog',
-      'Butane',
-      'Tiki',
-      'Caveman Retro',
-    ];
+
     return (
       <div>
         {/* <Button onClick={this.toggleVisibility}>Toggle Categories</Button> */}
@@ -50,7 +47,7 @@ class SidebarLeftPush extends Component {
               Torch Categories
             </Menu.Item>
             {this.props.categories.map(category => (
-              <Menu.Item key={category.id} name="gamepad">
+              <Menu.Item onClick={() => this.handleClick(category.name)} key={category.id} name="gamepad">
                 <Icon name="gamepad" />
                 {category.name}
               </Menu.Item>
@@ -76,7 +73,7 @@ class SidebarLeftPush extends Component {
  */
 const mapState = ({ categories }) => ({ categories });
 
-const mapDispatch = { getCategories };
+const mapDispatch = { getCategories, setActiveCategory };
 
 export default connect(mapState, mapDispatch)(SidebarLeftPush);
 
