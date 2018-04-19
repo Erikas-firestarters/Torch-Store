@@ -29,12 +29,12 @@ export class UserHome extends React.Component {
       <h3 className="ui fluid top attached header">User Detail</h3>
       <Segment attached>
         <Segment>
-          <p>Name: {console.log(this.props)} </p>
-          <p>Email: samuelkogan@gmail.com</p>
+          <p>Email: {this.props.userOrders}</p>
         </Segment>
       </Segment>
       <h3 className="ui attached header">Orders</h3>
       <Segment attached>
+      {this.p}
         <Segment>
           <p>Order #1</p>
           <p>order placed: 1/25/2017</p>

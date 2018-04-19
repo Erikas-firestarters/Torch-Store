@@ -1,37 +1,54 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
-import Routes from '../routes'
-import ProductList from './product-list'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  Sidebar,
+  Segment,
+  Button,
+  Menu,
+  Image,
+  Icon,
+  Header,
+} from 'semantic-ui-react';
+import Routes from '../routes';
+import ProductList from './product-list';
+import { getCategories, setActiveCategory } from '../store';
 
-export default class SidebarLeftPush extends Component {
-  state = { visible: true }
+class SidebarLeftPush extends Component {
+  state = { visible: true };
 
-  toggleVisibility = () => this.setState({ visible: !this.state.visible })
+  componentDidMount() {
+    this.props.getCategories();
+  }
+  handleClick(category) {
+    this.props.setActiveCategory(category);
+  }
+  toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { visible } = this.state
-    let categories = [ //replace with categories from state
-      'Analog',
-      'Butane',
-      'Tiki',
-      'Caveman Retro'
-    ]
+    const { visible } = this.state;
 
     return (
       <div>
         {/* <Button onClick={this.toggleVisibility}>Toggle Categories</Button> */}
         <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation="push" width="thin" visible={visible} icon="labeled" vertical inverted>
+          <Sidebar
+            as={Menu}
+            animation="push"
+            width="thin"
+            visible={visible}
+            icon="labeled"
+            vertical
+            inverted
+          >
             <Menu.Item name="home">
               <Icon name="home" />
               Torch Categories
             </Menu.Item>
-            {categories.map((category, index) => (
-              <Menu.Item key={index} name="gamepad">
+            {this.props.categories.map(category => (
+              <Menu.Item onClick={() => this.handleClick(category.name)} key={category.id} name="gamepad">
                 <Icon name="gamepad" />
-                {category}
+                {category.name}
               </Menu.Item>
             ))}
           </Sidebar>
@@ -41,15 +58,23 @@ export default class SidebarLeftPush extends Component {
                 <Routes />
                 <ProductList />
               </Header>
-              <Image src="/assets/images/wireframe/paragraph.png" />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
-    )
+    );
   }
 }
 
+/**
+ * CONTAINER
+ */
+const mapState = ({ categories }) => ({ categories });
+
+const mapDispatch = { getCategories, setActiveCategory };
+
+export default connect(mapState, mapDispatch)(SidebarLeftPush);
+
 SidebarLeftPush.propTypes = {
- // handleClick: PropTypes.func.isRequired
-}
+  // handleClick: PropTypes.func.isRequired
+};
