@@ -9,7 +9,7 @@ const SET_CATEGORY = 'SET_CATEGORY';
 /**
  * INITIAL STATE
  */
-const defaultCategory = 'Torch';
+const defaultCategory = '';
 
 /**
  * ACTION CREATORS
