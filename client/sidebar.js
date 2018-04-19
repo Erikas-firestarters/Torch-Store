@@ -5,7 +5,7 @@ import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui
 import Routes from './routes'
 import ProductList from './components/product-list'
 
-class SidebarLeftPush extends Component {
+export default class SidebarLeftPush extends Component {
   state = { visible: true }
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -23,25 +23,25 @@ class SidebarLeftPush extends Component {
       <div>
         {/* <Button onClick={this.toggleVisibility}>Toggle Categories</Button> */}
         <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation='push' width='thin' visible={visible} icon='labeled' vertical inverted>
-            <Menu.Item name='home'>
-              <Icon name='home' />
+          <Sidebar as={Menu} animation="push" width="thin" visible={visible} icon="labeled" vertical inverted>
+            <Menu.Item name="home">
+              <Icon name="home" />
               Torch Categories
             </Menu.Item>
             {categories.map((category, index) => (
-              <Menu.Item key={index} name='gamepad'>
-                <Icon name='gamepad' />
+              <Menu.Item key={index} name="gamepad">
+                <Icon name="gamepad" />
                 {category}
               </Menu.Item>
             ))}
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic>
-              <Header as='h3'>
+              <Header as="h3">
                 <Routes />
                 <ProductList />
               </Header>
-              <Image src='/assets/images/wireframe/paragraph.png' />
+              <Image src="/assets/images/wireframe/paragraph.png" />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
@@ -50,29 +50,6 @@ class SidebarLeftPush extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(SidebarLeftPush)
-
-/**
- * PROP TYPES
- */
 SidebarLeftPush.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  handleClick: PropTypes.func.isRequired
 }
