@@ -22,7 +22,6 @@ class SidebarLeftPush extends Component {
   }
   handleClick(category) {
     this.props.setActiveCategory(category);
-    console.log('CLICK', category)
   }
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
