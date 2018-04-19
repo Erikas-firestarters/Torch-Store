@@ -5,6 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import categories from './categories';
 import activeCategory from './activecategory';
+import product from './product';
+import products from './products';
 
 const reducer = combineReducers({ user, categories, product, products, activeCategory });
 const middleware = composeWithDevTools(
