@@ -1,14 +1,14 @@
 import React from 'react'
 
-import {Navbar} from './components'
+import {Navbar, ProductList} from './components'
 import Routes from './routes'
-
+import SidebarLeftPush from './components/sidebarleftpush';
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
+      <SidebarLeftPush />
     </div>
   )
 }
