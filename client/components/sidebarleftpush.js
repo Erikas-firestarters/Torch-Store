@@ -33,9 +33,9 @@ class SidebarLeftPush extends Component {
         {/* <Button onClick={this.toggleVisibility}>Toggle Categories</Button> */}
         {/* <Sidebar.Pushable as={Segment}> //this makes the sidebar 'push' animate away, but the main content is animated on a page load which is undesirable */}
           <Sidebar as={Menu} animation="push" width="thin" visible={visible} icon="labeled" vertical inverted>
-            <Menu.Item name="home">
+            <Menu.Item onClick={() => this.handleClick(null)} name="home">
               <Icon name="home" />
-              Torch Categories
+              Show All
             </Menu.Item>
             {this.props.categories.map(category => (
               <Menu.Item onClick={() => this.handleClick(category.name)} key={category.id} name="gamepad">
