@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { logout } from '../store';
 import { Input, Menu, Button, Grid } from 'semantic-ui-react';
 
@@ -20,28 +20,22 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     ) : (
       <div>
         {/* The navbar will show these links before you log in */}
-        <Grid columns="equal">
-          <Menu top="true">
-            <Grid.Column width={8}>
-              <Menu.Menu position="left" fluid={'true'}>
-                <Menu.Item>
-                  <Input icon="search" placeholder="Search..." />
-                </Menu.Item>
-              </Menu.Menu>
-            </Grid.Column>
-
-            <Grid.Column width={1}>
-              <Menu.Menu position="right">
-                <NavLink to="/login">
-                  <Menu.Item name="login" />
-                </NavLink>
-                <NavLink to="/signup">
-                  <Menu.Item name="signup" />
-                </NavLink>
-              </Menu.Menu>
-            </Grid.Column>
-          </Menu>
-        </Grid>
+        <Menu>
+          <Menu.Item>
+            <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
+          </Menu.Item>
+          <Menu.Item>
+            <Input icon="search" placeholder="Search..." width={10}/>
+          </Menu.Item>
+          <Menu.Menu position="right">
+            <Link to="/login">
+              <Menu.Item name="login" link />
+            </Link>
+            <Link to="/signup">
+              <Menu.Item name="signup" link />
+            </Link>
+          </Menu.Menu>
+        </Menu>
       </div>
     )}
     <hr />
