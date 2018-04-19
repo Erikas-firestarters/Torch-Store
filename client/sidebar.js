@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
 import Routes from './routes'
+import ProductList from './components/product-list'
 
 class SidebarLeftPush extends Component {
   state = { visible: true }
@@ -38,6 +39,7 @@ class SidebarLeftPush extends Component {
             <Segment basic>
               <Header as='h3'>
                 <Routes />
+                <ProductList />
               </Header>
               <Image src='/assets/images/wireframe/paragraph.png' />
             </Segment>
