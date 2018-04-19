@@ -7,7 +7,6 @@ import { Input, Menu } from 'semantic-ui-react';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-
     {isLoggedIn ? (
       <div>
         {/* The navbar will show these links after you log in */}
@@ -24,7 +23,6 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <Menu.Item as={NavLink} to="/cart" icon="cart" link />
           </Menu.Menu>
         </Menu>
-
       </div>
     ) : (
       <div>
