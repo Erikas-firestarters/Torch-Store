@@ -10,12 +10,20 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     {isLoggedIn ? (
       <div>
         {/* The navbar will show these links after you log in */}
-        <NavLink to="/home">
-          <Menu.Item name="home" />
-        </NavLink>
-        <a href="#" onClick={handleClick}>
-          Logout
-        </a>
+        <Menu>
+          <Menu.Item>
+            <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
+          </Menu.Item>
+          <Menu.Item>
+            <Input icon="search" placeholder="Search..." />
+          </Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item as={NavLink} to="/home" name="home" link />
+            <Menu.Item as={NavLink} to="/logout" name="logout" link />
+            <Menu.Item as={NavLink} to="/cart" icon="cart" link />
+          </Menu.Menu>
+        </Menu>
+
       </div>
     ) : (
       <div>
