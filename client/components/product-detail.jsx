@@ -1,6 +1,6 @@
-
+/* eslint react/prefer-stateless-function: 0 class-methods-use-this:0*/
 import React, { Component } from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Container, Image, Header, Segment } from 'semantic-ui-react';
 
 const product = {
   name: 'Basic Badass Torch',
@@ -9,22 +9,20 @@ const product = {
   img: 'https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715',
 }
 
-
-const ProductItem = () => {
+class ProductDetail extends Component {
+  render() {
     return (
-      <div className="product-list-item">
-        <Card raised >
-          <Image src={product.img}/>
-          <Card.Content>
-            <Card.Header>{product.name}</Card.Header>
-            <Card.Meta>
-              <span className="date">{product.price}</span>
-            </Card.Meta>
-          </Card.Content>
-        </Card>
-      </div>
-    );
+      <Container textAlign="left">
+        <Segment.Group raised>
+        <Segment><Header as="h3">{product.name}</Header></Segment>
+        <Segment.Group horizontal>
+          <Segment><Image src={product.img} /></Segment>
+          <Segment>Nested Right</Segment>
+        </Segment.Group>
+        </Segment.Group>
+      </Container>
+    )
   }
+}
 
-export default ProductItem;
-
+export default ProductDetail;

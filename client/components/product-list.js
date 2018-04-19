@@ -35,7 +35,7 @@ class ProductList extends Component {
 const mapState = ({products}) => ({products});
 const mapDispatch = (dispatch) => ({
   fetchInitialData() {
-    dispatch(fetchProducts);
+    dispatch(fetchProducts());
   }
 })
 
