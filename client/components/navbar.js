@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { logout } from '../store';
-import { Input, Menu, Button, Grid } from 'semantic-ui-react';
+import { Input, Menu } from 'semantic-ui-react';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -20,20 +20,17 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     ) : (
       <div>
         {/* The navbar will show these links before you log in */}
-        <Menu stretch>
+        <Menu>
           <Menu.Item>
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
-          <Menu.Item >
-            <Input icon="search" placeholder="Search..."/>
+          <Menu.Item>
+            <Input icon="search" placeholder="Search..." />
           </Menu.Item>
           <Menu.Menu position="right">
-            <Link to="/login">
-              <Menu.Item name="login" link />
-            </Link>
-            <Link to="/signup">
-              <Menu.Item name="signup" link />
-            </Link>
+            <Menu.Item as={NavLink} to="/login" name="login" link />
+            <Menu.Item as={NavLink} to="/signup" name="signup" link />
+            <Menu.Item as={NavLink} to="/cart" icon="cart" link />
           </Menu.Menu>
         </Menu>
       </div>
