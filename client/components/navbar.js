@@ -20,12 +20,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     ) : (
       <div>
         {/* The navbar will show these links before you log in */}
-        <Menu>
+        <Menu stretch>
           <Menu.Item>
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
-          <Menu.Item>
-            <Input icon="search" placeholder="Search..." width={10}/>
+          <Menu.Item >
+            <Input icon="search" placeholder="Search..."/>
           </Menu.Item>
           <Menu.Menu position="right">
             <Link to="/login">
