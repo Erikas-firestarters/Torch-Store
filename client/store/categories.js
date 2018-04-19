@@ -11,7 +11,7 @@ const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 /**
  * INITIAL STATE
  */
-const defaultCategories = [{name: 'Torch', id: 1}];
+const defaultCategories = [];
 
 /**
  * ACTION CREATORS
