@@ -5,7 +5,7 @@ import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui
 import Routes from '../routes'
 import ProductList from './product-list'
 
-export default class SidebarLeftPush extends Component {
+class SidebarLeftPush extends Component {
   state = { visible: true }
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
@@ -49,6 +49,25 @@ export default class SidebarLeftPush extends Component {
     )
   }
 }
+
+/**
+ * CONTAINER
+ */
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id,
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    handleClick() {
+      dispatch(logout());
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(SidebarLeftPush);
 
 SidebarLeftPush.propTypes = {
  // handleClick: PropTypes.func.isRequired
