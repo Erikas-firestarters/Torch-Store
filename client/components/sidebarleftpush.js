@@ -58,7 +58,6 @@ class SidebarLeftPush extends Component {
                 <Routes />
                 <ProductList />
               </Header>
-              <Image src="/assets/images/wireframe/paragraph.png" />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
