@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import UserDetail from './user-detail'
+import Cart from './cart'
 
 /**
  * COMPONENT
@@ -11,8 +12,10 @@ export const UserHome = (props) => {
 
   return (
     <div>
+      <Cart />
       <h3>Welcome, {email}</h3>
       <UserDetail />
+
     </div>
   )
 }
