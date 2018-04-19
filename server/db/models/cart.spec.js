@@ -4,7 +4,7 @@ const db = require('../index');
 const Cart = db.model('cart');
 const CartItem = db.model('cartItem');
 
-describe('Cart model', () => {
+describe.only('Cart model', () => {
   beforeEach(() => {
     return db.sync({
       force: true
@@ -13,18 +13,31 @@ describe('Cart model', () => {
 
   describe('cart association', () => {
     it('does association right for carts', async () => {
-      try {
-        let createdCart = await Cart.create({
-          quantity: '1'
-        });
-        let createdCartItem = await CartItem.create({
-          quantity: 2
-        });
-        createdCartItem.setCart(createdCart);
-        expect(createdCartItem.cartId).to.equal(1);
-      } catch (error) {
-        console.error(error);
-      }
+      let createdCart = await Cart.create({});
+      let createdCartItem = await CartItem.create({
+        quantity: 2
+      });
+      createdCartItem.setCart(createdCart);
+      expect(createdCartItem.cartId).to.equal(1);
     });
   });
+
+  // describe('cart virtual test', () => {
+  //   it('counts items', async () => {
+  //     let createdCart = await Cart.create({});
+  //     let createdCartItem1 = await CartItem.create(
+  //       {
+  //         quantity: 2
+  //       }
+  //     );
+  //     let createdCartItem2 = await CartItem.create(
+  //       {
+  //         quantity: 1
+  //       }
+  //     );
+  //     createdCartItem1.setCart(createdCart);
+  //     createdCartItem2.setCart(createdCart);
+  //     expect(createdCart.quantity).to.equal(3);
+  //   });
+  // });
 });
