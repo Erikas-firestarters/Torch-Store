@@ -11,43 +11,37 @@ const REMOVE_CATEGORY = 'REMOVE_CATEGORY'
 /**
  * INITIAL STATE
  */
-const defaultCategories = {}
+const defaultCategories = []
 
 /**
  * ACTION CREATORS
  */
-const getCategories = category => ({type: GET_CATEGORIES, category})
-const addCategory = category => ({type: ADD_CATEGORY, category})
-const removeCategory = category => ({type: REMOVE_CATEGORY, category})
+const getCats = categories => ({type: GET_CATEGORIES, categories})
+const addCat = category => ({type: ADD_CATEGORY, category})
+const removeCat = category => ({type: REMOVE_CATEGORY, category})
 
 /**
  * THUNK CREATORS
  */
-export const getCat = () =>
+export const getCategories = () =>
   dispatch =>
-    axios.get('/auth/me')
+    axios.get('/api/products/categories')
       .then(res =>
-        dispatch(getCategories(res.data || defaultCategories)))
+        dispatch(getCats(res.data || defaultCategories)))
       .catch(err => console.log(err))
 
-export const addCat = (email, password, method) =>
+export const addCategory = (category) =>
   dispatch =>
-    axios.post(`/auth/${method}`, { email, password })
-      .then(res => {
-        dispatch(getCategories(res.data))
-        history.push('/home')
-      }, authError => { // rare example: a good use case for parallel (non-catch) error handler
-        dispatch(getCategories({error: authError}))
-      })
-      .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr))
+    axios.post('/api/products/categories', { category })
+      .then(res =>
+        dispatch(addCat(res.data)))
+      .catch(err => console.error(err))
 
-export const removeCat = () =>
+export const removeCategory = (category) =>
   dispatch =>
-    axios.post('/auth/logout')
-      .then(_ => {
-        dispatch(addCategory())
-        history.push('/login')
-      })
+    axios.delete('/api/products/categories', { category })
+      .then(res =>
+        dispatch(removeCat(res.data)))
       .catch(err => console.log(err))
 
 /**
@@ -56,9 +50,11 @@ export const removeCat = () =>
 export default function (state = defaultCategories, action) {
   switch (action.type) {
     case GET_CATEGORIES:
-      return action.user
+      return action.categories
     case ADD_CATEGORY:
-      return defaultCategories
+      return action.category
+    case REMOVE_CATEGORY:
+      return action.category
     default:
       return state
   }
