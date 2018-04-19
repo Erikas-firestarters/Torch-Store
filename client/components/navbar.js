@@ -7,6 +7,7 @@ import { Input, Menu } from 'semantic-ui-react';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
+
     {isLoggedIn ? (
       <div>
         {/* The navbar will show these links after you log in */}
