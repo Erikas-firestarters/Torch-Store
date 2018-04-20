@@ -7,27 +7,38 @@ router.get('/', (req, res, next) => {
   const id = 1; ///////update this with session USERID
   CartItem.findAll({
     where: { userId: id },
-    include: [Product]
+    include: [Product],
   })
     .then(cart => res.json(cart))
     .catch(next);
 });
 router.delete('/', (req, res, next) => {
-  CartItem.build(req.body)
-    .then(cart => cart.setUser(req.requestedUser))
-    .save()
-    .then(cart => res.json(cart))
-    .catch(next);
+  if (req.deletedCartItem.userId === req.session.userId) {
+    req.requestedCartItem
+      .destroy()
+      .then(() => res.status(204))
+      .catch(next);
+  } else {
+    res.status(401);
+  }
 });
 router.post('/', (req, res, next) => {
-  const { id } = req.requestedUser;
-  CartItem.findOne({ where: { userId: id } })
-    .then(() => res.sendStatus(204))
-    .catch(next);
+  if (req.deletedCartItem.userId === req.session.userId) {
+    req.requestedCartItem
+      .update(req.body)
+      .then((newCartItem) => res.json(newCartItem))
+      .catch(next);
+  } else {
+    res.status(401);
+  }
 });
 router.put('/', (req, res, next) => {
-  const { id } = req.requestedUser;
-  CartItem.findOne({ where: { userId: id } })
-    .then(() => res.sendStatus(204))
-    .catch(next);
+  if (req.deletedCartItem.userId === req.session.userId) {
+    req.requestedCartItem
+      .update(req.body)
+      .then((updatedCartItem) => res.json(updatedCartItem))
+      .catch(next);
+  } else {
+    res.status(401);
+  }
 });
