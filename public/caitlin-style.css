@@ -4,7 +4,13 @@
   margin: 3vh;
 }
 
-.product-list {
-  width: 90%;
-  padding: 5vw 0;
+.main {
+  margin-top: 5rem;
+}
+
+.sidebar {
+  border-right: 2px solid #c3c3c3;
+  /* width: 15vw; */
+  min-width: 7vw;
+  height: 100%;
 }
