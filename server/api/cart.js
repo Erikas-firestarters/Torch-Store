@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const { CartItem } = require('../db/models');
+const { CartItem, Product } = require('../db/models');
 module.exports = router;
 
 router.get('/', (req, res, next) => {
-  console.log('req', req);
-  const { id } = req.requestedUser;
+  console.log('req', req.session);
+  const id = 1; ///////update this with session USERID
   CartItem.findAll({
     where: { userId: id },
-    //include: [{ model: CartItem, include: [Product] }],
+    include: [Product]
   })
     .then(cart => res.json(cart))
     .catch(next);
