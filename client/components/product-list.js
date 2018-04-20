@@ -4,14 +4,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import ProductItem from './product-item.js';
-import { fetchProducts } from '../store';
+import { fetchProducts, addCartItem } from '../store';
 
 class ProductList extends Component {
   componentDidMount() {
     this.props.fetchInitialData();
   }
+
   render() {
-    const {products, activeCategory} = this.props;
+    const {products, activeCategory, addProductToCart} = this.props;
     return (
       <Grid>
         <Grid.Row columns={3} centered >
@@ -20,13 +21,13 @@ class ProductList extends Component {
             .map(product => {
               return (
                 <Grid.Column key={product.id}>
-                  <ProductItem product={product} />
+                  <ProductItem addCartItem={addProductToCart} product={product} />
                 </Grid.Column>
               )
             }) :
             products.map(product => (
                 <Grid.Column key={product.id}>
-                  <ProductItem product={product} />
+                  <ProductItem addCartItem={addProductToCart} product={product} />
                 </Grid.Column>
               ))
           }
@@ -40,6 +41,9 @@ const mapState = ({products, activeCategory}) => ({products, activeCategory});
 const mapDispatch = (dispatch) => ({
   fetchInitialData() {
     dispatch(fetchProducts());
+  },
+  addProductToCart(product) {
+    dispatch(addCartItem(product));
   }
 })
 

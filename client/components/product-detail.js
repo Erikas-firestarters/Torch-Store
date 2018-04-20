@@ -34,8 +34,8 @@ class ProductDetail extends Component {
                 control="input"
                 placeholder="Quantity"
               />
-              <Button icon color="teal" type="submit">
-              <Icon name="shopping cart" />
+              <Button onClick={() => this.props.addCartItem(this.props.product)} icon color="teal" type="submit">
+              <Icon  name="shopping cart" />
             </Button>
             </Form.Group>
 
