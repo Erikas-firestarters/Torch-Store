@@ -20,8 +20,8 @@ class ProductList extends Component {
       if (cart.filter(prod => prod.id === newProduct.id).length === 0) {
         addProductToCart(newProduct);
       } else {
-        let newQuantity = cart.filter(prod => prod.id === newProduct.id)[0].quantity
-        newProduct.quantity = newQuantity
+        let newQuantity = cart.filter(prod => prod.id === newProduct.id)[0].quantity //grab old quantity
+        newProduct.quantity += newQuantity //add new to it
         updateCartProduct(newProduct);
       }
     };
