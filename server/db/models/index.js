@@ -28,6 +28,7 @@ Cart.hasMany(CartItem, {
 
 Product.hasMany(Photo);
 
+
 User.hasMany(Order);
 OrderItem.belongsTo(Order);
 

@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const { Product, Review, Category } = require('../db/models')
+const { Product, Review, Category, Photo } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({include: [Photo] })
     .then(products => res.json(products))
     .catch(next)
 })

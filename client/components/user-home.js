@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import UserDetail from './user-detail'
+import ProductDetail from './product-detail';
 import Cart from './cart'
 
 /**
@@ -15,7 +16,6 @@ export const UserHome = (props) => {
       <Cart />
       <h3>Welcome, {email}</h3>
       <UserDetail />
-
     </div>
   )
 }
