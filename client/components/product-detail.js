@@ -1,6 +1,5 @@
 /* eslint react/prefer-stateless-function: 0 class-methods-use-this:0*/
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import ReviewList from './review-list';
 import ProductForm, {ProductImg, ProductDescription }  from './product-view-parts';
 import { Button, Modal, Icon} from 'semantic-ui-react';
@@ -28,7 +27,5 @@ class ProductDetail extends Component {
   }
 }
 
-const mapState = ({products}) => ({products});
-
-export default connect(mapState)(ProductDetail)
+export default ProductDetail
 

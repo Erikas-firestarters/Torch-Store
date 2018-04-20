@@ -45,7 +45,7 @@ export class UserHome extends React.Component {
                   <p>Order Date: {Date(order.createdAt)}</p>
                   <p>Total: ${Number(order.subtotal) + Number(order.tax)}</p>
                   <p>Status: {order.status}</p>
-                  <Modal trigger={<Button>Show Modal</Button>}>
+                  <Modal trigger={<Button>Show Order</Button>}>
                     <Modal.Header>Order #{order.id}</Modal.Header>
                     <Modal.Content image>
                       <Modal.Description>
