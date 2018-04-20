@@ -3,3 +3,8 @@
 .product-list-item {
   margin: 3vh;
 }
+
+.product-list {
+  width: 90%;
+  padding: 5vw 0;
+}
