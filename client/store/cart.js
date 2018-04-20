@@ -12,7 +12,7 @@ const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
 /**
  * INITIAL STATE
  */
-const defaultCart = [1];
+const defaultCart = [];
 
 /**
  * ACTION CREATORS
@@ -31,9 +31,9 @@ export const getCart = () => dispatch =>
     .then(res => dispatch(init(res.data || defaultCart)))
     .catch(err => console.log(err));
 
-export const removeCartItem = cartItem => {
+export const removeCartItem = cartItem => dispatch => {
   dispatch(remove(cartItem));
-  const { cartItemId } = cartItem;
+  // const { cartItemId } = cartItem;
   //   return dispatch =>
   //     axios
   //       .delete('/cart')
@@ -63,7 +63,7 @@ export default function(state = defaultCart, action) {
     case GET_CART:
       return action.cart;
     case REMOVE_CART_ITEM:
-      return state.filter(item => item.id !== state.cartItemId);
+      return state.filter(item => console.log(item.id !== action.cartItemId));
     case ADD_CART_ITEM:
       return [...state, action.cartItem];
     case UPDATE_CART_ITEM:

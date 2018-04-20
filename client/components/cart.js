@@ -6,7 +6,6 @@ import CartItem from './cart-item';
 
 function Cart(props) {
   const { cart, handleRemove, handleCartChange } = props;
-  console.log('this is cart', cart);
   return (
     <div className="ui grid">
       <div className="center aligned two column row">
@@ -14,18 +13,7 @@ function Cart(props) {
           <h3 className="ui header">Cart</h3>
 
           {cart.map(item => (
-
-            <CartItem key={item.id} item={item}/>
-
-            // <div className="ui segment" key={item.id}>
-            //   <img
-            //     className="ui mini left floated image"
-            //     src="https://semantic-ui.com/images/wireframe/image.png"
-            //   />
-            //   <p>{item.name}</p>
-            //   <p>{item.price}</p>
-            //   <Button color="red" onClick={handleRemove}>X</Button>
-            // </div>
+            <CartItem key={item.id} item={item} />
           ))}
         </div>
         <div className="column">
