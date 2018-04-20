@@ -16,9 +16,12 @@ class ProductList extends Component {
     const cartHandler = (product, quantity) => {
       let newProduct = product;
       newProduct.quantity = quantity;
+
       if (cart.filter(prod => prod.id === newProduct.id).length === 0) {
         addProductToCart(newProduct);
       } else {
+        let newQuantity = cart.filter(prod => prod.id === newProduct.id)[0].quantity
+        newProduct.quantity = newQuantity
         updateCartProduct(newProduct);
       }
     };
