@@ -16,7 +16,7 @@ class ProductDetail extends Component {
               price={this.props.product.price}
               description={this.props.product.description}
             />
-            <ProductForm />
+            <ProductForm product={this.props.product} addCartItem={this.props.addCartItem} />
           </Modal.Description>
         </Modal.Content>
         <Modal.Content>

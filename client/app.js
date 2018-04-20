@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import { Navbar, ProductList } from './components';
+import { Navbar, ProductList, Cart } from './components';
 import Routes from './routes';
 import Sidebar from './components/Sidebar';
 
@@ -18,6 +18,7 @@ const App = () => {
         <Grid.Column width={14} >
           <div className="main">
             <Routes />
+            <Cart />
             <ProductList />
           </div>
         </Grid.Column>

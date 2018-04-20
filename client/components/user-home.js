@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchOrders } from '../store/userOrders';
+import { fetchOrders, getCart } from '../store/';
 import {
   Segment,
   Button,
@@ -89,6 +89,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   fetchInitialData: id => {
     dispatch(fetchOrders(id));
+    dispatch(getCart());
   }
 });
 
