@@ -7,11 +7,13 @@ router.get('/', (req, res, next) => {
     where: { userId: req.session.passport.user },
     include: [Product],
   })
-    // .map(cartItem => {
-    //   const sendItem = cartItem.product;
-    //   sendItem.quantity = cartItem.quantity;
-    //   return sendItem;
-    // })
+    .then(res =>
+      res.map(cartItem => {
+        const sendItem = cartItem.product;
+        sendItem.dataValues.quantity = cartItem.quantity;
+        return sendItem;
+      })
+    )
     .then(cart => res.json(cart))
     .catch(next);
 });
