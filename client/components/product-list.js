@@ -11,18 +11,24 @@ class ProductList extends Component {
     this.props.fetchInitialData();
   }
   render() {
-    const {products} = this.props;
+    const {products, activeCategory} = this.props;
     return (
-      <Grid className="product-list">
-        <Grid.Row columns={3} >
-          {
-            products.map(product => {
+      <Grid>
+        <Grid.Row columns={3} centered >
+          { activeCategory.id ?
+            products.filter( unFilteredProduct => ( unFilteredProduct.categoryId === activeCategory.id))
+            .map(product => {
               return (
                 <Grid.Column key={product.id}>
                   <ProductItem product={product} />
                 </Grid.Column>
               )
-            })
+            }) :
+            products.map(product => (
+                <Grid.Column key={product.id}>
+                  <ProductItem product={product} />
+                </Grid.Column>
+              ))
           }
         </Grid.Row>
       </Grid>
@@ -30,7 +36,7 @@ class ProductList extends Component {
   }
 }
 
-const mapState = ({products}) => ({products});
+const mapState = ({products, activeCategory}) => ({products, activeCategory});
 const mapDispatch = (dispatch) => ({
   fetchInitialData() {
     dispatch(fetchProducts());
