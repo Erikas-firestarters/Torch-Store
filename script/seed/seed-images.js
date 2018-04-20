@@ -14,12 +14,14 @@ function doTimes(n, fn) {
   }
   return results;
 }
+let counter = 1;
 
 const randomImage = () => {
   const image = {
     imageUrl: faker.image.imageURL,
-    productId: 1
+    productId: counter,
   }
+  counter++;
   return Photo.build(image);
 }
 
