@@ -1,17 +1,18 @@
-import React from 'react'
+import React from 'react';
 
-import {Navbar, ProductList} from './components'
-import Routes from './routes'
-import SidebarLeftPush from './components/sidebarleftpush';
+import { Navbar, ProductList } from './components';
+import Routes from './routes';
+import Sidebar from './components/Sidebar';
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <SidebarLeftPush />
+      <Sidebar />
+      <Routes />
       <ProductList />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
