@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
 import {CartItem} from '../components';
 
-function Cart(props) {
+function Checkout(props) {
   const { cart, handleRemove, handleCartChange } = props;
   return (
     <div className="ui grid">

@@ -8,14 +8,14 @@ class CartItem extends Component {
     super();
   }
   render() {
-    const { item, handleRemove } = this.props;
+    const { item, handleRemove, handleCartChange } = this.props;
     return (
       <div className="ui segment">
         <img
           className="ui mini left floated image"
           src={item.photo}
         />
-        <Input placeholder="0" value={item.quantity} />
+        <Input onChange={handleCartChange(item.id)} placeholder="0" value={item.quantity} />
         <p>{item.name}</p>
         <p>{item.price}</p>
         <Button color="red" onClick={() => handleRemove(item.id)}>
@@ -33,7 +33,8 @@ const mapDispatch = dispatch => {
     handleRemove(id) {
       dispatch(removeCartItem(id));
     },
-    handleCartChange(cartItem) {
+    handleCartChange(e, id) {
+
       dispatch(updateCartItem(cartItem));
     },
   };
