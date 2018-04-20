@@ -40,15 +40,18 @@ export const removeCartItem = cartItem => {
   //       .then(() => dispatch(remove(cartItemId)))
   //       .catch(err => console.log(err));
 };
-export const addCartItem = product => dispatch => dispatch(add(product));
+export const addCartItem = (cartItem, loggedIn) => dispatch => {
+  !loggedIn
+    ? dispatch(add(cartItem))
+    : axios
+        .post('/cart', cartItem)
+        .then(() => dispatch(add(cartItem || defaultCart)))
+        .catch(err => console.log(err));
+};
 
-// axios
-//   .post('/cart', product)
-//   .then(res => dispatch(add(res.data || defaultCart)))
-//   .catch(err => console.log(err));
-export const updateCartItem = updatedCartItem => dispatch =>
+export const updateCartItem = cartItem => dispatch =>
   axios
-    .put('/cart', updatedCartItem)
+    .put('/cart', cartItem)
     .then(res => dispatch(update(res.data || defaultCart)))
     .catch(err => console.log(err));
 

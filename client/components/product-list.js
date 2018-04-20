@@ -18,15 +18,17 @@ class ProductList extends Component {
       addProductToCart,
       cart,
       updateCartProduct,
+      user,
     } = this.props;
     const cartHandler = (product, quantity) => {
       let cartItem = cart.filter(prod => prod.id === product.id);
+      let loggedIn = user;
       if (cartItem.length) {
         cartItem[0].quantity += quantity;
         updateCartProduct(cartItem);
       } else {
         product.quantity = Number(quantity);
-        addProductToCart(product);
+        addProductToCart(product, loggedIn);
       }
     };
     return (
@@ -70,8 +72,8 @@ const mapDispatch = dispatch => ({
     dispatch(fetchProducts());
   },
 
-  addProductToCart(product) {
-    dispatch(addCartItem(product));
+  addProductToCart(product, loggedIn) {
+    dispatch(addCartItem(product, loggedIn));
   },
   updateCartProduct(product) {
     dispatch(updateCartItem(product));
