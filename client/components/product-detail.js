@@ -1,47 +1,27 @@
 /* eslint react/prefer-stateless-function: 0 class-methods-use-this:0*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal, Icon, Form, Divider } from 'semantic-ui-react';
+import ReviewList from './review-list';
+import ProductForm, {ProductImg, ProductDescription }  from './product-view-parts';
+import { Button, Modal, Icon} from 'semantic-ui-react';
 
 class ProductDetail extends Component {
-  constructor () {
-    super();
-    this.state = {
-      quantity: 0,
-    }
-  }
-  handleChange(e) {
-    return this.setState({ quantity: e.target.value})
-  }
   render() {
     return (
       <Modal trigger={<Button icon color="pink"><Icon name="magnify" /></Button>}>
         <Modal.Header>{this.props.product.name}</Modal.Header>
         <Modal.Content image>
-          <Image
-            wrapped
-            size="large"
-            src={this.props.product.photos[0].imageUrl}
-          />
+          <ProductImg imgUrl={this.props.product.photos[0].imageUrl} />
           <Modal.Description>
-            <Header>${this.props.product.price}</Header>
-            <p>{this.props.product.description}</p>
-            <Divider />
-            <Form size="big">
-            <Form.Group widths="equal">
-              <Form.Field
-                onChange={this.handleChange}
-                control="input"
-                placeholder="Quantity"
-              />
-              <Button onClick={() => this.props.addCartItem(this.props.product)} icon color="teal" type="submit">
-              <Icon  name="shopping cart" />
-            </Button>
-            </Form.Group>
-
-
-          </Form>
+            <ProductDescription
+              price={this.props.product.price}
+              description={this.props.product.description}
+            />
+            <ProductForm product={this.props.product} addCartItem={this.props.addCartItem} />
           </Modal.Description>
+        </Modal.Content>
+        <Modal.Content>
+        <ReviewList productId={this.props.product.id} />
         </Modal.Content>
       </Modal>
     );
@@ -49,11 +29,6 @@ class ProductDetail extends Component {
 }
 
 const mapState = ({products}) => ({products});
-const mapDispatch = (dispatch) => ({
-  fetchInitialData() {
-    dispatch(fetchProducts());
-  }
-})
 
-export default connect(mapState, mapDispatch)(ProductDetail)
+export default connect(mapState)(ProductDetail)
 
