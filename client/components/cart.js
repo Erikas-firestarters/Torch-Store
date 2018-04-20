@@ -2,31 +2,31 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
+import CartItem from './cart-item';
 
-function Cart() {
-const {cart, handleCartChange, handleRemove} = this.props;
-console.log('this is cart', cart)
+function Cart(props) {
+  const { cart, handleRemove, handleCartChange } = props;
+  console.log('this is cart', cart);
   return (
     <div className="ui grid">
       <div className="center aligned two column row">
         <div className="column">
           <h3 className="ui header">Cart</h3>
-            <div className="ui segment">
-              <img className="ui mini left floated image" src="https://semantic-ui.com/images/wireframe/image.png" />
-              <p>Product #3</p>
-              <p>$44.55</p>
-            </div>
-            <div className="ui segment">
-              <img className="ui mini left floated image" src="https://semantic-ui.com/images/wireframe/image.png" />
-              <p>Product #2</p>
-              <p>$20.05</p>
-            </div>
-            <div className="ui segment">
-              <img className="ui mini left floated image" src="https://semantic-ui.com/images/wireframe/image.png" />
-              <p>Product #1</p>
-              <p>$18.65</p>
-            </div>
 
+          {cart.map(item => (
+
+            <CartItem key={item.id} item={item}/>
+
+            // <div className="ui segment" key={item.id}>
+            //   <img
+            //     className="ui mini left floated image"
+            //     src="https://semantic-ui.com/images/wireframe/image.png"
+            //   />
+            //   <p>{item.name}</p>
+            //   <p>{item.price}</p>
+            //   <Button color="red" onClick={handleRemove}>X</Button>
+            // </div>
+          ))}
         </div>
         <div className="column">
           <div className="ui segment">
@@ -43,12 +43,12 @@ const mapState = ({ cart }) => ({ cart });
 const mapDispatch = dispatch => {
   return {
     handleRemove(e) {
-      console.log(e)
-      // dispatch(removeCartItem())
+    dispatch(removeCartItem(item.id))
     },
     handleCartChange(e) {
-    console.log(e)
-    }}
+      console.log(e);
+    },
+  };
 };
 
 export default connect(mapState, mapDispatch)(Cart);
