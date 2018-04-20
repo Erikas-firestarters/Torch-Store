@@ -22,7 +22,7 @@ class Sidebar extends Component {
         <Item.Group divided>
           {this.props.categories.map(category => (
             <Item onClick={() => this.handleClick(category.name)} key={category.id}>
-              <Item.Image size="tiny" src="/assets/images/wireframe/image.png" />
+              <Item.Image size="tiny" />
               <Item.Content verticalAlign="middle">{category.name}</Item.Content>
             </Item>))}
         </Item.Group>
