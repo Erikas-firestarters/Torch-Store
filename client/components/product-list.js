@@ -12,17 +12,21 @@ class ProductList extends Component {
   }
 
   render() {
-    const { products, activeCategory, addProductToCart, cart, updateCartProduct } = this.props;
+    const {
+      products,
+      activeCategory,
+      addProductToCart,
+      cart,
+      updateCartProduct,
+    } = this.props;
     const cartHandler = (product, quantity) => {
-      let newProduct = product;
-      newProduct.quantity = quantity;
-
-      if (cart.filter(prod => prod.id === newProduct.id).length === 0) {
-        addProductToCart(newProduct);
+      let cartItem = cart.filter(prod => prod.id === product.id);
+      if (cartItem.length) {
+        cartItem[0].quantity += quantity;
+        updateCartProduct(cartItem);
       } else {
-        let newQuantity = cart.filter(prod => prod.id === newProduct.id)[0].quantity //grab old quantity
-        newProduct.quantity += newQuantity //add new to it
-        updateCartProduct(newProduct);
+        product.quantity = Number(quantity);
+        addProductToCart(product);
       }
     };
     return (
