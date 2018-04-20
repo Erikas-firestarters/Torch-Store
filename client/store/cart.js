@@ -49,11 +49,14 @@ export const addCartItem = (cartItem, loggedIn) => dispatch => {
         .catch(err => console.log(err));
 };
 
-export const updateCartItem = cartItem => dispatch =>
-  axios
-    .put('/cart', cartItem)
-    .then(res => dispatch(update(res.data || defaultCart)))
-    .catch(err => console.log(err));
+export const updateCartItem = cartItem => dispatch =>{
+  dispatch(update(cartItem))
+  // axios
+  //   .put('/cart', cartItem)
+  //   .then(res => dispatch(update(res.data || defaultCart)))
+  //   .catch(err => console.log(err));
+
+}
 
 /**
  * REDUCER
