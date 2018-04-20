@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     where: { userId: req.session.passport.user },
     include: [Product],
   })
-    .then(res =>
+    .then( res =>
       res.map(cartItem => {
         const sendItem = cartItem.product;
         sendItem.dataValues.quantity = cartItem.quantity;
