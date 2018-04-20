@@ -39,7 +39,7 @@ export const removeCartItem = cartItem => {
 //       .delete('/cart')
 //       .then(() => dispatch(remove(cartItemId)))
 //       .catch(err => console.log(err));
-// };
+};
 export const addCartItem = product => dispatch =>
 
   dispatch(add(product))
