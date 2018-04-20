@@ -63,7 +63,7 @@ export default function(state = defaultCart, action) {
     case GET_CART:
       return action.cart;
     case REMOVE_CART_ITEM:
-      return state.filter(item => console.log(item.id !== action.cartItemId));
+      return state.filter(item => item.id !== action.cartItemId);
     case ADD_CART_ITEM:
       return [...state, action.cartItem];
     case UPDATE_CART_ITEM:
