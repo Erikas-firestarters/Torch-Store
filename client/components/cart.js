@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
 
 function Cart() {
-// const {cart, handleCartChange, handleRemove} = this.props;
-// console.log('this is cart', cart)
+const {cart, handleCartChange, handleRemove} = this.props;
+console.log('this is cart', cart)
   return (
     <div className="ui grid">
       <div className="center aligned two column row">

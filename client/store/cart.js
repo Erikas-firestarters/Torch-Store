@@ -32,14 +32,16 @@ export const getCart = () => dispatch =>
     .then(res => dispatch(init(res.data || defaultCart)))
     .catch(err => console.log(err));
 export const removeCartItem = cartItem => {
+  dispatch(remove(cartItem))
   const { cartItemId } = cartItem;
-  return dispatch =>
-    axios
-      .delete('/cart')
-      .then(() => dispatch(remove(cartItemId)))
-      .catch(err => console.log(err));
-};
+//   return dispatch =>
+//     axios
+//       .delete('/cart')
+//       .then(() => dispatch(remove(cartItemId)))
+//       .catch(err => console.log(err));
+// };
 export const addCartItem = product => dispatch =>
+
   dispatch(add(product))
 
   // axios
