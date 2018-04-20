@@ -15,18 +15,18 @@ const Review = require('./review');
  *
  *    BlogPost.belongsTo(User)
  */
-Cart.belongsTo(User);
-CartItem.belongsTo(Cart);
+CartItem.belongsTo(User);
 
 Photo.belongsTo(Product);
 
 User.hasOne(Cart);
-Cart.hasMany(CartItem, {
+User.hasMany(CartItem, {
   onDelete: 'cascade',
   hooks: true,
 });
 
 Product.hasMany(Photo);
+
 
 User.hasMany(Order);
 OrderItem.belongsTo(Order);

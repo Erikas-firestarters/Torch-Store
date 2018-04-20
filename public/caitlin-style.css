@@ -3,3 +3,14 @@
 .product-list-item {
   margin: 3vh;
 }
+
+.main {
+  margin-top: 5rem;
+}
+
+.sidebar {
+  border-right: 2px solid #c3c3c3;
+  /* width: 15vw; */
+  min-width: 7vw;
+  height: 100%;
+}
