@@ -3,7 +3,7 @@ const { Review } = require('../../server/db/models')
 const db = require('../../server/db')
 const Promise = require('bluebird');
 
-const numReviews = 10;
+const numReviews = 150;
 
 const titles = [
   'Best Torch in the business',
