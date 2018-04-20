@@ -14,7 +14,7 @@ const ProductItem = props => {
             <span className="price">${product.price}</span>
             <Card.Meta>
               <ProductDetail addCartItem={addCartItem} product={product} />
-              <Button onClick={() => addCartItem(product)} icon color="teal" type="submit">
+              <Button onClick={() => addCartItem(product, 1)} icon color="teal" type="submit">
                 <Icon name="shopping cart" />
               </Button>
             </Card.Meta>
