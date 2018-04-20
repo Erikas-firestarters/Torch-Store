@@ -13,12 +13,15 @@ function doTimes(n, fn) {
   return results;
 }
 
+const randomCategory = () => Math.floor(Math.random() * 10) + 1;
+
 function randProduct() {
   const product = {
     name: faker.commerce.productName(),
     description: faker.lorem.paragraph(),
     price: faker.commerce.price(),
     inventory: faker.random.number(),
+    categoryId: randomCategory(),
   };
   return Product.build(product);
 }
