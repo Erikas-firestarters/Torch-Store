@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
 
@@ -13,8 +13,9 @@ class CartItem extends Component {
       <div className="ui segment">
         <img
           className="ui mini left floated image"
-          src="https://semantic-ui.com/images/wireframe/image.png"
+          src={item.photo}
         />
+        <Input placeholder="0" value={item.quantity} />
         <p>{item.name}</p>
         <p>{item.price}</p>
         <Button color="red" onClick={() => handleRemove(item.id)}>
@@ -25,15 +26,15 @@ class CartItem extends Component {
   }
 }
 
-const mapState = null;
+const mapState = ({ cart }) => ({ cart });
 
 const mapDispatch = dispatch => {
   return {
     handleRemove(id) {
       dispatch(removeCartItem(id));
     },
-    handleCartChange(e) {
-      console.log(e);
+    handleCartChange(cartItem) {
+      dispatch(updateCartItem(cartItem));
     },
   };
 };
