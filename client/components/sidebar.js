@@ -35,6 +35,7 @@ class Sidebar extends Component {
 
       </Menu>
 
+
     );
   }
 }
