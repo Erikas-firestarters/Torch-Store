@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { removeCartItem, updateCartItem } from '../store';
 
-export default function Cart() {
+function Cart() {
+// const {cart, handleCartChange, handleRemove} = this.props;
+// console.log('this is cart', cart)
   return (
     <div className="ui grid">
       <div className="center aligned two column row">
@@ -33,3 +37,18 @@ export default function Cart() {
     </div>
   );
 }
+
+const mapState = ({ cart }) => ({ cart });
+
+const mapDispatch = dispatch => {
+  return {
+    handleRemove(e) {
+      console.log(e)
+      // dispatch(removeCartItem())
+    },
+    handleCartChange(e) {
+    console.log(e)
+    }}
+};
+
+export default connect(mapState, mapDispatch)(Cart);
