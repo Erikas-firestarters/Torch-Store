@@ -32,9 +32,10 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 router.put('/', (req, res, next) => {
+  console.log('put cart id' , req.body.id)
   req.body.userId = req.session.passport.user;
   CartItem.findById(req.body.id)
-    .then(cartItem => cartItem.update(req.body))
+    .then(result => result.update(req.body))
     .then(updatedCartItem => res.json(updatedCartItem))
     .catch(next);
 });

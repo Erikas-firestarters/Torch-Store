@@ -58,7 +58,7 @@ export const addCartItem = (cartItem, loggedIn) => dispatch => {
 };
 
 export const updateCartItem = (cartItem, loggedIn) => dispatch => {
-  if (!loggedIn) dispatch(update(cartItem));
+  if (!loggedIn) {dispatch(update(cartItem))}
   else {
     let backendItem = {};
     backendItem.quantity = cartItem[0].quantity;
