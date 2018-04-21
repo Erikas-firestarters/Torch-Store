@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, Icon, Image, Button } from 'semantic-ui-react';
 import ProductDetail from './product-detail';
 
 const ProductItem = props => {
-  const { product } = props;
+  const { product, addCartItem } = props;
   return (
     <div className="product-list-item">
       <Card raised>
@@ -13,10 +13,10 @@ const ProductItem = props => {
           <Card.Meta>
             <span className="price">${product.price}</span>
             <Card.Meta>
-            <ProductDetail product={product} />
-            <Button icon color="teal" type="submit">
-              <Icon name="shopping cart" />
-            </Button>
+              <ProductDetail addCartItem={addCartItem} product={product} />
+              <Button onClick={() => addCartItem(product, 1)} icon color="teal" type="submit">
+                <Icon name="shopping cart" />
+              </Button>
             </Card.Meta>
           </Card.Meta>
         </Card.Content>
