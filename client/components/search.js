@@ -2,6 +2,8 @@ import _ from 'lodash'
 import {connect} from 'react-redux';
 import React, { Component } from 'react'
 import { Search, Grid, Header } from 'semantic-ui-react'
+import history from '../history'
+
 
 class SearchBar extends Component {
   constructor () {
@@ -18,7 +20,12 @@ class SearchBar extends Component {
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.name })
+  handleResultSelect = (event, { result }) => {
+
+  history.push(`products/${result.id}`);
+
+
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -59,8 +66,6 @@ class SearchBar extends Component {
     )
   }
 }
-
-
 
 
 const mapState = ({ products }) => ({ products });
