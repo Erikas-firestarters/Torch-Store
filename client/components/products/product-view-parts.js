@@ -7,7 +7,7 @@ export const ProductImg = props => (
 
 export const ProductDescription = props => (
   <div>
-    <Header>${props.price}</Header>
+    {props.price ? <Header>${props.price}</Header> : <div />}
     <p>{props.description}</p>
     <Divider />
   </div>

@@ -21,7 +21,6 @@ class ReviewForm extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Segment padded textAlign="center">
       <Form>
