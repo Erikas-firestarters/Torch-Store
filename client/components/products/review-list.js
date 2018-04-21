@@ -9,14 +9,14 @@ class ReviewList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showReviews: false,
+      showReviews: true,
       showReviewForm: false,
     };
   }
   componentDidMount() {
     this.props.fetchInitialData(this.props.productId);
   }
-  showReviews(e) {
+  showReviews(e = '') {
     e.preventDefault();
     this.setState({
       showReviews: !this.state.showReviews,
@@ -35,18 +35,20 @@ class ReviewList extends Component {
     const { reviews, isLoggedIn } = this.props;
     return (
       <div>
-        {reviews.length &&
+        {reviews.length ?
           <Button
             floated="right"
             color="teal"
             onClick={this.showReviews.bind(this)}>Read Reviews</Button>
+            : <span />
         }
+
         { isLoggedIn &&
         <Button floated="right"
         color="pink"
         onClick={this.showReviewForm.bind(this)}>Leave a Review</Button>
         }
-        <Divider clearing />
+        <Divider clearing hidden />
 
         {this.state.showReviews &&
         <Segment padded >

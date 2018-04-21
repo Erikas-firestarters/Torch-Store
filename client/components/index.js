@@ -11,4 +11,5 @@ export {default as ProductList} from './products/product-list';
 export {default as ProductDetail} from './products/product-detail';
 export {default as Cart} from './cart';
 export {default as CartItem} from './cart-item';
+export {default as ProductPage} from './products/product-page';
 // export {default as Checkout} from './checkout';
