@@ -10,9 +10,11 @@ class ProductDetail extends Component {
       <Modal trigger={<Button icon color="pink"><Icon name="magnify" /></Button>}>
         <Modal.Header>{this.props.product.name}</Modal.Header>
         <Modal.Content image>
+          { this.props.product.photos[0].length &&
           <ProductImg imgUrl={this.props.product.photos[0].imageUrl} />
+          }
           <Modal.Description>
-            <ProductDescription
+             <ProductDescription
               price={this.props.product.price}
               description={this.props.product.description}
             />

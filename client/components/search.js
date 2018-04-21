@@ -48,7 +48,6 @@ class SearchBar extends Component {
 
   render() {
     const { isLoading, value, results } = this.state
-    console.log('fjdslas >>>> ', results)
     return (
           <Search
             loading={isLoading}
