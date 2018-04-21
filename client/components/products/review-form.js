@@ -36,7 +36,7 @@ class ReviewForm extends Component {
         />
         <Form.Field>
         <label>Rating</label>
-        <Rating maxRating={5} onRate={this.handleRate.bind(this)} />
+        <Rating icon="star" maxRating={5} onRate={this.handleRate.bind(this)} />
         </Form.Field>
         </Form.Group>
         <Form.Field

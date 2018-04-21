@@ -6,9 +6,9 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {default as ProductItem} from './product-item';
-export {default as ProductList} from './product-list';
-export {default as ProductDetail} from './product-detail';
+export {default as ProductItem} from './products/product-item';
+export {default as ProductList} from './products/product-list';
+export {default as ProductDetail} from './products/product-detail';
 export {default as Cart} from './cart';
 export {default as CartItem} from './cart-item';
 // export {default as Checkout} from './checkout';

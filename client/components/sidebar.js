@@ -25,7 +25,7 @@ class Sidebar extends Component {
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu as={NavLink} to="/products" vertical pointing fluid>
+      <Menu vertical pointing fluid>
         <Sticky>
         <Menu.Item
           key="00"
@@ -36,8 +36,6 @@ class Sidebar extends Component {
         />
         {this.props.categories.map(category => (
           <Menu.Item
-            // as={NavLink}
-            // to="/products"
             key={category.id}
             name={category.name}
             active={activeItem === category.name}

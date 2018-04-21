@@ -1,21 +1,15 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import { Navbar, ProductList, Cart } from './components';
+import { Navbar} from './components';
 import Routes from './routes';
-import Sidebar from './components/Sidebar';
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Grid columns={2}>
+      <Grid>
         <Grid.Row>
-        <Grid.Column width={2} stretched>
-          <div className="sidebar">
-            <Sidebar />
-          </div>
-        </Grid.Column>
-        <Grid.Column width={14} >
+        <Grid.Column width={16} >
           <div className="main">
             <Routes />
           </div>
