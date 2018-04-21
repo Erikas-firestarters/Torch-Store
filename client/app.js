@@ -18,8 +18,6 @@ const App = () => {
         <Grid.Column width={14} >
           <div className="main">
             <Routes />
-            <Cart />
-            <ProductList />
           </div>
         </Grid.Column>
         </Grid.Row>

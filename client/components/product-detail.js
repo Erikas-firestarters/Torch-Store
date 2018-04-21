@@ -12,7 +12,7 @@ class ProductDetail extends Component {
         <Modal.Content image>
           <ProductImg imageUrl={this.props.product.imageUrl} />
           <Modal.Description>
-            <ProductDescription
+             <ProductDescription
               price={this.props.product.price}
               description={this.props.product.description}
             />

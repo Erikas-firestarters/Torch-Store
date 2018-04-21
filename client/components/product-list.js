@@ -22,10 +22,10 @@ class ProductList extends Component {
     } = this.props;
     const cartHandler = (product, quantity) => {
       let cartItem = cart.filter(prod => prod.id === product.id);
-      let loggedIn = user;
+      let loggedIn = user.id;
       if (cartItem.length) {
         cartItem[0].quantity += quantity;
-        updateCartProduct(cartItem);
+        updateCartProduct(cartItem, loggedIn);
       } else {
         product.quantity = Number(quantity);
         addProductToCart(product, loggedIn);
@@ -61,10 +61,11 @@ class ProductList extends Component {
   }
 }
 
-const mapState = ({ products, activeCategory, cart }) => ({
+const mapState = ({ products, activeCategory, cart, user }) => ({
   products,
   activeCategory,
   cart,
+  user,
 });
 
 const mapDispatch = dispatch => ({
@@ -75,8 +76,8 @@ const mapDispatch = dispatch => ({
   addProductToCart(product, loggedIn) {
     dispatch(addCartItem(product, loggedIn));
   },
-  updateCartProduct(product) {
-    dispatch(updateCartItem(product));
+  updateCartProduct(product, loggedIn) {
+    dispatch(updateCartItem(product, loggedIn));
   },
 });
 

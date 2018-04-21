@@ -31,29 +31,45 @@ export const getCart = () => dispatch =>
     .then(res => dispatch(init(res.data || defaultCart)))
     .catch(err => console.log(err));
 
-export const removeCartItem = cartItem => dispatch => {
+export const removeCartItem = (cartItem, loggedIn) => dispatch => {
   dispatch(remove(cartItem));
-  // const { cartItemId } = cartItem;
-  //   return dispatch =>
-  //     axios
-  //       .delete('/cart')
-  //       .then(() => dispatch(remove(cartItemId)))
-  //       .catch(err => console.log(err));
+  if (!loggedIn) dispatch(remove(cartItem));
+  else {
+    let backendItem = {};
+    backendItem.quantity = cartItem.quantity;
+    backendItem.productId = cartItem.id;
+    axios
+      .delete('/api/cart', backendItem)
+      .then(() => dispatch(remove(cartItem || defaultCart)))
+      .catch(err => console.log(err));
+  }
 };
 export const addCartItem = (cartItem, loggedIn) => dispatch => {
-  !loggedIn
-    ? dispatch(add(cartItem))
-    : axios
-        .post('/cart', cartItem)
-        .then(() => dispatch(add(cartItem || defaultCart)))
-        .catch(err => console.log(err));
+  if (!loggedIn) dispatch(add(cartItem));
+  else {
+    let backendItem = {};
+    backendItem.quantity = cartItem.quantity;
+    backendItem.productId = cartItem.id;
+    axios
+      .post('/api/cart', backendItem)
+      .then(() => dispatch(add(cartItem || defaultCart)))
+      .catch(err => console.log(err));
+  }
 };
 
-export const updateCartItem = cartItem => dispatch =>
-  axios
-    .put('/cart', cartItem)
-    .then(res => dispatch(update(res.data || defaultCart)))
-    .catch(err => console.log(err));
+export const updateCartItem = (cartItem, loggedIn) => dispatch => {
+  if (!loggedIn) {dispatch(update(cartItem))}
+  else {
+    let backendItem = {};
+    backendItem.quantity = cartItem[0].quantity;
+    backendItem.productId = cartItem[0].id;
+    backendItem.id = cartItem[0].cartItemId;
+    axios
+      .put('/api/cart', backendItem)
+      .then(() => dispatch(update(cartItem || defaultCart)))
+      .catch(err => console.log(err));
+  }
+};
 
 /**
  * REDUCER
@@ -63,7 +79,7 @@ export default function(state = defaultCart, action) {
     case GET_CART:
       return action.cart;
     case REMOVE_CART_ITEM:
-      return state.filter(item => console.log(item.id !== action.cartItemId));
+      return state.filter(item => item.id !== action.cartItemId);
     case ADD_CART_ITEM:
       return [...state, action.cartItem];
     case UPDATE_CART_ITEM:
