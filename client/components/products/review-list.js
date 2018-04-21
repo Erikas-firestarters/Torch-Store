@@ -36,20 +36,15 @@ class ReviewList extends Component {
     return (
       <div>
         {reviews.length ?
-          <Button
-            floated="right"
-            color="teal"
+          <Button floated="right" color="teal"
             onClick={this.showReviews.bind(this)}>Read Reviews</Button>
             : <span />
         }
-
         { isLoggedIn &&
-        <Button floated="right"
-        color="pink"
+        <Button floated="right" color="pink"
         onClick={this.showReviewForm.bind(this)}>Leave a Review</Button>
         }
         <Divider clearing hidden />
-
         {this.state.showReviews &&
         <Segment padded >
           <h2>Reviews</h2>
