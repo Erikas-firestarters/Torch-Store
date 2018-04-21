@@ -1,41 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Item, Menu, Segment } from 'semantic-ui-react';
+import { Item, Menu, Segment, Sticky } from 'semantic-ui-react';
 import { getCategories, setActiveCategory } from '../store';
+import { NavLink } from 'react-router-dom';
 
 class Sidebar extends Component {
-  constructor () {
-    super()
+  constructor() {
+    super();
     this.state = {
       visible: true,
       activeItem: 'All Products',
-    }
+    };
   }
 
   componentDidMount() {
     this.props.getCategories();
   }
   handleClick(category) {
-    this.setState({activeItem: category.name || 'All Products'})
+    this.setState({ activeItem: category.name || 'All Products' });
     this.props.setActiveCategory(category);
   }
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const {activeItem} = this.state;
+    const { activeItem } = this.state;
     return (
-      <Menu vertical pointing fluid>
-      <Menu.Item key="00" name="All Products" active={activeItem === 'All Products'} onClick={() => this.handleClick('')} />
-        {
-          this.props.categories.map(category => (
-            <Menu.Item key={category.id} name={category.name} active={activeItem === category.name} onClick={() => this.handleClick(category)} />
-          ))
-        }
-
-
+      <Menu as={NavLink} to="/products" vertical pointing fluid>
+        <Sticky>
+        <Menu.Item
+          key="00"
+          name="All Products"
+          active={activeItem === 'All Products'}
+          onClick={() => this.handleClick('')}
+          link
+        />
+        {this.props.categories.map(category => (
+          <Menu.Item
+            // as={NavLink}
+            // to="/products"
+            key={category.id}
+            name={category.name}
+            active={activeItem === category.name}
+            onClick={() => this.handleClick(category)}
+          />
+        ))}
+        </Sticky>
       </Menu>
-
-
     );
   }
 }

@@ -1,42 +1,40 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Item, Grid, Icon, Label, Sticky } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
-import CartItem from './cart-item';
+import { CartItem } from '../components';
 
 function Cart(props) {
-  const { cart, handleRemove, handleCartChange } = props;
+  const { cart } = props;
   return (
-    <div className="ui grid">
-      <div className="center aligned two column row">
-        <div className="column">
-          <h3 className="ui header">Cart</h3>
-
-          {cart.map(item => (
-            <CartItem key={item.id} item={item} />
-          ))}
-        </div>
-        <div className="column">
-          <div className="ui segment">
-            <Button>CHECKOUT</Button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Grid>
+      <Grid.Column width={12}>
+        <Item.Group divided>
+          {cart.map(item => <CartItem key={item.id} item={item} />)}
+        </Item.Group>
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <Sticky>
+          <Button as="div" labelPosition="right">
+            <Button icon>
+              <Icon name="cart" />
+              Checkout
+            </Button>
+            <Label as="a" basic pointing="left">
+              {cart.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+              )}
+            </Label>
+          </Button>
+        </Sticky>
+      </Grid.Column>
+    </Grid>
   );
 }
 
 const mapState = ({ cart }) => ({ cart });
 
-const mapDispatch = dispatch => {
-  return {
-    handleRemove(e) {
-    dispatch(removeCartItem(item.id))
-    },
-    handleCartChange(e) {
-      console.log(e);
-    },
-  };
-};
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(Cart);
