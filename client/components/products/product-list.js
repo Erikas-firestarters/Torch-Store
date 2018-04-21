@@ -16,22 +16,7 @@ class ProductList extends Component {
     const {
       products,
       activeCategory,
-      addProductToCart,
-      cart,
-      updateCartProduct,
-      isLoggedIn,
     } = this.props;
-    const cartHandler = (product, quantity) => {
-      let cartItem = cart.filter(prod => prod.id === product.id);
-      if (cartItem.length) {
-        cartItem[0].quantity += quantity;
-        console.log('carthandler', isLoggedIn)
-        updateCartProduct(cartItem, isLoggedIn);
-      } else {
-        product.quantity = Number(quantity);
-        addProductToCart(product, isLoggedIn);
-      }
-    };
     return (
       <Grid>
         <Grid.Row columns={2}>
@@ -53,7 +38,6 @@ class ProductList extends Component {
                       return (
                         <Grid.Column key={product.id}>
                           <ProductItem
-                            addCartItem={addProductToCart}
                             product={product}
                           />
                         </Grid.Column>
@@ -62,7 +46,6 @@ class ProductList extends Component {
                 : products.map(product => (
                     <Grid.Column key={product.id}>
                       <ProductItem
-                        addItem={cartHandler}
                         product={product}
                       />
                     </Grid.Column>
@@ -87,13 +70,6 @@ const mapState = ({ products, activeCategory, cart, user }) => ({
 const mapDispatch = dispatch => ({
   fetchInitialData() {
     dispatch(fetchProducts());
-  },
-
-  addProductToCart(product, loggedIn) {
-    dispatch(addCartItem(product, loggedIn));
-  },
-  updateCartProduct(product, loggedIn) {
-    dispatch(updateCartItem(product, loggedIn));
   },
 });
 
