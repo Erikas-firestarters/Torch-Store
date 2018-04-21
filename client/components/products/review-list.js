@@ -16,7 +16,7 @@ class ReviewList extends Component {
   componentDidMount() {
     this.props.fetchInitialData(this.props.productId);
   }
-  showReviews(e = '') {
+  showReviews(e) {
     e.preventDefault();
     this.setState({
       showReviews: !this.state.showReviews,
