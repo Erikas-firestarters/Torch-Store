@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store';
-import { Input, Menu, Label } from 'semantic-ui-react';
+import { Input, Menu, Label, Sticky } from 'semantic-ui-react';
 import SearchBar from './search';
 const resultRenderer = ({ name }) => <Label content={name} />
 const Navbar = ({ handleClick, isLoggedIn }) => (
@@ -12,11 +12,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       <div>
         {/* The navbar will show these links after you log in */}
         <Menu>
+
           <Menu.Item>
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
+            <Menu.Item as={NavLink} to="/products" name="Shop Torches" link />
           <Menu.Item>
-            {/* <Input icon="search" placeholder="Search..." /> */}
             <SearchBar resultRenderer={resultRenderer} />
           </Menu.Item>
           <Menu.Menu position="right">
@@ -33,8 +34,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Menu.Item>
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
+          <Menu.Item as={NavLink} to="/products" name="Shop Torches" link />
           <Menu.Item>
-            {/* <Input icon="search" placeholder="Search..." /> */}
             <SearchBar />
           </Menu.Item>
           <Menu.Menu position="right">

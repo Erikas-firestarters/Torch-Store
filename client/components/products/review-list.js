@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Divider, Button, Segment } from 'semantic-ui-react';
 import ReviewDetail from './review-detail';
 import ReviewForm from './review-form';
-import { fetchReviews } from '../store';
+import { fetchReviews } from '../../store';
 
 class ReviewList extends Component {
   constructor(props) {
