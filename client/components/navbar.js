@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store';
-import { Input, Menu } from 'semantic-ui-react';
-
+import { Input, Menu, Label } from 'semantic-ui-react';
+import SearchBar from './search';
+const resultRenderer = ({ name }) => <Label content={name} />
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
     {isLoggedIn ? (
@@ -15,7 +16,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
           <Menu.Item>
-            <Input icon="search" placeholder="Search..." />
+            {/* <Input icon="search" placeholder="Search..." /> */}
+            <SearchBar resultRenderer={resultRenderer} />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item as={NavLink} to="/home" name="home" link />
@@ -32,7 +34,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
           <Menu.Item>
-            <Input icon="search" placeholder="Search..." />
+            {/* <Input icon="search" placeholder="Search..." /> */}
+            <SearchBar />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item as={NavLink} to="/login" name="login" link />
@@ -72,3 +75,4 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
 };
+
