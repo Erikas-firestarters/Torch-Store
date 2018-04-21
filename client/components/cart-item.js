@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react';
+import { Button, Input, Item, Icon, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
 
@@ -8,20 +8,43 @@ class CartItem extends Component {
     super();
   }
   render() {
-    const { item, handleRemove, handleCartChange } = this.props;
+    const { item, handleRemove, handleUpdate } = this.props;
     return (
-      <div className="ui segment">
-        <img
-          className="ui mini left floated image"
-          src={item.photo}
-        />
-        <Input onChange={handleCartChange(item.id)} placeholder="0" value={item.quantity} />
-        <p>{item.name}</p>
-        <p>{item.price}</p>
-        <Button color="red" onClick={() => handleRemove(item.id)}>
-          X
-        </Button>
-      </div>
+      <Item>
+        <Item.Image src={item.photos[0].imageUrl} />
+        <Item.Content>
+          <Item.Header as="a">{item.name}</Item.Header>
+          <Item.Meta>
+            <Label tag color="teal">{`$${item.price}`}</Label>
+          </Item.Meta>
+          <Item.Description>{item.description}</Item.Description>
+          <Item.Extra>
+              <Icon>
+            {`Qty: ${item.quantity}`}
+            </Icon>
+            <Button.Group floated="right">
+              <Button
+                icon="plus"
+                floated="right"
+                color="green"
+                onClick={() => handleUpdate(true, item)}
+              />
+              <Button
+                icon="minus"
+                floated="right"
+                color="yellow"
+                onClick={() => handleUpdate(false, item)}
+              />
+              <Button
+                icon="remove"
+                floated="right"
+                color="red"
+                onClick={() => handleRemove(item.id)}
+              />
+            </Button.Group>
+          </Item.Extra>
+        </Item.Content>
+      </Item>
     );
   }
 }
@@ -33,9 +56,12 @@ const mapDispatch = dispatch => {
     handleRemove(id) {
       dispatch(removeCartItem(id));
     },
-    handleCartChange(e, id) {
-
-      dispatch(updateCartItem(cartItem));
+    handleUpdate(increment, cartItem) {
+      const change = increment ? 1 : -1;
+      cartItem.quantity += change;
+      cartItem.quantity
+        ? dispatch(updateCartItem(cartItem))
+        : dispatch(removeCartItem(cartItem.id));
     },
   };
 };
