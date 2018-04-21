@@ -3,7 +3,8 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react';
 import ProductDetail from './product-detail';
 
 const ProductItem = props => {
-  const { product, addCartItem } = props;
+  const { product, addItem } = props;
+  console.log('ProductItem: addItem()', addItem)
   return (
     <div className="product-list-item">
       <Card raised>
@@ -13,8 +14,8 @@ const ProductItem = props => {
           <Card.Meta>
             <span className="price">${product.price}</span>
             <Card.Meta>
-              <ProductDetail addCartItem={addCartItem} product={product} />
-              <Button onClick={() => addCartItem(product, 1)} icon color="teal" type="submit">
+              <ProductDetail addCartItem={addItem} product={product} />
+              <Button onClick={() => addItem(product, 1)} icon color="teal" type="submit">
                 <Icon name="shopping cart" />
               </Button>
             </Card.Meta>
