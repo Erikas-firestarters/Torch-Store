@@ -1,11 +1,16 @@
 import React from 'react';
 import { Button, Item, Grid, Icon, Label, Sticky } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { removeCartItem, updateCartItem } from '../store';
 import { CartItem } from '../components';
+import { NavLink } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 function Cart(props) {
   const { cart } = props;
+  const subTotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   return (
     <Grid>
       <Grid.Column width={12}>
@@ -16,15 +21,18 @@ function Cart(props) {
       <Grid.Column width={4}>
         <Sticky>
           <Button as="div" labelPosition="right">
-            <Button icon>
+            <Button as={NavLink} to="/checkout" icon>
               <Icon name="cart" />
               Checkout
             </Button>
-            <Label as="a" basic pointing="left">
-              {cart.reduce(
-                (total, item) => total + item.price * item.quantity,
-                0
-              )}
+            <Label color="teal" basic pointing="left">
+              <NumberFormat
+                value={subTotal}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+              />
+              {}
             </Label>
           </Button>
         </Sticky>
