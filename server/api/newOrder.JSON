@@ -1,0 +1,43 @@
+"const" address = {
+  "shipping": {
+    "fullName": "",
+    "AddressLine1": "",
+    "AddressLine2": "",
+    "City": "",
+    "State": "",
+    "ZipCode": "",
+  },
+  "billing": {
+    "fullName": "",
+    "AddressLine1": "",
+    "AddressLine2": "",
+    "City": "",
+    State: "",
+    ZipCode: "",
+  },
+  cart: [
+    {
+      id: 11,
+      name: 'Awesome Fresh Mouse',
+      description: 'Commodi est ullam. Molestiae et nisi provident soluta distinctio quis excepturi. Tenetur repellat voluptatum eius. Adipisci eos cumque quos qui hic voluptatibus enim vitae. Quasi dolorum iusto aut sunt quisquam.',
+      price: '398.00',
+      inventory: 99359,
+      imageUrl: 'https://react.semantic-ui.com/assets/images/wireframe/image.png',
+      createdAt: '2018-04-21T16:47:59.496Z',
+      updatedAt: '2018-04-21T16:47:59.496Z',
+      categoryId: 7,
+      quantity: 1
+    },
+    user: {
+      fullName: 'null null',
+      id: 56,
+      email: 'dan@dan.com',
+      googleId: null,
+      firstName: null,
+      lastName: null,
+      isAdmin: false,
+      createdAt: '2018-04-21T18:11:38.447Z',
+      updatedAt: '2018-04-21T18:11:38.447Z'
+    },
+  ],
+}
