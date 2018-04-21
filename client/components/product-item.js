@@ -7,7 +7,7 @@ const ProductItem = props => {
   return (
     <div className="product-list-item">
       <Card raised>
-        <Image src={product.photos[0].imageUrl} />
+        <Image src={product.imageUrl} />
         <Card.Content>
           <Card.Header>{product.name}</Card.Header>
           <Card.Meta>

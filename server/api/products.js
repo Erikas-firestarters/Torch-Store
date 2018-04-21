@@ -3,7 +3,7 @@ const { Product, Review, Category, Photo } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  Product.findAll({include: [Photo] })
+  Product.findAll()
     .then(products => res.json(products))
     .catch(next)
 })

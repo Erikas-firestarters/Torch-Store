@@ -6,7 +6,7 @@ const Address = require('./address');
 const Order = require('./order');
 const OrderItem = require('./orderItem');
 const Category = require('./category');
-const Photo = require('./photo');
+// const Photo = require('./photo');
 const Review = require('./review');
 
 /**
@@ -17,7 +17,7 @@ const Review = require('./review');
  */
 CartItem.belongsTo(User);
 
-Photo.belongsTo(Product);
+// Photo.belongsTo(Product);
 
 User.hasOne(Cart);
 User.hasMany(CartItem, {
@@ -25,7 +25,7 @@ User.hasMany(CartItem, {
   hooks: true,
 });
 
-Product.hasMany(Photo);
+// Product.hasMany(Photo);
 
 
 User.hasMany(Order);
@@ -62,6 +62,6 @@ module.exports = {
   Order,
   OrderItem,
   Category,
-  Photo,
+  // Photo,
   Review,
 };

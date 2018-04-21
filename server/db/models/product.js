@@ -17,8 +17,15 @@ const Product = db.define('product', {
   inventory: {
     type: Sequelize.INTEGER,
     allowNull: false,
-  }
-
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'https://react.semantic-ui.com/assets/images/wireframe/image.png',
+    validate: {
+      isUrl: true
+    }
+  },
 })
 
 module.exports = Product
