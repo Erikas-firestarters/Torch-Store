@@ -39,4 +39,4 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default connect(mapState, mapDispatch)(Cart);
+export default connect(mapState, mapDispatch)(Checkout);
