@@ -4,28 +4,27 @@ import ReviewList from './review-list';
 import ProductForm, {ProductImg, ProductDescription }  from './product-view-parts';
 import { Button, Modal, Icon} from 'semantic-ui-react';
 
-class ProductDetail extends Component {
-  render() {
+const ProductDetail = (props) => {
+    const {cartHandler, product} = props
     return (
       <Modal trigger={<Button icon color="pink"><Icon name="magnify" /></Button>}>
-        <Modal.Header>{this.props.product.name}</Modal.Header>
+        <Modal.Header>{product.name}</Modal.Header>
         <Modal.Content image>
-          <ProductImg imageUrl={this.props.product.imageUrl} />
+          <ProductImg imageUrl={product.imageUrl} />
           <Modal.Description>
              <ProductDescription
-              price={this.props.product.price}
-              description={this.props.product.description}
+              price={product.price}
+              description={product.description}
             />
-            <ProductForm product={this.props.product} addCartItem={this.props.addCartItem} />
+            <ProductForm product={product} cartHandler={cartHandler} />
           </Modal.Description>
         </Modal.Content>
         <Modal.Content>
-        <ReviewList productId={this.props.product.id} />
+        <ReviewList productId={product.id} />
         </Modal.Content>
       </Modal>
     );
   }
-}
 
 export default ProductDetail
 

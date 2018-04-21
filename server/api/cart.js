@@ -7,8 +7,8 @@ router.get('/', (req, res, next) => {
     where: { userId: req.session.passport.user },
     include: [Product],
   })
-    .then(res =>
-      res.map(cartItem => {
+    .then(cartItems =>
+      cartItems.map(cartItem => {
         const sendItem = cartItem.product;
         sendItem.dataValues.quantity = cartItem.quantity;
         sendItem.dataValues.cartItemId = cartItem.id;
@@ -32,7 +32,7 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 router.put('/', (req, res, next) => {
-  console.log('put cart id' , req.body.id)
+  console.log('put cart id', req.body.id)
   req.body.userId = req.session.passport.user;
   CartItem.findById(req.body.id)
     .then(result => result.update(req.body))

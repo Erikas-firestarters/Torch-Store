@@ -31,10 +31,10 @@ export const getCart = () => dispatch =>
     .then(res => dispatch(init(res.data || defaultCart)))
     .catch(err => console.log(err));
 
-export const removeCartItem = (cartItem, loggedIn) => dispatch => {
-  dispatch(remove(cartItem));
-  if (!loggedIn) dispatch(remove(cartItem));
-  else {
+export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
+  if (!isLoggedIn) {
+    dispatch(remove(cartItem));
+  } else {
     let backendItem = {};
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
@@ -44,22 +44,26 @@ export const removeCartItem = (cartItem, loggedIn) => dispatch => {
       .catch(err => console.log(err));
   }
 };
-export const addCartItem = (cartItem, loggedIn) => dispatch => {
-  if (!loggedIn) dispatch(add(cartItem));
-  else {
+export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
+  console.log('add cart item: Logged in', isLoggedIn)
+  if (!isLoggedIn) {
+    dispatch(add(cartItem));
+  } else {
     let backendItem = {};
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
     axios
-      .post('/api/cart', backendItem)
-      .then(() => dispatch(add(cartItem || defaultCart)))
-      .catch(err => console.log(err));
+    .post('/api/cart', backendItem)
+    .then(() => dispatch(add(cartItem || defaultCart)))
+    .catch(err => console.log(err));
   }
 };
 
-export const updateCartItem = (cartItem, loggedIn) => dispatch => {
-  if (!loggedIn) {dispatch(update(cartItem))}
-  else {
+export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
+  console.log('update cart item: Logged in', isLoggedIn)
+  if (!isLoggedIn) {
+    dispatch(update(cartItem));
+  } else {
     let backendItem = {};
     backendItem.quantity = cartItem[0].quantity;
     backendItem.productId = cartItem[0].id;

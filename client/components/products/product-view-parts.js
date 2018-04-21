@@ -25,6 +25,7 @@ class ProductForm extends Component {
     this.setState({ quantity: e.target.value });
   }
   render() {
+    const {cartHandler} = this.props
     return (
       <div>
         <Form size="big">
@@ -35,7 +36,7 @@ class ProductForm extends Component {
               control="input"
               placeholder="Quantity"
             />
-            <Button onClick={() => this.props.addCartItem(this.props.product, Number(this.state.quantity))} icon color="teal" type="submit">
+            <Button onClick={() => cartHandler(this.props.product, Number(this.state.quantity))} icon color="teal" type="submit">
               <Icon name="shopping cart" />
             </Button>
           </Form.Group>

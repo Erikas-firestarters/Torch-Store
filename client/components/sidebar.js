@@ -11,6 +11,7 @@ class Sidebar extends Component {
       visible: true,
       activeItem: 'All Products',
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,21 +28,21 @@ class Sidebar extends Component {
     return (
       <Menu vertical pointing fluid>
         <Sticky>
-        <Menu.Item
-          key="00"
-          name="All Products"
-          active={activeItem === 'All Products'}
-          onClick={() => this.handleClick('')}
-          link
-        />
-        {this.props.categories.map(category => (
           <Menu.Item
-            key={category.id}
-            name={category.name}
-            active={activeItem === category.name}
-            onClick={() => this.handleClick(category)}
+            key="00"
+            name="All Products"
+            active={activeItem === 'All Products'}
+            onClick={() => this.handleClick('')}
+            link
           />
-        ))}
+          {this.props.categories.map(category => (
+            <Menu.Item
+              key={category.id}
+              name={category.name}
+              active={activeItem === category.name}
+              onClick={() => this.handleClick(category)}
+            />
+          ))}
         </Sticky>
       </Menu>
     );
