@@ -6,7 +6,7 @@ const Photo = db.define('photo', {
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'https://loremflickr.com/320/240/dog',
+    defaultValue: 'https://react.semantic-ui.com/assets/images/wireframe/image.png',
     validate: {
       isUrl: true
     }
