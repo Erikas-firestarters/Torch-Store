@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import ProductItem from './product-item.js';
-import { fetchProducts, addCartItem, updateCartItem } from '../store';
+import Sidebar from '../sidebar';
+import { fetchProducts, addCartItem, updateCartItem } from '../../store';
 
 class ProductList extends Component {
   componentDidMount() {
@@ -33,28 +34,42 @@ class ProductList extends Component {
     };
     return (
       <Grid>
-        <Grid.Row columns={3} centered>
-          {activeCategory.id
-            ? products
-                .filter(
-                  unFilteredProduct =>
-                    unFilteredProduct.categoryId === activeCategory.id
-                )
-                .map(product => {
-                  return (
+        <Grid.Row columns={2}>
+          <Grid.Column width={2} stretched>
+            <div className="sidebar">
+              <Sidebar />
+            </div>
+          </Grid.Column>
+          <Grid.Column width={14}>
+            <Grid>
+            <Grid.Row columns={3} centered>
+              {activeCategory.id
+                ? products
+                    .filter(
+                      unFilteredProduct =>
+                        unFilteredProduct.categoryId === activeCategory.id
+                    )
+                    .map(product => {
+                      return (
+                        <Grid.Column key={product.id}>
+                          <ProductItem
+                            addCartItem={addProductToCart}
+                            product={product}
+                          />
+                        </Grid.Column>
+                      );
+                    })
+                : products.map(product => (
                     <Grid.Column key={product.id}>
                       <ProductItem
-                        addCartItem={addProductToCart}
+                        addCartItem={cartHandler}
                         product={product}
                       />
                     </Grid.Column>
-                  );
-                })
-            : products.map(product => (
-                <Grid.Column key={product.id}>
-                  <ProductItem addCartItem={cartHandler} product={product} />
-                </Grid.Column>
-              ))}
+                  ))}
+            </Grid.Row>
+            </Grid>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     );
