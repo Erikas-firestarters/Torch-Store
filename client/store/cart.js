@@ -8,6 +8,7 @@ const GET_CART = 'GET_CART';
 const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 const ADD_CART_ITEM = 'ADD_CART_ITEM';
 const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
+const CHECKOUT_CART = 'CHECKOUT_CART';
 
 /**
  * INITIAL STATE
@@ -52,9 +53,9 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
     axios
-    .post('/api/cart', backendItem)
-    .then(() => dispatch(add(cartItem || defaultCart)))
-    .catch(err => console.log(err));
+      .post('/api/cart', backendItem)
+      .then(() => dispatch(add(cartItem || defaultCart)))
+      .catch(err => console.log(err));
   }
 };
 
@@ -71,6 +72,12 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
       .then(() => dispatch(update(cartItem || defaultCart)))
       .catch(err => console.log(err));
   }
+};
+export const finalizeOrder = order => dispatch => {
+  axios
+    .post('/order', order)
+    .then(() => dispatch(init([])))
+    .catch(err => console.log(err));
 };
 
 /**
