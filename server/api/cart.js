@@ -31,6 +31,8 @@ router.post('/', (req, res, next) => {
     .then(newCartItem => res.json(newCartItem))
     .catch(next);
 });
+
+
 router.put('/', (req, res, next) => {
   console.log('put cart id', req.body.id)
   req.body.userId = req.session.passport.user;

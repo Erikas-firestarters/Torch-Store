@@ -9,6 +9,7 @@ import {
   Modal,
   Header,
 } from 'semantic-ui-react';
+import Email from './email';
 
 /**
  * COMPONENT
@@ -23,13 +24,11 @@ export class UserHome extends React.Component {
     this.props.fetchInitialData(this.props.id);
   }
 
-  show = dimmer => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
-
   render() {
     return (
       <div className="centered">
         <h3>Welcome, {this.props.email}</h3>
+        <Email order={this.props.order} />
         <div className="ui raised very padded text container segment">
           <h3 className="ui fluid top attached header">User Detail</h3>
           <Segment attached>
