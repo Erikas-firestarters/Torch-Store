@@ -41,7 +41,12 @@ export class Checkout extends Component {
     this.handleShippingDropdownChange = this.handleShippingDropdownChange.bind(
       this
     );
+    this.handleOrderSubmit = this.handleOrderSubmit.bind(this);
   }
+
+  handleOrderSubmit = (e) => {
+    console.log('submitting order', e)
+  };
 
   handleShippingChange(e, key) {
     this.setState({
@@ -98,7 +103,9 @@ export class Checkout extends Component {
                 </Header>
                 {cart.length ? (
                   <Item.Group divided>
-                    {cart.map(item => <CartItem isOrder={true} key={item.id} item={item} />)}
+                    {cart.map(item => (
+                      <CartItem isOrder={true} key={item.id} item={item} />
+                    ))}
                   </Item.Group>
                 ) : (
                   <Header as="h4" textAlign="center">
@@ -114,7 +121,7 @@ export class Checkout extends Component {
                 offset={50}
                 pushing
               >
-                <CheckoutWidget />
+                <CheckoutWidget handleOrderSubmit={this.handleOrderSubmit} />
               </Sticky>
             </Grid.Column>
           </Grid>

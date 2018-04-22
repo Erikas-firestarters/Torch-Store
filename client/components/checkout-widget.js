@@ -17,7 +17,7 @@ import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 export const CheckoutOrderDetail = props => {
-  const { cart, isOrder } = props;
+  const { cart, isOrder, handleOrderSubmit } = props;
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -70,7 +70,7 @@ export const CheckoutOrderDetail = props => {
               </List.Header>
             </List.Content>
           </List.Item>
-          <Button fluid attached="bottom">
+          <Button fluid attached="bottom" onSubmit={handleOrderSubmit}>
             Process order
           </Button>
       </List>

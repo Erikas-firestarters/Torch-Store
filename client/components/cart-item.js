@@ -40,7 +40,7 @@ class CartItem extends Component {
     ];
     return (
       <Item>
-        <Item.Image src={item.imageUrl} size="mini" />
+        <Item.Image size="small" src={item.imageUrl} />
         <Item.Content>
           <Item.Header as="a">{item.name}</Item.Header>
           <Item.Meta>
