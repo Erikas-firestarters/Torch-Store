@@ -11,14 +11,12 @@ const ProductItem = props => {
     let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
     if (cartItem.length) {
       cartItem[0].quantity += quantity;
-      console.log('carthandler', isLoggedIn);
       updateCartProduct(cartItem, isLoggedIn);
     } else {
       updatedProduct.quantity = Number(quantity);
       addProductToCart(updatedProduct, isLoggedIn);
     }
   };
-  // console.log('ProductItem: addItem()', addItem)
   return (
     <div className="product-list-item">
       <Card raised>

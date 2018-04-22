@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Cart, ProductList, Checkout} from './components'
-import {me} from './store'
+import {Login, Signup, UserHome, Cart, ProductList, Checkout, ProductPage} from './components'
+import {me, fetchProducts, getCategories} from './store'
 
 /**
  * COMPONENT
@@ -22,8 +22,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
-        <Route path="/products" component={ProductList} />
+        <Route path="/products/categories/:type" component={ProductList} />
+        <Route path="/products/:id" component={ProductPage} />
+        <Route exact path="/products" component={ProductList} />
         <Route path="/checkout" component={Checkout} />
+
 
         {
           isLoggedIn &&
@@ -54,6 +57,8 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchProducts());
+      dispatch(getCategories());
     }
   }
 }

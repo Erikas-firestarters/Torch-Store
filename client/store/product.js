@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 const GET_PRODUCT = 'GET_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
@@ -15,7 +14,7 @@ const addProduct = (product) => ({type: ADD_PRODUCT, product});
 
 export const fetchProduct = (id) =>
   (dispatch) =>
-    axios.get(`/products/${id}`)
+    axios.get(`/api/products/${id}`)
     .then( res => dispatch(getProduct(res.data)))
     .catch( err => console.error(err));
 
