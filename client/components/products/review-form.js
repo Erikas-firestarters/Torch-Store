@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Rating, Input, TextArea, Segment } from 'semantic-ui-react';
+import {postReview} from '../../store';
+import history from '../../history';
 
 class ReviewForm extends Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class ReviewForm extends Component {
       title: '',
       content: '',
       rating: '',
+      dirty: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,13 +20,27 @@ class ReviewForm extends Component {
     this.setState({ rating });
   }
   handleChange(e, type) {
-    this.setState({ [type]: e.target.value });
+    this.setState({ [type]: e.target.value, dirty: true });
+  }
+  resetComponent = () => this.setState({ title: '', content: '', rating: '', dirty: false })
+  handleSubmit(e) {
+    e.preventDefault();
+    const newReview = {
+      title: this.state.title,
+      content: this.state.content,
+      rating: this.state.rating,
+      productId: this.props.id,
+      userId: this.props.user.id
+    }
+    this.props.submitReview(newReview)
+    this.resetComponent();
+    this.props.resetReviews();
   }
 
   render() {
     return (
       <Segment padded textAlign="center">
-      <Form>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <Form.Group widths="equal">
         <Form.Field
           required
@@ -51,6 +68,7 @@ class ReviewForm extends Component {
           id="form-button-control-public"
           control={Button}
           content="Submit"
+          disabled={!this.state.dirty}
         />
       </Form>
       </Segment>
@@ -58,13 +76,13 @@ class ReviewForm extends Component {
   }
 }
 
-// const mapState = ({ products, reviews, user }) => ({ products, reviews, isLoggedIn: !!user.id });
-// const mapDispatch = dispatch => ({
-//   fetchInitialData() {
-//     dispatch();
-//   },
-// });
+const mapState = ({ user }) => ({ user, isLoggedIn: !!user.id });
+const mapDispatch = dispatch => ({
+  submitReview(review) {
+    dispatch(postReview(review));
+  },
+});
 
-// export default connect(mapState, mapDispatch)(ReviewForm);
+export default connect(mapState, mapDispatch)(ReviewForm);
 
-export default ReviewForm;
+// export default ReviewForm;
