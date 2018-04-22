@@ -9,6 +9,7 @@ import {
   Modal,
   Header,
 } from 'semantic-ui-react';
+import Email from './email';
 
 /**
  * COMPONENT
@@ -22,9 +23,6 @@ export class UserHome extends React.Component {
   componentDidMount() {
     this.props.fetchInitialData(this.props.id);
   }
-
-  show = dimmer => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
 
   render() {
     return (

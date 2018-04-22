@@ -5,18 +5,11 @@ import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import ProductItem from './product-item.js';
 import Sidebar from '../sidebar';
-import { fetchProducts } from '../../store';
 
 class ProductList extends Component {
-  componentDidMount() {
-    this.props.fetchInitialData();
-  }
-
   render() {
-    const {
-      products,
-      activeCategory,
-    } = this.props;
+    const { products, activeCategory } = this.props;
+    const subRoute = this.props.match.params.type || '';
     return (
       <Grid>
         <Grid.Row columns={2}>
@@ -28,28 +21,26 @@ class ProductList extends Component {
           <Grid.Column width={14}>
             <Grid>
             <Grid.Row columns={3} centered>
-              {activeCategory.id
-                ? products
-                    .filter(
-                      unFilteredProduct =>
-                        unFilteredProduct.categoryId === activeCategory.id
-                    )
-                    .map(product => {
-                      return (
-                        <Grid.Column key={product.id}>
-                          <ProductItem
-                            product={product}
-                          />
-                        </Grid.Column>
-                      );
-                    })
-                : products.map(product => (
+              {subRoute ?
+                products.filter(unFilteredProduct =>
+                  unFilteredProduct.categoryId === activeCategory.id
+                )
+                .map(product => (
+                    <Grid.Column key={product.id}>
+                      <ProductItem
+                        product={product}
+                      />
+                    </Grid.Column>
+                ))
+                :
+                products.map(product => (
                     <Grid.Column key={product.id}>
                       <ProductItem
                         product={product}
                       />
                     </Grid.Column>
                   ))}
+
             </Grid.Row>
             </Grid>
           </Grid.Column>
@@ -67,10 +58,6 @@ const mapState = ({ products, activeCategory, cart, user }) => ({
   isLoggedIn: !!user.id,
 });
 
-const mapDispatch = dispatch => ({
-  fetchInitialData() {
-    dispatch(fetchProducts());
-  },
-});
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(ProductList);
