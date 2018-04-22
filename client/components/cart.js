@@ -21,10 +21,12 @@ function Cart(props) {
       <Grid.Column width={4}>
         <Sticky>
           <Button as="div" labelPosition="right">
-            <Button as={NavLink} to="/checkout" icon>
-              <Icon name="cart" />
-              Checkout
-            </Button>
+            <NavLink to="/checkout">
+              <Button as="div" icon>
+                <Icon name="cart" />
+                Checkout
+              </Button>
+            </NavLink>
             <Label color="teal" basic pointing="left">
               <NumberFormat
                 value={subTotal}

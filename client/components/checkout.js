@@ -108,10 +108,12 @@ export class Checkout extends Component {
         <Grid.Column width={4}>
           <Sticky>
             <Button as="div" labelPosition="right">
-              <Button as={NavLink} to="/checkout" icon>
-                <Icon name="cart" />
-                Checkout
-              </Button>
+              <NavLink as="div" to="/cart">
+                <Button as="div" icon>
+                  <Icon name="cart" />
+                  Cart
+                </Button>
+              </NavLink>
               <Label color="teal" basic pointing="left">
                 <NumberFormat
                   value={subTotal}
