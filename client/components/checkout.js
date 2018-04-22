@@ -10,7 +10,7 @@ import {
   Form,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { CartItem, CheckoutForm } from '../components';
+import { CartItem, AddressForm } from '../components';
 import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
@@ -18,24 +18,54 @@ export class Checkout extends Component {
   constructor() {
     super();
     this.state = {
-      shippingFirstName: '',
-      shippingLastName: '',
-      shippingAddressLine1: '',
-      shippingAddressLine2: '',
-      shippingCity: '',
-      shippingState: '',
-      shippingZipCode: '',
-      billingFirstName: '',
-      billingLastName: '',
-      billinAddressLine1: '',
-      billingAddressLine2: '',
-      villingCity: '',
-      billingState: '',
-      billingZipCode: '',
+      shipping: {
+        firstName: '',
+        lastName: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
+      billing: {
+        firstName: '',
+        lastName: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
     };
+    this.handleShippingChange = this.handleShippingChange.bind(this);
+    this.handleBillingChange = this.handleBillingChange.bind(this);
+    this.handleBillingDropdownChange = this.handleBillingDropdownChange.bind(
+      this
+    );
+    this.handleShippingDropdownChange = this.handleShippingDropdownChange.bind(
+      this
+    );
+  }
+
+  handleShippingChange(e, key) {
+    this.setState({
+      shipping: { ...this.state.shipping, [key]: e.target.value },
+    });
+  }
+  handleBillingChange(e, key) {
+    this.setState({
+      billing: { ...this.state.billing, [key]: e.target.value },
+    });
+  }
+  handleShippingDropdownChange(e, { value }) {
+    this.setState({ shipping: { ...this.state.shipping, state: value } });
+  }
+  handleBillingDropdownChange(e, { value }) {
+    this.setState({ billing: { ...this.state.billing, state: value } });
   }
 
   render() {
+    console.log('render func', this.state);
     const { cart } = this.props;
     const subTotal = cart.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -51,9 +81,14 @@ export class Checkout extends Component {
           </Grid.Row>
           <Grid.Row>
             <Header as="h4" textAlign="center">
-              Shipping/Billing address:
+              Shipping:
             </Header>
-            <CheckoutForm />
+            <AddressForm
+              handleShippingChange={this.handleShippingChange}
+              handleBillingChange={this.handleBillingChange}
+              handleShippingDropdownChange={this.handleShippingDropdownChange}
+              handleBillingDropdownChange={this.handleBillingDropdownChange}
+            />
           </Grid.Row>
           <Grid.Row>
             <Header as="h4" textAlign="center">
@@ -61,6 +96,7 @@ export class Checkout extends Component {
             </Header>
           </Grid.Row>
           <Grid.Row>
+            ˝
             <Header as="h4" textAlign="center">
               Review and confirm order:
             </Header>
@@ -91,7 +127,7 @@ export class Checkout extends Component {
     );
   }
 }
-const mapState = ({ cart }) => ({ cart });
+const mapState = ({ cart, user }) => ({ cart, user });
 
 const mapDispatch = dispatch => {
   return {

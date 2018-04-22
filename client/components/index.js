@@ -12,4 +12,4 @@ export {default as ProductDetail} from './products/product-detail';
 export {default as Cart} from './cart';
 export {default as CartItem} from './cart-item';
 export {default as Checkout} from './checkout';
-export {default as CheckoutForm} from './checkout-form';
+export {default as AddressForm} from './address-form';
