@@ -3,18 +3,12 @@ import {
   Button,
   Item,
   Grid,
-  Icon,
-  Label,
   Sticky,
   Header,
-  Card,
-  Feed,
-  List,
+  Container,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { CartItem, AddressForm } from '../components';
-import { NavLink } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import { CartItem, AddressForm, CheckoutWidget } from '../components';
 
 export class Checkout extends Component {
   constructor() {
@@ -65,133 +59,67 @@ export class Checkout extends Component {
   handleBillingDropdownChange(e, { value }) {
     this.setState({ billing: { ...this.state.billing, state: value } });
   }
+  handleContextRef = contextRef => this.setState({ contextRef });
 
   render() {
-    console.log('render func', this.state);
+    const { contextRef } = this.state;
     const { cart } = this.props;
-    const subTotal = cart.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
     return (
-      <Grid>
-        <Grid.Column width={12}>
-          <Grid.Row>
-            <Header as="h2" textAlign="center">
-              Checkout
-            </Header>
-          </Grid.Row>
-          <Grid.Row>
-            <Header as="h4" textAlign="center">
-              Shipping:
-            </Header>
-            <AddressForm
-              handleShippingChange={this.handleShippingChange}
-              handleBillingChange={this.handleBillingChange}
-              handleShippingDropdownChange={this.handleShippingDropdownChange}
-              handleBillingDropdownChange={this.handleBillingDropdownChange}
-            />
-          </Grid.Row>
-          <Grid.Row>
-            <Header as="h4" textAlign="center">
-              Payment information:
-            </Header>
-          </Grid.Row>
-          <Grid.Row>
-            ˝
-            <Header as="h4" textAlign="center">
-              Review and confirm order:
-            </Header>
-            <Item.Group divided>
-              {cart.map(item => <CartItem key={item.id} item={item} />)}
-            </Item.Group>
-          </Grid.Row>
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <Sticky>
-            <Card>
-              <Card.Content>
-                <Card.Header>Order Details:</Card.Header>
-              </Card.Content>
-              <Card.Content>
-                <List divided relaxed>
-                  <List.Item>
-                    <List.Icon
-                      name="github"
-                      size="large"
-                      verticalAlign="middle"
-                    />
-                    <List.Content>
-                      <List.Header>
-                        subTotal:
-                        <NumberFormat
-                          value={subTotal}
-                          displayType={'text'}
-                          thousandSeparator={true}
-                          prefix={'$'}
-                        />
-                      </List.Header>
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
-                    <List.Icon
-                      name="github"
-                      size="large"
-                      verticalAlign="middle"
-                    />
-                    <List.Content>
-                      <List.Header>
-                        Tax:
-                        <NumberFormat
-                          value={subTotal * 0.1}
-                          displayType={'text'}
-                          thousandSeparator={true}
-                          prefix={'$'}
-                        />
-                      </List.Header>
-                    </List.Content>
-                  </List.Item>
-                  <List.Item>
-                    <List.Icon
-                      name="github"
-                      size="large"
-                      verticalAlign="middle"
-                    />
-                    <List.Content>
-                      <List.Header>
-                        Total:
-                        <NumberFormat
-                          value={subTotal * 1.1}
-                          displayType={'text'}
-                          thousandSeparator={true}
-                          prefix={'$'}
-                        />
-                      </List.Header>
-                    </List.Content>
-                  </List.Item>
-                </List>
-              </Card.Content>
-            </Card>
-
-            <Button as="div" labelPosition="right">
-              <NavLink as="div" to="/cart">
-                <Button as="div" icon>
-                  <Icon name="cart" />
-                  Cart
-                </Button>
-              </NavLink>
-              <Label color="teal" basic pointing="left">
-                <NumberFormat
-                  value={subTotal}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  prefix={'$'}
+      <Container>
+        <div ref={this.handleContextRef}>
+          <Grid>
+            <Grid.Column width={12}>
+              <Grid.Row>
+                <Header as="h2" textAlign="center">
+                  Checkout
+                </Header>
+              </Grid.Row>
+              <Grid.Row>
+                <Header as="h4" textAlign="center">
+                  Shipping:
+                </Header>
+                <AddressForm
+                  handleShippingChange={this.handleShippingChange}
+                  handleBillingChange={this.handleBillingChange}
+                  handleShippingDropdownChange={
+                    this.handleShippingDropdownChange
+                  }
+                  handleBillingDropdownChange={this.handleBillingDropdownChange}
                 />
-              </Label>
-            </Button>
-          </Sticky>
-        </Grid.Column>
-      </Grid>
+              </Grid.Row>
+              <Grid.Row>
+                <Header as="h4" textAlign="center">
+                  Payment information:
+                </Header>
+              </Grid.Row>
+              <Grid.Row>
+                <Header as="h4" textAlign="center">
+                  Review and confirm order:
+                </Header>
+                {cart.length ? (
+                  <Item.Group divided>
+                    {cart.map(item => <CartItem isOrder={true} key={item.id} item={item} />)}
+                  </Item.Group>
+                ) : (
+                  <Header as="h4" textAlign="center">
+                    No items in cart
+                  </Header>
+                )}
+              </Grid.Row>
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <Sticky
+                bottomOffset={50}
+                context={contextRef}
+                offset={50}
+                pushing
+              >
+                <CheckoutWidget />
+              </Sticky>
+            </Grid.Column>
+          </Grid>
+        </div>
+      </Container>
     );
   }
 }
