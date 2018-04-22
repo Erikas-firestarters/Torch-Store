@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Icon, Image, Button } from 'semantic-ui-react';
 import ProductDetail from './product-detail';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 import { addCartItem, updateCartItem } from '../../store';
 
 const ProductItem = props => {
@@ -22,7 +23,7 @@ const ProductItem = props => {
       <Card raised>
         <Image src={product.imageUrl} />
         <Card.Content>
-          <Card.Header>{product.name}</Card.Header>
+          <Card.Header><Link to={`/products/${product.id}`}>{product.name}</Link></Card.Header>
           <Card.Meta>
             <span className="price">${product.price}</span>
             <Card.Meta>
