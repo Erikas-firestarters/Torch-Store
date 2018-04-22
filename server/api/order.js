@@ -51,7 +51,7 @@ router.post('/', async (req, res, next) => {
   })
 
   const orderObjectArray = await req.body.address.cart.map(items => {
-    const orderItem = OrderItem.Create({
+    OrderItem.Create({
       productId: items.id,
       quantity: items.quantity,
       price: items.price,
@@ -59,4 +59,4 @@ router.post('/', async (req, res, next) => {
   }).then((thisOrder) => {
     thisOrder.setOrder(order)
   })
-}).catch(HttpError)
+}).catch(HttpError);
