@@ -6,7 +6,7 @@ import { logout } from '../store';
 import { Input, Menu, Label, Sticky } from 'semantic-ui-react';
 import SearchBar from './search';
 const resultRenderer = ({ name }) => <Label content={name} />
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     {isLoggedIn ? (
       <div>
@@ -21,6 +21,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <SearchBar resultRenderer={resultRenderer} />
           </Menu.Item>
           <Menu.Menu position="right">
+          {isAdmin &&
+            <Menu.Item as={NavLink} to="/admin" name="admin" link />
+          }
             <Menu.Item as={NavLink} to="/home" name="home" link />
             <Menu.Item name="logout" onClick={() => handleClick()} link />
             <Menu.Item as={NavLink} to="/cart" icon="cart" link />
@@ -56,6 +59,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
   };
 };
 
