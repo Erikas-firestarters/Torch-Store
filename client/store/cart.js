@@ -45,7 +45,6 @@ export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
   }
 };
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
-  console.log('add cart item: Logged in', isLoggedIn)
   if (!isLoggedIn) {
     dispatch(add(cartItem));
   } else {
@@ -60,7 +59,6 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
 };
 
 export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
-  console.log('update cart item: Logged in', isLoggedIn)
   if (!isLoggedIn) {
     dispatch(update(cartItem));
   } else {
