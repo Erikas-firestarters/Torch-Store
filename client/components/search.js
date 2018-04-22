@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import React, { Component } from 'react'
 import { Search, Grid, Header } from 'semantic-ui-react'
 import history from '../history'
-
+import {withRouter} from 'react-router';
+import {fetchProduct} from '../store';
 
 class SearchBar extends Component {
   constructor () {
@@ -21,10 +22,10 @@ class SearchBar extends Component {
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
   handleResultSelect = (event, { result }) => {
-
-  history.push(`products/${result.id}`);
-
-
+    // event.preventDefault();
+    this.props.fetchProduct(result.id)
+    history.push(`/products/${result.id}`);
+    this.resetComponent();
   }
 
   handleSearchChange = (e, { value }) => {
@@ -66,8 +67,12 @@ class SearchBar extends Component {
     )
   }
 }
-
+const mapDispatch = dispatch => ({
+  fetchProduct(id) {
+    dispatch(fetchProduct(id));
+  },
+});
 
 const mapState = ({ products }) => ({ products });
 
-export default connect(mapState)(SearchBar);
+export default withRouter(connect(mapState, mapDispatch)(SearchBar));

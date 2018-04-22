@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import ProductItem from './product-item.js';
 import Sidebar from '../sidebar';
-import { fetchProducts, addCartItem, updateCartItem } from '../../store';
+import { fetchProducts } from '../../store';
 
 class ProductList extends Component {
   componentDidMount() {

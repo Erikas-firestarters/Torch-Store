@@ -20,7 +20,9 @@ router.get('/categories', async (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id)
-    .then(product => res.json(product))
+    .then(product => {
+      console.log('product in api', product)
+      res.json(product)})
     .catch(next)
 })
 
