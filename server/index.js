@@ -52,11 +52,6 @@ passport.deserializeUser((id, done) =>
     .then(user => done(null, user))
     .catch(done))
 
-  app.use((req, res, next) => {
-    console.log('SESSION User', req.session.passport);
-    next();
-  });
-
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
