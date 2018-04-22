@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Cart, ProductList, Checkout, ProductPage} from './components'
-import {me, fetchProducts} from './store'
+import {me, fetchProducts, getCategories} from './store'
 
 /**
  * COMPONENT
@@ -22,6 +22,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
+        <Route path="/products/categories/:type" component={ProductList} />
         <Route path="/products/:id" component={ProductPage} />
         <Route exact path="/products" component={ProductList} />
         <Route path="/checkout" component={Checkout} />
@@ -57,6 +58,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       dispatch(fetchProducts());
+      dispatch(getCategories());
     }
   }
 }

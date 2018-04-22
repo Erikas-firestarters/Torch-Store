@@ -7,11 +7,12 @@ import ProductForm, {
   ProductDescription,
 } from './product-view-parts';
 import Sidebar from '../sidebar';
-import {fetchProduct} from '../../store';
+import {fetchProduct, removeActiveCategory} from '../../store';
 
 class ProductPage extends Component {
   componentDidMount () {
     const {product, match} = this.props;
+    if (this.props.activeCategory.id) this.props.removeCat()
     if (product.id !== match.params.id) {
       this.props.fetchInitialData(this.props.match.params.id);
     }
@@ -24,7 +25,7 @@ class ProductPage extends Component {
         <Grid.Row columns={2}>
           <Grid.Column width={2} stretched>
             <div className="sidebar">
-              <Sidebar />
+              <Sidebar active="" />
             </div>
           </Grid.Column>
           <Grid.Column width={13}>
@@ -55,11 +56,14 @@ class ProductPage extends Component {
     );
   }
 }
-const mapState = ({ product }) => ({ product });
+const mapState = ({ product, activeCategory }) => ({ product, activeCategory });
 const mapDispatch = dispatch => ({
   fetchInitialData(id) {
-    dispatch(fetchProduct(id));
+    dispatch(fetchProduct(id))
   },
+  removeCat() {
+    dispatch(removeActiveCategory());
+  }
 });
 
 

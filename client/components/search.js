@@ -22,7 +22,6 @@ class SearchBar extends Component {
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
   handleResultSelect = (event, { result }) => {
-    // event.preventDefault();
     this.props.fetchProduct(result.id)
     history.push(`/products/${result.id}`);
     this.resetComponent();
