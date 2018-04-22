@@ -55,7 +55,6 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
     axios
       .post('/api/cart', backendItem)
       .then(res => {
-        console.log('add item response ', res.data);
         cartItem.cartItemId = res.data.id
         return dispatch(add(cartItem || defaultCart));
       })
