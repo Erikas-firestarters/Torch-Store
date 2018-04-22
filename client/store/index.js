@@ -1,4 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -16,7 +18,18 @@ const reducer = combineReducers({ user, userOrders, categories, product, product
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
-const store = createStore(reducer, middleware);
+const config = {
+  key: 'root', // key is required
+  storage, // storage is now required
+};
+
+const persistReducers = persistReducer(config, reducer);
+const store = createStore(persistReducers, middleware);
+let persistor = persistStore(store)
+
+export function configureStore () {
+return { persistor, store}
+}
 
 export default store;
 export * from './user';
