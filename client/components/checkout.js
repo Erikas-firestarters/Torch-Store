@@ -7,7 +7,9 @@ import {
   Label,
   Sticky,
   Header,
-  Form,
+  Card,
+  Feed,
+  List,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm } from '../components';
@@ -107,6 +109,70 @@ export class Checkout extends Component {
         </Grid.Column>
         <Grid.Column width={4}>
           <Sticky>
+            <Card>
+              <Card.Content>
+                <Card.Header>Order Details:</Card.Header>
+              </Card.Content>
+              <Card.Content>
+                <List divided relaxed>
+                  <List.Item>
+                    <List.Icon
+                      name="github"
+                      size="large"
+                      verticalAlign="middle"
+                    />
+                    <List.Content>
+                      <List.Header>
+                        subTotal:
+                        <NumberFormat
+                          value={subTotal}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
+                      </List.Header>
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon
+                      name="github"
+                      size="large"
+                      verticalAlign="middle"
+                    />
+                    <List.Content>
+                      <List.Header>
+                        Tax:
+                        <NumberFormat
+                          value={subTotal * 0.1}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
+                      </List.Header>
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon
+                      name="github"
+                      size="large"
+                      verticalAlign="middle"
+                    />
+                    <List.Content>
+                      <List.Header>
+                        Total:
+                        <NumberFormat
+                          value={subTotal * 1.1}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
+                      </List.Header>
+                    </List.Content>
+                  </List.Item>
+                </List>
+              </Card.Content>
+            </Card>
+
             <Button as="div" labelPosition="right">
               <NavLink as="div" to="/cart">
                 <Button as="div" icon>
@@ -131,15 +197,6 @@ export class Checkout extends Component {
 }
 const mapState = ({ cart, user }) => ({ cart, user });
 
-const mapDispatch = dispatch => {
-  return {
-    handleRemove(e) {
-      dispatch(removeCartItem(item.id));
-    },
-    handleCartChange(e) {
-      console.log(e);
-    },
-  };
-};
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(Checkout);
