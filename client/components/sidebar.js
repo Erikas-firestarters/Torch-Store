@@ -1,46 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Item, Menu, Segment, Sticky } from 'semantic-ui-react';
-import { getCategories, setActiveCategory } from '../store';
-import { NavLink } from 'react-router-dom';
+import { Menu, Sticky } from 'semantic-ui-react';
+import { getCategories, setActiveCategory, removeActiveCategory } from '../store';
+import history from '../history'
+import {NavLink} from 'react-router';
 
 class Sidebar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       visible: true,
-      activeItem: 'All Products',
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handeClick = this.handleClick.bind(this);
   }
-
   componentDidMount() {
-    this.props.getCategories();
+    if (this.props.activeCategory.name === '') {
+      this.props.setActiveCategory({name: 'All Products', id: 0});
+    }
   }
-  handleClick(category) {
-    this.setState({ activeItem: category.name || 'All Products' });
-    this.props.setActiveCategory(category);
+  componentWillUnMount() {
+    this.props.removeActiveCategory();
+  }
+  handleClick(e, cat) {
+    this.props.setActiveCategory(cat);
+    if (!cat.id) history.push(`/products/`);
+    else history.push(`/products/categories/${cat.id}`);
   }
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { activeItem } = this.state;
     return (
-      <Menu vertical pointing fluid>
+      <Menu vertical fluid>
         <Sticky>
           <Menu.Item
             key="00"
             name="All Products"
-            active={activeItem === 'All Products'}
-            onClick={() => this.handleClick('')}
+            active={this.props.activeCategory.name === 'All Products'}
+            onClick={(e) => this.handleClick(e, {name: 'All Products', id: 0})}
             link
           />
           {this.props.categories.map(category => (
             <Menu.Item
               key={category.id}
               name={category.name}
-              active={activeItem === category.name}
-              onClick={() => this.handleClick(category)}
+              active={this.props.activeCategory.name === category.name}
+              onClick={(e) => this.handleClick(e, {name: category.name, id: category.id})}
             />
           ))}
         </Sticky>
@@ -52,20 +56,8 @@ class Sidebar extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({ categories }) => ({ categories });
+const mapState = ({ categories, activeCategory }) => ({ categories, activeCategory });
 
-const mapDispatch = { getCategories, setActiveCategory };
+const mapDispatch = { getCategories, setActiveCategory, removeActiveCategory };
 
 export default connect(mapState, mapDispatch)(Sidebar);
-
-Sidebar.propTypes = {
-  // handleClick: PropTypes.func.isRequired
-};
-
-// {this.props.categories.map(category => (
-//   <Grid.column key={category.id}>
-//   <Item onClick={() => this.handleClick(category.name)} >
-//     <Item.Image size="tiny" src="/assets/images/wireframe/image.png" />
-//     <Item.Content verticalAlign="middle">{category.name}</Item.Content>
-//   </Item>
-//   </Grid.column>))}
