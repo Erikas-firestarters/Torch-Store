@@ -28,7 +28,6 @@ export class UserHome extends React.Component {
     return (
       <div className="centered">
         <h3>Welcome, {this.props.email}</h3>
-        <Email order={this.props.order} />
         <div className="ui raised very padded text container segment">
           <h3 className="ui fluid top attached header">User Detail</h3>
           <Segment attached>
