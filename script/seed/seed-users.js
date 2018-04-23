@@ -32,7 +32,7 @@ function generateUsers() {
     User.build({
       firstName: 'Daniel',
       lastName: 'Simandl',
-      email: `daniel.simandl@${faker.internet.domainName()}`,
+      email: `dan@dan.com`,
       password: '123',
       isAdmin: true,
     })
@@ -41,7 +41,7 @@ function generateUsers() {
     User.build({
       firstName: 'Sam',
       lastName: 'Kogan',
-      email: `sam.kogan@${faker.internet.domainName()}`,
+      email: `sam@sam.com`,
       password: '123',
       isAdmin: true,
     })
@@ -50,7 +50,7 @@ function generateUsers() {
     User.build({
       firstName: 'Caitlin',
       lastName: 'Trussell',
-      email: `caitlin.trussell@${faker.internet.domainName()}`,
+      email: `caitlin@caitlin.com`,
       password: '123',
       isAdmin: true,
     })
@@ -59,7 +59,7 @@ function generateUsers() {
     User.build({
       firstName: 'Josh',
       lastName: 'Remaley',
-      email: `josh.remaley@${faker.internet.domainName()}`,
+      email: `josh@josh.com`,
       password: '123',
       isAdmin: true,
     })
