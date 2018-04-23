@@ -67,15 +67,17 @@ router.get('/:id', (req, res, next) => {
     })
     .catch(next);
 });
+
 router.put('/:id', (req, res, next) => {
   req.requestedUser
     .update(req.body)
     .then(updatedUser => res.json(updatedUser))
     .catch(next);
 });
+
 router.delete('/:id', (req, res, next) => {
   req.requestedUser
     .destroy()
-    .then(() => res.status(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
