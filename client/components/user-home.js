@@ -87,7 +87,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   fetchInitialData: id => {
     dispatch(fetchOrders(id));
-    dispatch(getCart());
+    //dispatch(getCart());
   }
 });
 
