@@ -38,7 +38,7 @@ export class AdminUsersView extends React.Component {
                     <Form onSubmit={this.onEditSubmit}>
                       <Form.Field>
                         <label>Id</label>
-                        <input readOnly name="id" value={user.id} />
+                        <input as={'p'} name="id" value={user.id} />
                       </Form.Field>
                       <Form.Field>
                         <label>Name</label>
