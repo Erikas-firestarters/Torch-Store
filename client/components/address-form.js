@@ -10,6 +10,7 @@ import {
   Form,
   Dropdown,
   Select,
+  Checkbox,
 } from 'semantic-ui-react';
 import NumberFormat from 'react-number-format';
 import stateOptions from './all-states';
@@ -20,10 +21,14 @@ export const AddressForm = props => {
     handleBillingChange,
     handleShippingDropdownChange,
     handleBillingDropdownChange,
+    handleSubmitButtonRef,
+    handleOrderSubmit,
+    handleCheckboxChange,
+    checkBox,
   } = props;
   return (
     <div>
-      <Form>
+      <Form onSubmit={handleOrderSubmit}>
         <Form.Group>
           <Form.Input
             label="First name"
@@ -68,65 +73,75 @@ export const AddressForm = props => {
           />
           <Form.Input
             label="Zip Code:"
-            onChange={e => handleShippingChange(e, 'zipCode')}
+            onChange={e => handleShippingChange(e, 'zipcode')}
             width={2}
           />
         </Form.Group>
         <Form.Group grouped>
-          <Form.Field
+          <Checkbox
+            defaultChecked
             label="Billing address is same as shipping address."
-            control="input"
-            type="checkbox"
+            onChange={handleCheckboxChange}
           />
         </Form.Group>
-
+        {checkBox ? (
+          <div />
+        ) : (
+          <div>
+            <Form.Group>
+              <Form.Input
+                label="First name"
+                onChange={e => handleBillingChange(e, 'firstName')}
+                placeholder="First Name"
+                width={8}
+              />
+              <Form.Input
+                label="Last Name"
+                onChange={e => handleBillingChange(e, 'lastName')}
+                placeholder="Last Name"
+                width={8}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
+                label="Address line 1:"
+                onChange={e => handleBillingChange(e, 'addressLine1')}
+                width={16}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
+                label="Address line 2:"
+                onChange={e => handleBillingChange(e, 'addressLine2')}
+                width={16}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
+                label="City:"
+                onChange={e => handleBillingChange(e, 'city')}
+                width={6}
+              />
+              <Form.Input
+                control={Select}
+                label="State:"
+                options={stateOptions}
+                placeholder="State"
+                onChange={handleBillingDropdownChange}
+                width={8}
+              />
+              <Form.Input
+                label="Zip Code:"
+                onChange={e => handleBillingChange(e, 'zipcode')}
+                width={2}
+              />
+            </Form.Group>
+          </div>
+        )}
         <Form.Group>
-          <Form.Input
-            label="First name"
-            onChange={e => handleBillingChange(e, 'firstName')}
-            placeholder="First Name"
-            width={8}
-          />
-          <Form.Input
-            label="Last Name"
-            onChange={e => handleBillingChange(e, 'lastName')}
-            placeholder="Last Name"
-            width={8}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            label="Address line 1:"
-            onChange={e => handleBillingChange(e, 'addressLine1')}
-            width={16}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            label="Address line 2:"
-            onChange={e => handleBillingChange(e, 'addressLine2')}
-            width={16}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            label="City:"
-            onChange={e => handleBillingChange(e, 'city')}
-            width={6}
-          />
-          <Form.Input
-            control={Select}
-            label="State:"
-            options={stateOptions}
-            placeholder="State"
-            onChange={handleBillingDropdownChange}
-            width={8}
-          />
-          <Form.Input
-            label="Zip Code:"
-            onChange={e => handleBillingChange(e, 'zipCode')}
-            width={2}
-          />
+          <Button as="button" type="submit" ref={handleSubmitButtonRef}>
+            Process Order
+          </Button>
         </Form.Group>
       </Form>
     </div>
