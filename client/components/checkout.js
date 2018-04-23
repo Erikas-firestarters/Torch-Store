@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
 import { finalizeOrder, emptyCart } from '../store';
+import history from '../history';
 
 export class Checkout extends Component {
   constructor() {
@@ -50,7 +51,7 @@ export class Checkout extends Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
-  handleOrderSubmit = e => {
+  handleOrderSubmit = async e => {
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { billing, shipping, checkBox } = this.state;
@@ -64,8 +65,13 @@ export class Checkout extends Component {
       tax: subtotal * 0.1,
       cart,
     };
-    submitOrder(order)
-    user.id ? deleteBackendCart() : null;
+    try {
+      await submitOrder(order);
+      if (user.id)  deleteBackendCart();
+      history.push('/home');
+    } catch (err) {
+      console.err(err);
+    }
   };
 
   handleShippingChange(e, key) {
@@ -173,8 +179,8 @@ const mapDispatch = dispatch => ({
     return dispatch(finalizeOrder(order));
   },
   deleteBackendCart() {
-    return dispatch(emptyCart())
-  }
+    return dispatch(emptyCart());
+  },
 });
 
 export default connect(mapState, mapDispatch)(Checkout);
