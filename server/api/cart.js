@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
   const userId = req.session.passport.user;
   CartItem.destroy({
-    where: { userId: userId }
+    where: { userId: userId },
   })
     .then(() => res.sendStatus(204))
     .catch(next);
@@ -46,6 +46,18 @@ router.post('/', (req, res, next) => {
   req.body.userId = req.session.passport.user;
   CartItem.create(req.body)
     .then(newCartItem => res.json(newCartItem))
+    .catch(next);
+});
+
+router.post('/transfer', (req, res, next) => {
+  req.body.forEach(element => {
+    element.userId = req.session.passport.user
+    return element
+  });
+  CartItem.bulkCreate(req.body, { individualHooks: true})
+    .then(newCart => {
+      return res.json(newCart)
+    })
     .catch(next);
 });
 
