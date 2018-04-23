@@ -4,9 +4,8 @@ const adminsOnly = (req, res, next) => {
 };
 
 const selfOrAdmin = (req, res, next) => {
-  if (req.user.id === req.params.id) return next()
+  if (req.user && req.user.id === req.params.id) return next()
   else res.redirect('/auth');
-
 }
 
 module.exports = {adminsOnly, selfOrAdmin}

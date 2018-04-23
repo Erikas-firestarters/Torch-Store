@@ -8,6 +8,7 @@ const {
   Product,
 } = require('../db/models');
 const HttpError = require('../utils/HttpError');
+const {selfOrAdmin} = require('../utils/gatekeeper');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
@@ -28,8 +29,6 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id/orders', (req, res, next) => {
-  console.log('sessy', req.session)
-  console.log('user loser', req.user)
   const { id } = req.requestedUser;
   Order.findAll({
     where: { userId: id },
