@@ -6,7 +6,6 @@ module.exports = router;
 
 router.get('/', adminsOnly, (req, res, next) => {
   User.findAll({
-    // attributes: ['id', 'email', 'firstName', 'lastName', 'isAdmin', 'password'],
   })
     .then(users => res.json(users))
     .catch(next);
