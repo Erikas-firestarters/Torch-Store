@@ -34,7 +34,6 @@ router.post('/', (req, res, next) => {
 
 
 router.put('/', (req, res, next) => {
-  console.log('put cart id', req.body.id)
   req.body.userId = req.session.passport.user;
   CartItem.findById(req.body.id)
     .then(result => result.update(req.body))
