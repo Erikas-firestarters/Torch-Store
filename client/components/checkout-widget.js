@@ -17,62 +17,61 @@ import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 export const CheckoutOrderDetail = props => {
-  const { cart, isOrder } = props;
-  const subTotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const { cart, isOrder, handleOrderSubmit, subtotal } = props;
+
   return (
     <div>
       <List divided relaxed>
-          <Button as={NavLink} to="/cart" attached="top">
+        <NavLink to="/cart">
+          <Button attached="top">
             <Icon name="cart" />
             edit cart
           </Button>
-          <List.Header>Order Details:</List.Header>
-          <List.Item>
-            <List.Content>
-              <List.Header>
-                Sub Total:
-                <NumberFormat
-                  floated="right"
-                  value={parseFloat(subTotal).toFixed(2)}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  prefix={'$'}
-                />
-              </List.Header>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Content>
-              <List.Header>
-                Tax:
-                <NumberFormat
-                  value={parseFloat(subTotal * 0.1).toFixed(2)}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  prefix={'$'}
-                />
-              </List.Header>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Content>
-              <List.Header>
-                Total:
-                <NumberFormat
-                  value={parseFloat(subTotal * 1.1).toFixed(2)}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  prefix={'$'}
-                />
-              </List.Header>
-            </List.Content>
-          </List.Item>
-          <Button fluid attached="bottom">
-            Process order
-          </Button>
+        </NavLink>
+        <List.Header>Order Details:</List.Header>
+        <List.Item>
+          <List.Content>
+            <List.Header>
+              Sub Total:
+              <NumberFormat
+                floated="right"
+                value={parseFloat(subtotal).toFixed(2)}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+              />
+            </List.Header>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content>
+            <List.Header>
+              Tax:
+              <NumberFormat
+                value={parseFloat(subtotal * 0.1).toFixed(2)}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+              />
+            </List.Header>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content>
+            <List.Header>
+              Total:
+              <NumberFormat
+                value={parseFloat(subtotal * 1.1).toFixed(2)}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+              />
+            </List.Header>
+          </List.Content>
+        </List.Item>
+        <Button fluid attached="bottom" onClick={handleOrderSubmit}>
+          Process order
+        </Button>
       </List>
     </div>
   );
