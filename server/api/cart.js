@@ -20,6 +20,16 @@ router.get('/', (req, res, next) => {
     .then(cart => res.json(cart))
     .catch(next);
 });
+//deletes ALL cart items for the current user
+router.delete('/', (req, res, next) => {
+  const userId = req.session.passport.user;
+  CartItem.destroy({
+    where: { userId: userId }
+  })
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
 router.delete('/:cartItemId', (req, res, next) => {
   req.body.userId = req.session.passport.user;
   const { userId } = req.body;

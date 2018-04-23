@@ -43,6 +43,14 @@ export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
       .catch(err => console.log(err));
   }
 };
+
+export const emptyCart = () => dispatch => {
+    axios
+      .delete(`/api/cart/`)
+      .then(() => dispatch(init(defaultCart)))
+      .catch(err => console.log(err));
+};
+
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
   if (!isLoggedIn) {
     dispatch(add(cartItem));
