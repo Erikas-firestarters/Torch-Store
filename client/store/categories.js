@@ -25,19 +25,19 @@ const removeCat = category => ({ type: REMOVE_CATEGORY, category });
  */
 export const getCategories = () => dispatch =>
   axios
-    .get('/api/products/categories')
+    .get('/api/categories')
     .then(res => dispatch(getCats(res.data || defaultCategories)))
     .catch(err => console.log(err));
 
 export const addCategory = category => dispatch =>
   axios
-    .post('/api/products/categories', { category })
+    .post('/api/admin/categories', { category })
     .then(res => dispatch(addCat(res.data)))
     .catch(err => console.error(err));
 
 export const removeCategory = category => dispatch =>
   axios
-    .delete('/api/products/categories', { category })
+    .delete('/api/admin/categories', { category })
     .then(res => dispatch(removeCat(res.data)))
     .catch(err => console.log(err));
 
