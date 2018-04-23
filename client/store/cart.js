@@ -33,17 +33,13 @@ export const getCart = () => dispatch =>
     .catch(err => console.log(err));
 
 export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
-  console.log('remove cart thunk', isLoggedIn)
   if (!isLoggedIn) {
-    dispatch(remove(cartItem));
+    dispatch(remove(cartItem.id));
   } else {
-    console.log('thunk going backend', cartItem)
-    // let backendItem = {};
-    // backendItem.quantity = cartItem.quantity;
-    // backendItem.productId = cartItem.id;
+    const {cartItemId} = cartItem;
     axios
-      .delete('/api/cart', cartItem)
-      .then(() => dispatch(remove(cartItem || defaultCart)))
+      .delete(`/api/cart/${cartItemId}`)
+      .then(() => dispatch(remove(cartItem.id || defaultCart)))
       .catch(err => console.log(err));
   }
 };
@@ -57,7 +53,7 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
     axios
       .post('/api/cart', backendItem)
       .then(res => {
-        cartItem.cartItemId = res.data.id
+        cartItem.cartItemId = res.data.id;
         return dispatch(add(cartItem || defaultCart));
       })
       .catch(err => console.log(err));

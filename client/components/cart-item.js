@@ -105,7 +105,7 @@ const mapDispatch = dispatch => {
       cartItem.quantity = quantity;
       cartItem.quantity
         ? dispatch(updateCartItem(cartItem, isLoggedIn))
-        : dispatch(removeCartItem(cartItem.id, isLoggedIn));
+        : dispatch(removeCartItem(cartItem, isLoggedIn));
     },
   };
 };

@@ -20,24 +20,16 @@ router.get('/', (req, res, next) => {
     .then(cart => res.json(cart))
     .catch(next);
 });
-router.delete('/', (req, res, next) => {
+router.delete('/:cartItemId', (req, res, next) => {
   req.body.userId = req.session.passport.user;
-  const {userId, productId} = req.body;
-  // const productId = req.body
-  console.log('userId:', userId, 'prodid', req.body )
-
-  CartItem.findAll({
+  const { userId } = req.body;
+  const { cartItemId } = req.params;
+  CartItem.destroy({
     where: {
-      [Op.and]: [
-        { userId: userId },
-        { productId: productId },
-      ],
+      [Op.and]: [{ userId: userId }, { id: cartItemId }],
     },
   })
-    .then(items => console.log('found items', items))
-    .then(() => res.sendStatus(202))
-    // .then(cartItem => cartItem.destroy())
-    // .then(updatedCartItem => res.json(updatedCartItem))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 router.post('/', (req, res, next) => {
