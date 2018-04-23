@@ -11,6 +11,7 @@ const HttpError = require('../utils/HttpError');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
+
   User.findById(id)
     .then(user => {
       if (!user) throw new HttpError(404);
@@ -20,16 +21,6 @@ router.param('id', (req, res, next, id) => {
     .catch(next);
 });
 
-// router.get('/', (req, res, next) => {
-//   User.findAll({
-//     // explicitly select only the id and email fields - even though
-//     // users' passwords are encrypted, it won't help if we just
-//     // send everything to anyone who asks!
-//     attributes: ['id', 'email'],
-//   })
-//     .then(users => res.json(users))
-//     .catch(next);
-// });
 router.post('/', (req, res, next) => {
   User.create(req.body)
     .then(user => res.json(user))
@@ -37,6 +28,8 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id/orders', (req, res, next) => {
+  console.log('sessy', req.session)
+  console.log('user loser', req.user)
   const { id } = req.requestedUser;
   Order.findAll({
     where: { userId: id },

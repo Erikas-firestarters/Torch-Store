@@ -11,7 +11,7 @@ import product from './product';
 import products from './products';
 import userOrders from './userOrders'
 import cart from './cart';
-import reviews from './view-reviews';
+import reviews from './reviews';
 import admin from './admin';
 
 const reducer = combineReducers({ user, userOrders, categories, product, products, activeCategory, cart, reviews, admin});
@@ -41,5 +41,5 @@ export * from './product';
 export * from './userOrders'
 export * from './cart'
 export * from './userOrders';
-export * from './view-reviews';
+export * from './reviews';
 export * from './admin';

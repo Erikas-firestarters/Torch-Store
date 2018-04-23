@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Rating, Input, TextArea, Segment } from 'semantic-ui-react';
 import {postReview} from '../../store';
-import history from '../../history';
 
 class ReviewForm extends Component {
   constructor(props) {
@@ -10,25 +9,24 @@ class ReviewForm extends Component {
     this.state = {
       title: '',
       content: '',
-      rating: '',
+      rating: 0,
       dirty: false,
     };
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleRate (e, { rating }) {
+  handleRate = (e, { rating }) => {
     e.preventDefault();
     this.setState({ rating });
   }
-  handleChange(e, type) {
+  handleChange = (e, type) => {
     this.setState({ [type]: e.target.value, dirty: true });
   }
   resetComponent = () => this.setState({ title: '', content: '', rating: '', dirty: false })
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     const newReview = {
       title: this.state.title,
       content: this.state.content,
-      rating: this.state.rating,
+      rating: this.state.rating || 0,
       productId: this.props.id,
       userId: this.props.user.id
     }
@@ -40,7 +38,7 @@ class ReviewForm extends Component {
   render() {
     return (
       <Segment padded textAlign="center">
-      <Form onSubmit={this.handleSubmit.bind(this)}>
+      <Form onSubmit={this.handleSubmit}>
         <Form.Group widths="equal">
         <Form.Field
           required
@@ -52,7 +50,7 @@ class ReviewForm extends Component {
         />
         <Form.Field>
         <label>Rating</label>
-        <Rating icon="star" maxRating={5} onRate={this.handleRate.bind(this)} />
+        <Rating icon="star" maxRating={5} onRate={this.handleRate} />
         </Form.Field>
         </Form.Group>
         <Form.Field
