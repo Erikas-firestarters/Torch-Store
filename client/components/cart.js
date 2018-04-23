@@ -9,18 +9,18 @@ import {
   Container,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { CartItem } from '../components';
+import { CartItem, CartWidget } from '../components';
 import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 function Cart(props) {
   const { cart } = props;
-  const subTotal = cart.reduce(
+  const subtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
   return (
-    <Container fluid>
+    <Container>
       <Grid>
         <Grid.Column width={12}>
           <Item.Group divided>
@@ -29,23 +29,7 @@ function Cart(props) {
         </Grid.Column>
         <Grid.Column width={4}>
           <Sticky>
-            <Button as="div" labelPosition="right">
-              <NavLink to="/checkout">
-                <Button as="div" icon>
-                  <Icon name="cart" />
-                  Checkout
-                </Button>
-              </NavLink>
-              <Label color="teal" basic pointing="left">
-                <NumberFormat
-                  value={subTotal}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  prefix={'$'}
-                />
-                {}
-              </Label>
-            </Button>
+            <CartWidget subtotal={subtotal} />
           </Sticky>
         </Grid.Column>
       </Grid>

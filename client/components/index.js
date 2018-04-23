@@ -11,6 +11,7 @@ export {default as ProductList} from './products/product-list';
 export {default as ProductDetail} from './products/product-detail';
 export {default as Cart} from './cart';
 export {default as CartItem} from './cart-item';
+export {default as CartWidget} from './cart-widget';
 export {default as Checkout} from './checkout';
 export {default as CheckoutWidget} from './checkout-widget';
 export {default as AddressForm} from './address-form';

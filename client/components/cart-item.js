@@ -19,8 +19,13 @@ class CartItem extends Component {
       quantity: this.props.item.quantity,
     };
   }
-  handleQuantityChange = (e, { value }) => {
-    const {isLoggedIn, item} = this.props;
+  handleFieldQuantityChange = (e) => {
+    const { isLoggedIn, item } = this.props;
+    const quantity = Number(e.target.quantity.value)
+    this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
+  };
+  handleDropdownQuantityChange = (e, { value }) => {
+    const { isLoggedIn, item } = this.props;
     const quantity = value ? value : e.target.value;
     this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
   };
@@ -55,22 +60,27 @@ class CartItem extends Component {
               <Grid.Row>
                 Quantity:
                 {item.quantity < 10 ? (
-                  <Grid.Column floated="left" width={1}>
+                  <Grid.Column floated="left" width={2}>
                     <Dropdown
                       compact
                       selection
                       options={options}
                       value={item.quantity}
-                      onChange={this.handleQuantityChange}
+                      onChange={this.handleDropdownQuantityChange}
                     />
                   </Grid.Column>
                 ) : (
-                  <Grid.Column floated="left" width={1}>
-                    <Form onSubmit={this.handleQuantityChange}>
-                      <Form.Group>
-                        <Input size="tiny" />
-                        <Button size="tiny">update</Button>
-                      </Form.Group>
+                  <Grid.Column floated="left">
+                    <Form onSubmit={this.handleFieldQuantityChange}>
+                      <Form.Field
+                        label="Quantity"
+                        control="input"
+                        placeholder="test"
+                        name="quantity"
+                      />
+                      <Button size="tiny" type="submit">
+                        update
+                      </Button>
                     </Form>
                   </Grid.Column>
                 )}
