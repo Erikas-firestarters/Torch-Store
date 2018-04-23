@@ -31,13 +31,13 @@ export const getCategories = () => dispatch =>
 
 export const addCategory = category => dispatch =>
   axios
-    .post('/api/categories', { category })
+    .post('/api/admin/categories', { category })
     .then(res => dispatch(addCat(res.data)))
     .catch(err => console.error(err));
 
 export const removeCategory = category => dispatch =>
   axios
-    .delete('/api/categories', { category })
+    .delete('/api/admin/categories', { category })
     .then(res => dispatch(removeCat(res.data)))
     .catch(err => console.log(err));
 

@@ -6,7 +6,14 @@ import { Grid } from 'semantic-ui-react';
 import ProductItem from './product-item.js';
 import Sidebar from '../sidebar';
 
+
 class ProductList extends Component {
+  findCategoryMatch (products, catId) {
+    var match = (elem) => elem.id === catId;
+    return products.filter(product => product.categories.some(match)
+    )
+  }
+
   render() {
     const { products, activeCategory } = this.props;
     const subRoute = this.props.match.params.type || '';
@@ -22,9 +29,7 @@ class ProductList extends Component {
             <Grid>
             <Grid.Row columns={3} centered>
               {subRoute ?
-                products.filter(unFilteredProduct =>
-                  unFilteredProduct.categoryId === activeCategory.id
-                )
+                this.findCategoryMatch(products, activeCategory.id)
                 .map(product => (
                     <Grid.Column key={product.id}>
                       <ProductItem

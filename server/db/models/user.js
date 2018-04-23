@@ -40,14 +40,6 @@ const User = db.define(
       type: Sequelize.STRING,
       // allowNull: false,
     },
-    fullName: {
-      type: Sequelize.VIRTUAL,
-      get() {
-        return `${this.getDataValue('firstName')} ${this.getDataValue(
-          'lastName'
-        )}`;
-      },
-    },
     isAdmin: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
@@ -59,7 +51,7 @@ const User = db.define(
         attributes: { exclude: ['password', 'salt'] },
       }),
     },
-  }
+  },
 );
 
 module.exports = User;

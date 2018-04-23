@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Product, Review, Category, Photo } = require('../db/models');
+const { Product, Review, Category } = require('../db/models');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
@@ -13,32 +13,6 @@ router.get('/', async (req, res, next) => {
         }],
     });
     res.json(products);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get('/categories', async (req, res, next) => {
-  try {
-    const categories = await Category.findAll();
-    res.json(categories);
-  } catch (err) {
-    next(err);
-  }
-});
-router.get('/categories/:id', async (req, res, next) => {
-  try {
-    const category = await Category.findById(req.params.id, {
-      include: [
-        {
-          model: Product,
-          as: 'products',
-          required: false,
-          through: { attributes: [] },
-        },
-      ],
-    });
-    res.json(category);
   } catch (err) {
     next(err);
   }
