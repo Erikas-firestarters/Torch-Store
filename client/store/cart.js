@@ -8,7 +8,7 @@ const GET_CART = 'GET_CART';
 const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 const ADD_CART_ITEM = 'ADD_CART_ITEM';
 const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
-const CHECKOUT_CART = 'CHECKOUT_CART';
+const EMPTY_CART = 'EMPTY_CART';
 
 /**
  * INITIAL STATE
@@ -22,6 +22,7 @@ const init = cart => ({ type: GET_CART, cart });
 const remove = cartItemId => ({ type: REMOVE_CART_ITEM, cartItemId });
 const add = cartItem => ({ type: ADD_CART_ITEM, cartItem });
 const update = cartItem => ({ type: UPDATE_CART_ITEM, cartItem });
+const empty = _ => ({ type: EMPTY_CART, defaultCart });
 
 /**
  * THUNK CREATORS
@@ -45,10 +46,10 @@ export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
 };
 
 export const emptyCart = () => dispatch => {
-    axios
-      .delete(`/api/cart/`)
-      .then(() => dispatch(init(defaultCart)))
-      .catch(err => console.log(err));
+  axios
+    .delete(`/api/cart/`)
+    .then(() => dispatch(init(defaultCart)))
+    .catch(err => console.log(err));
 };
 
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
@@ -94,6 +95,8 @@ export const finalizeOrder = order => dispatch => {
  */
 export default function(state = defaultCart, action) {
   switch (action.type) {
+    case EMPTY_CART:
+      return action.defaultCart;
     case GET_CART:
       return state.length ? state : action.cart; //backend cart is only set to state if front end cart state is empty
     case REMOVE_CART_ITEM:

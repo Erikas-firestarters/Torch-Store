@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
-import { finalizeOrder } from '../store';
+import { finalizeOrder, emptyCart } from '../store';
 
 export class Checkout extends Component {
   constructor() {
@@ -52,7 +52,7 @@ export class Checkout extends Component {
 
   handleOrderSubmit = e => {
     const { subtotal } = this;
-    const { user, cart } = this.props;
+    const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { billing, shipping, checkBox } = this.state;
     billing.fullName = `${billing.firstName} ${billing.lastName}`;
     shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
@@ -64,7 +64,8 @@ export class Checkout extends Component {
       tax: subtotal * 0.1,
       cart,
     };
-    this.props.submitOrder(order);
+    submitOrder(order)
+    user.id ? deleteBackendCart() : null;
   };
 
   handleShippingChange(e, key) {
@@ -171,6 +172,9 @@ const mapDispatch = dispatch => ({
   submitOrder(order) {
     return dispatch(finalizeOrder(order));
   },
+  deleteBackendCart() {
+    return dispatch(emptyCart())
+  }
 });
 
 export default connect(mapState, mapDispatch)(Checkout);
