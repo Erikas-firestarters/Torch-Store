@@ -26,7 +26,6 @@ class CartItem extends Component {
   };
   handleDropdownQuantityChange = (e, { value }) => {
     const { isLoggedIn, item } = this.props;
-    console.log('DROPDOWN CHANGE', value);
     const quantity = value ? value : e.target.value;
     this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
   };
