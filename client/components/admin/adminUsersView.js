@@ -32,8 +32,7 @@ export class AdminUsersView extends React.Component {
                 </List.Content>
                 <Modal
                   trigger={<Button color={'teal'}>Edit User</Button>}
-                  closeIcon
-                >
+                  closeIcon>
                   <Header icon="user" content="Edit User" />
                   <Modal.Content>
                     <Form onSubmit={this.onEditSubmit}>
