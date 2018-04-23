@@ -47,7 +47,7 @@ export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
 export const emptyCart = () => dispatch => {
     axios
       .delete(`/api/cart/`)
-      .then(() => dispatch(init(defaultCart)))
+      .then(() => dispatch(empty()))/////////////////////////
       .catch(err => console.log(err));
 };
 
@@ -62,7 +62,8 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
       .post('/api/cart', backendItem)
       .then(res => {
         cartItem.cartItemId = res.data.id;
-        return dispatch(add(cartItem || defaultCart));
+        return dispatch(add(cartItem || defaultCart)); //need to handle an array of multiple items here
+        ///////////////////////////////////////////////////////////////
       })
       .catch(err => console.log(err));
   }
