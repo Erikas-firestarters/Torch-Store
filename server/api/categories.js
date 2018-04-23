@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Product, Category } = require('../db/models');
+const {adminsOnly} = require('../utils/gatekeeper');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
@@ -12,10 +13,21 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    const category = await Category.findById(req.params.id);
-    res.json(category);
+    const newCategory = await Category.create(req.body);
+    res.json(newCategory);
+  }
+  catch (err) {
+    next(err);
+  }
+})
+
+
+router.delete('/', adminsOnly, async (req, res, next) => {
+  try {
+    await Category.destroy(req.body);
+    res.sendStatus(204);
   }
   catch (err) {
     next(err);
