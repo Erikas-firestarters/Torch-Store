@@ -36,7 +36,16 @@ Order.hasMany(OrderItem, {
   hooks: true,
 });
 
-Product.belongsTo(Category);
+// Product.belongsTo(Category);
+Category.belongsToMany(Product, {
+  through: 'category_product',
+  foreignKey: 'category_id'
+})
+
+Product.belongsToMany(Category, {
+  through: 'product_category',
+  foreignKey: 'product_id'
+})
 
 OrderItem.belongsTo(Product);
 CartItem.belongsTo(Product);
