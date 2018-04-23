@@ -20,12 +20,13 @@ class CartItem extends Component {
     };
   }
   handleQuantityChange = (e, { value }) => {
+    const {isLoggedIn, item} = this.props;
     const quantity = value ? value : e.target.value;
-    this.props.handleDispatchUpdate(this.props.item, quantity);
+    this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
   };
 
   render() {
-    const { item, handleRemove, handleUpdate, isOrder } = this.props;
+    const { item, handleRemove, isLoggedIn } = this.props;
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
@@ -79,7 +80,7 @@ class CartItem extends Component {
                       icon="remove"
                       floated="right"
                       color="red"
-                      onClick={() => handleRemove(item.id)}
+                      onClick={() => handleRemove(item, isLoggedIn)}
                     />
                   </Button.Group>
                 </Grid.Column>
@@ -92,18 +93,18 @@ class CartItem extends Component {
   }
 }
 
-const mapState = ({ cart }) => ({ cart });
+const mapState = ({ cart, user }) => ({ cart, isLoggedIn: !!user.id });
 
 const mapDispatch = dispatch => {
   return {
-    handleRemove(id) {
-      dispatch(removeCartItem(id));
+    handleRemove(cartItem, isLoggedIn) {
+      dispatch(removeCartItem(cartItem, isLoggedIn));
     },
-    handleDispatchUpdate(cartItem, quantity) {
+    handleDispatchUpdate(cartItem, quantity, isLoggedIn) {
       cartItem.quantity = quantity;
       cartItem.quantity
-        ? dispatch(updateCartItem(cartItem))
-        : dispatch(removeCartItem(cartItem.id));
+        ? dispatch(updateCartItem(cartItem, isLoggedIn))
+        : dispatch(removeCartItem(cartItem, isLoggedIn));
     },
   };
 };

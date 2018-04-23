@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { CartItem, Product } = require('../db/models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 module.exports = router;
 
 router.get('/', (req, res, next) => {
@@ -18,11 +20,16 @@ router.get('/', (req, res, next) => {
     .then(cart => res.json(cart))
     .catch(next);
 });
-router.delete('/', (req, res, next) => {
+router.delete('/:cartItemId', (req, res, next) => {
   req.body.userId = req.session.passport.user;
-  CartItem.findById(req.body.id)
-    .then(cartItem => cartItem.destroy())
-    .then(updatedCartItem => res.json(updatedCartItem))
+  const { userId } = req.body;
+  const { cartItemId } = req.params;
+  CartItem.destroy({
+    where: {
+      [Op.and]: [{ userId: userId }, { id: cartItemId }],
+    },
+  })
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 router.post('/', (req, res, next) => {
@@ -31,7 +38,6 @@ router.post('/', (req, res, next) => {
     .then(newCartItem => res.json(newCartItem))
     .catch(next);
 });
-
 
 router.put('/', (req, res, next) => {
   req.body.userId = req.session.passport.user;
