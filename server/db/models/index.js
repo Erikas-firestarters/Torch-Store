@@ -39,12 +39,10 @@ Order.hasMany(OrderItem, {
 // Product.belongsTo(Category);
 Category.belongsToMany(Product, {
   through: 'category_product',
-  foreignKey: 'category_id'
 })
 
 Product.belongsToMany(Category, {
-  through: 'product_category',
-  foreignKey: 'product_id'
+  through: 'category_product',
 })
 
 OrderItem.belongsTo(Product);
