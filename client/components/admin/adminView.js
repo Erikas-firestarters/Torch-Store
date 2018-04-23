@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Menu } from 'semantic-ui-react';
+import { Grid, Menu, Header, Icon } from 'semantic-ui-react';
 import { fetchUsers } from '../../store';
 import AdminUsersView from './adminUsersView';
 import AdminProductsView from './adminProductsView';
@@ -12,21 +12,27 @@ import AdminOrdersView from './adminOrdersView';
 class AdminView extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { activeItem: 'Users' }
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  componentDidMount() {
-    const users = this.props.users
-		this.props.fetchInitialData(users);
-	}
+  componentDidMount(){
+		this.props.fetchInitialData();
+  }
 
   render() {
-    const { activeItem, users } = this.state;
+    const { activeItem, admin } = this.props;
 
     return (
       <div>
+      <Header />
+      <Header size={'huge'}>
+        <Icon name="settings" size={'huge'} />
+        <Header.Content>
+        Admin Council
+        </Header.Content>
+      </Header>
       <Grid>
         <Grid.Column width={4}>
           <Menu fluid vertical tabular>
@@ -47,7 +53,7 @@ class AdminView extends Component {
             />
           </Menu>
         </Grid.Column>
-        <AdminUsersView users={users} />
+        {activeItem === 'Users' && <AdminUsersView admin={admin} />}
         {activeItem === 'Products' && <AdminProductsView products={this.state.products} />}
         {activeItem === 'Orders' && <AdminOrdersView orders={this.state.orders} />}
         <Grid.Column stretched width={12} />
@@ -57,21 +63,20 @@ class AdminView extends Component {
   }
 }
 
-const mapState = ({ user, users, products, orders }) => ({
+const mapState = ({ user, admin, orders, products }) => ({
   user,
-  users,
+  admin,
   products,
   orders,
   isLoggedIn: !!user.id,
-  isAdmin: !!user.isAdmin
+  isAdmin: !!user.isAdmin,
+  activeItem: 'Users',
 });
 
 const mapDispatch = dispatch => ({
   fetchInitialData: () => {
-    dispatch(fetchUsers());
-    // dispatch(fetchProducts());
-    // dispatch(fetchOrders());
+    dispatch(fetchUsers())
   }
-});
+})
 
 export default connect(mapState, mapDispatch)(AdminView);

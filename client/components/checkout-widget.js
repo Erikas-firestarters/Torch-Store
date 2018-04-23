@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
-export const CheckoutOrderDetail = props => {
+export const CartWidget = props => {
   const { cart, isOrder, handleOrderSubmit, subtotal } = props;
 
   return (
@@ -81,4 +81,4 @@ const mapState = ({ cart, user }) => ({ cart, user });
 
 const mapDispatch = null;
 
-export default connect(mapState, mapDispatch)(CheckoutOrderDetail);
+export default connect(mapState, mapDispatch)(CartWidget);
