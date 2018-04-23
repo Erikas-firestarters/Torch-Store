@@ -36,7 +36,7 @@ export const removeCartItem = (cartItem, isLoggedIn) => dispatch => {
   if (!isLoggedIn) {
     dispatch(remove(cartItem.id));
   } else {
-    const {cartItemId} = cartItem;
+    const { cartItemId } = cartItem;
     axios
       .delete(`/api/cart/${cartItemId}`)
       .then(() => dispatch(remove(cartItem.id || defaultCart)))
@@ -87,7 +87,7 @@ export const finalizeOrder = order => dispatch => {
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
-      return [...state, action.cart];
+      return state.length ? state : action.cart; //backend cart is only set to state if front end cart state is empty
     case REMOVE_CART_ITEM:
       return state.filter(item => item.id !== action.cartItemId);
     case ADD_CART_ITEM:
