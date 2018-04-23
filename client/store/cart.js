@@ -87,7 +87,7 @@ export const finalizeOrder = order => dispatch => {
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
-      return action.cart;
+      return [...state, action.cart];
     case REMOVE_CART_ITEM:
       return state.filter(item => item.id !== action.cartItemId);
     case ADD_CART_ITEM:

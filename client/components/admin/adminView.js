@@ -24,7 +24,6 @@ class AdminView extends Component {
 
   render() {
     const { activeItem, users } = this.state;
-    console.log(this.state.users);
 
     return (
       <div>

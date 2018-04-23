@@ -27,7 +27,6 @@ class CartItem extends Component {
 
   render() {
     const { item, handleRemove, isLoggedIn } = this.props;
-    console.log('CARTITME: islogged in', isLoggedIn)
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
