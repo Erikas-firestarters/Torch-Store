@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store';
-import { Input, Menu, Label, Sticky } from 'semantic-ui-react';
+import { Header, Menu, Label } from 'semantic-ui-react';
 import SearchBar from './search';
 const resultRenderer = ({ name }) => <Label content={name} />
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
@@ -14,12 +14,10 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
         <Menu>
 
           <Menu.Item>
-            <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
+          <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
           </Menu.Item>
-            <Menu.Item as={NavLink} to="/products" name="Shop Torches" link />
-          <Menu.Item>
-            <SearchBar resultRenderer={resultRenderer} />
-          </Menu.Item>
+          <Menu.Item as={NavLink} to="/products" name="Shop Torches" link />
+          <Menu.Item><SearchBar resultRenderer={resultRenderer} /></Menu.Item>
           <Menu.Menu position="right">
           {isAdmin &&
             <Menu.Item as={NavLink} to="/admin" name="admin" link />

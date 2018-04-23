@@ -17,14 +17,14 @@ class ReviewList extends Component {
     this.props.fetchInitialData(this.props.productId);
   }
   showReviews(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     this.setState({
       showReviews: !this.state.showReviews,
       showReviewForm: false
     });
   }
   showReviewForm(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     this.setState({
       showReviewForm: !this.state.showReviewForm,
       showReviews: false,
@@ -45,7 +45,7 @@ class ReviewList extends Component {
         onClick={this.showReviewForm.bind(this)}>Leave a Review</Button>
         }
         <Divider clearing hidden />
-        {this.state.showReviews &&
+        { reviews.length && this.state.showReviews ?
         <Segment padded >
           <h2>Reviews</h2>
           <Segment.Group>
@@ -54,9 +54,10 @@ class ReviewList extends Component {
             ))}
           </Segment.Group>
           </Segment>
+          : <span />
         }
 
-        {this.state.showReviewForm && <ReviewForm /> }
+        {this.state.showReviewForm && <ReviewForm id={this.props.productId} resetReviews={this.showReviews.bind(this)} /> }
 
       </div>
     );

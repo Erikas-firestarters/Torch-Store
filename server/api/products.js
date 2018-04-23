@@ -21,7 +21,6 @@ router.get('/categories', async (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id)
     .then(product => {
-      console.log('product in api', product)
       res.json(product)})
     .catch(next)
 })
@@ -38,7 +37,9 @@ router.get('/:id/reviews', (req, res, next) => {
 
 router.post('/:id/reviews', (req, res, next) => {
   Review.create(req.body)
-    .then(review => res.json(review))
+    .then(review => {
+      res.json(review)
+    })
     .catch(next)
 })
 
