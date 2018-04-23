@@ -68,7 +68,7 @@ function generateUsers() {
     User.build({
       firstName: 'Erika',
       lastName: 'Weil',
-      email: `erika.weil@${faker.internet.domainName()}`,
+      email: `erika@erika.com`,
       password: '123',
       isAdmin: true,
     })
