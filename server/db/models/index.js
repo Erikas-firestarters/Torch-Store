@@ -36,7 +36,12 @@ Order.hasMany(OrderItem, {
   hooks: true,
 });
 
-Product.belongsTo(Category);
+Category.belongsToMany(Product, {
+  through: 'category_product',
+})
+Product.belongsToMany(Category, {
+  through: 'category_product',
+})
 
 OrderItem.belongsTo(Product);
 CartItem.belongsTo(Product);

@@ -8,4 +8,5 @@ const Category = db.define('category', {
     }
 })
 
+
 module.exports = Category
