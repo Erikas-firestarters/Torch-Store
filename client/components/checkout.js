@@ -64,7 +64,6 @@ export class Checkout extends Component {
       tax: subtotal * 0.1,
       cart,
     };
-    console.log('order on frontend', order);
     this.props.submitOrder(order);
   };
 
@@ -100,7 +99,6 @@ export class Checkout extends Component {
       (total, item) => total + parseFloat(item.price) * item.quantity,
       0
     );
-    console.log('subtotal',this.subtotal)
     return (
       <Container>
         <div ref={this.handleStickyContextRef}>
