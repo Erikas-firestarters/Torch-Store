@@ -14,10 +14,18 @@ import { removeCartItem, updateCartItem } from '../store';
 
 class CartItem extends Component {
   constructor(props) {
-    super();
+    super(props);
+    this.state = {
+      quantity: this.props.item.quantity,
+    };
   }
+  handleQuantityChange = (e, { value }) => {
+    const quantity = value ? value : e.target.value;
+    this.props.handleDispatchUpdate(this.props.item, quantity);
+  };
+
   render() {
-    const { item, handleRemove, handleUpdate } = this.props;
+    const { item, handleRemove, handleUpdate, isOrder } = this.props;
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
@@ -32,11 +40,13 @@ class CartItem extends Component {
     ];
     return (
       <Item>
-        {/* <Item.Image src={item.photos[0].imageUrl} /> */}
+        <Item.Image size="small" src={item.imageUrl} />
         <Item.Content>
           <Item.Header as="a">{item.name}</Item.Header>
           <Item.Meta>
-            <Label tag color="teal">{`$ ${item.price}`}</Label>
+            <Label tag color="teal">{`$ ${parseFloat(item.price).toFixed(
+              2
+            )}`}</Label>
           </Item.Meta>
           <Item.Description>{item.description}</Item.Description>
           <Item.Extra>
@@ -50,14 +60,12 @@ class CartItem extends Component {
                       selection
                       options={options}
                       value={item.quantity}
-                      onChange={e =>
-                        handleUpdate(item, parseFloat(e.target.textContent))
-                      }
+                      onChange={this.handleQuantityChange}
                     />
                   </Grid.Column>
                 ) : (
                   <Grid.Column floated="left" width={1}>
-                    <Form onSubmit={e => handleUpdate(item, e.target.value)}>
+                    <Form onSubmit={this.handleQuantityChange}>
                       <Form.Group>
                         <Input size="tiny" />
                         <Button size="tiny">update</Button>
@@ -91,10 +99,7 @@ const mapDispatch = dispatch => {
     handleRemove(id) {
       dispatch(removeCartItem(id));
     },
-    handleUpdate(cartItem, quantity) {
-      // I was unable to access e.target.value and settled for a string e.target.textContent
-      // because text of "10+", I have to do this check for NaN
-      quantity = quantity ? quantity : 10;
+    handleDispatchUpdate(cartItem, quantity) {
       cartItem.quantity = quantity;
       cartItem.quantity
         ? dispatch(updateCartItem(cartItem))

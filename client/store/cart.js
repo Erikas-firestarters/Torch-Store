@@ -78,7 +78,7 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
 };
 export const finalizeOrder = order => dispatch => {
   axios
-    .post('/order', order)
+    .post('/api/order', order)
     .then(() => dispatch(init([])))
     .catch(err => console.log(err));
 };
