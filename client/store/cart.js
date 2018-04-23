@@ -75,9 +75,9 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
     dispatch(update(cartItem));
   } else {
     let backendItem = {};
-    backendItem.quantity = cartItem[0].quantity;
-    backendItem.productId = cartItem[0].id;
-    backendItem.id = cartItem[0].cartItemId;
+    backendItem.quantity = cartItem.quantity;
+    backendItem.productId = cartItem.id;
+    backendItem.id = cartItem.cartItemId;
     axios
       .put('/api/cart', backendItem)
       .then(() => dispatch(update(cartItem || defaultCart)))
@@ -85,7 +85,7 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
   }
 };
 export const finalizeOrder = order => dispatch => {
-  axios
+  return axios
     .post('/api/order', order)
     .then(() => dispatch(init([])))
     .catch(err => console.log(err));

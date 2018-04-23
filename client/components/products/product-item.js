@@ -11,7 +11,8 @@ const ProductItem = props => {
   const cartHandler = (updatedProduct, quantity) => {
     let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
     if (cartItem.length) {
-      cartItem[0].quantity += quantity;
+      cartItem = cartItem[0]
+      cartItem.quantity += quantity;
       updateCartProduct(cartItem, isLoggedIn);
     } else {
       updatedProduct.quantity = Number(quantity);
