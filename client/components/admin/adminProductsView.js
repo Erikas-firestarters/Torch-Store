@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header, List } from 'semantic-ui-react';
+import AdminProductDetail from './adminProductDetail';
 
 const AdminProductsView = props => {
   const { products } = props;
@@ -8,12 +9,10 @@ const AdminProductsView = props => {
       <Header>Products List</Header>
       <List divided relaxed>
         {products && products.map( product =>
-          (<List.Item key={product.fullName}>
+          (<List.Item key={product.id}>
             <List.Content>
-              <List.Header>{product.fullName}</List.Header>
-              <List.Description>{product.id}</List.Description>
-              <List.Description>{product.email}</List.Description>
-              <List.Description>{product.isAdmin}</List.Description>
+              <List.Header>{product.name}</List.Header>
+              <AdminProductDetail product={product} />
             </List.Content>
           </List.Item>)
         )}

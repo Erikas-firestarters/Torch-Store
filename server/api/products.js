@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Product, Review, Category } = require('../db/models');
+const HttpError = require('../utils/HttpError');
+const {adminsOnly} = require('../utils/gatekeeper');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
@@ -18,13 +20,36 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', (req, res, next) => {
-  Product.findById(req.params.id)
+router.param('id', (req, res, next, id) => {
+  Product.findById(id)
     .then(product => {
-      res.json(product);
+      if (!product) throw new HttpError(404);
+      req.product = product;
+      next();
     })
     .catch(next);
 });
+
+router.put('/:id', adminsOnly, (req, res, next) => {
+  req.product
+    .update(req.body)
+    .then(updatedUser => res.json(updatedUser))
+    .catch(next)
+});
+
+router.post('/', adminsOnly, (req, res, next) => {
+  Product.create(req.body)
+    .then(newProduct => res.json(newProduct))
+    .catch(next)
+});
+
+router.delete('/:id', adminsOnly, (req, res, next) => {
+  req.product
+    .destroy()
+    .then(() => res.sendStatus(204))
+    .catch(next)
+});
+
 
 router.get('/:id/reviews', (req, res, next) => {
   Review.findAll({
