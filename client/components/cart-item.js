@@ -8,6 +8,9 @@ import {
   Dropdown,
   Grid,
   Form,
+  Card,
+  Image,
+  Header,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { removeCartItem, updateCartItem } from '../store';
@@ -19,9 +22,9 @@ class CartItem extends Component {
       quantity: this.props.item.quantity,
     };
   }
-  handleFieldQuantityChange = (e) => {
+  handleFieldQuantityChange = e => {
     const { isLoggedIn, item } = this.props;
-    const quantity = Number(e.target.quantity.value)
+    const quantity = Number(e.target.quantity.value);
     this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
   };
   handleDropdownQuantityChange = (e, { value }) => {
@@ -31,7 +34,7 @@ class CartItem extends Component {
   };
 
   render() {
-    const { item, handleRemove, isLoggedIn } = this.props;
+    const { item, handleRemove, isLoggedIn, header } = this.props;
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
@@ -45,60 +48,66 @@ class CartItem extends Component {
       { key: 10, text: '10+', value: 10 },
     ];
     return (
-      <Item>
-        <Item.Image size="small" src={item.imageUrl} />
-        <Item.Content>
-          <Item.Header as="a">{item.name}</Item.Header>
-          <Item.Meta>
-            <Label tag color="teal">{`$ ${parseFloat(item.price).toFixed(
-              2
-            )}`}</Label>
-          </Item.Meta>
-          <Item.Description>{item.description}</Item.Description>
-          <Item.Extra>
-            <Grid>
-              <Grid.Row>
-                Quantity:
-                {item.quantity < 10 ? (
-                  <Grid.Column floated="left" width={2}>
-                    <Dropdown
-                      compact
-                      selection
-                      options={options}
-                      value={item.quantity}
-                      onChange={this.handleDropdownQuantityChange}
-                    />
-                  </Grid.Column>
-                ) : (
-                  <Grid.Column floated="left">
-                    <Form onSubmit={this.handleFieldQuantityChange}>
-                      <Form.Field
-                        label="Quantity"
-                        control="input"
-                        placeholder={item.quantity}
-                        name="quantity"
-                      />
-                      <Button size="tiny" type="submit">
-                        update
-                      </Button>
-                    </Form>
-                  </Grid.Column>
-                )}
-                <Grid.Column width={1} floated="right">
-                  <Button.Group floated="right">
-                    <Button
-                      icon="remove"
-                      floated="right"
-                      color="red"
-                      onClick={() => handleRemove(item, isLoggedIn)}
-                    />
-                  </Button.Group>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={4}>
+            <Header as="h4">{item.name}</Header>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Header as="h4">Description:</Header>
+          </Grid.Column>
+          <Grid.Column width={2}>
+            <Header as="h4">Quantity:</Header>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={4}>
+            <Image src={item.imageUrl} size="small" />
+          </Grid.Column>
+          <Grid.Column width={10}>{item.description}</Grid.Column>
+          <Grid.Column width={2}>
+            {item.quantity < 10 ? (
+              // <Grid.Column floated="right" width={2}>
+              <Dropdown
+                floated="right"
+                compact
+                selection
+                options={options}
+                value={item.quantity}
+                onChange={this.handleDropdownQuantityChange}
+              />
+            ) : (
+              // </Grid.Column>
+              <Form
+                size="tiny"
+                floated="right"
+                onSubmit={this.handleFieldQuantityChange}
+              >
+                <Form.Field
+                  fluid
+                  control="input"
+                  placeholder={item.quantity}
+                  name="quantity"
+                />
+                <Button size="tiny" type="submit">
+                  update
+                </Button>
+              </Form>
+            )}
+            <Grid.Row>
+              <Button.Group floated="right">
+                <Button
+                  size="mini"
+                  icon="remove"
+                  floated="right"
+                  color="red"
+                  onClick={() => handleRemove(item, isLoggedIn)}
+                />
+              </Button.Group>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
