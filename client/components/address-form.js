@@ -146,9 +146,9 @@ export const AddressForm = props => {
           </div>
         )}
         <Form.Group>
-          {/* <Button as="button" type="submit" ref={handleSubmitButtonRef}>
+          <Button as="button" type="submit" ref={handleSubmitButtonRef}>
             Process Order
-          </Button> */}
+          </Button>
         </Form.Group>
       </Form>
     </div>

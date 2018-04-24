@@ -15,10 +15,11 @@ import {
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
+import ReactDOM from 'react-dom';
 
 export const CartWidget = props => {
-  const { cart, isOrder, handleOrderSubmit, subtotal } = props;
-
+  const { cart, isOrder, handleOrderSubmit, subtotal, submitButtonRef } = props;
+  console.log('submit button ref', submitButtonRef);
   return (
     <div>
       <List divided relaxed>
@@ -69,13 +70,21 @@ export const CartWidget = props => {
             </List.Header>
           </List.Content>
         </List.Item>
-        <Button fluid attached="bottom" onClick={handleOrderSubmit}>
+        <Button
+          fluid
+          attached="bottom"
+          onClick={() => simulateClick(submitButtonRef)}
+        >
           Process order
         </Button>
       </List>
     </div>
   );
 };
+
+function simulateClick(elem) {
+  ReactDOM.findDOMNode(elem).click();
+}
 
 const mapState = ({ cart, user }) => ({ cart, user });
 

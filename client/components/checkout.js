@@ -52,6 +52,7 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
+    console.log('HANDLE ORDER SUBMIT EVENT CHECKOUT', e)
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { billing, shipping, checkBox } = this.state;
@@ -96,6 +97,7 @@ export class Checkout extends Component {
     this.setState({ billing: { ...this.state.billing, state: value } });
   }
   handleStickyContextRef = contextRef => this.setState({ contextRef });
+
   handleSubmitButtonRef = submitButtonRef => {
     this.submitButtonRef = submitButtonRef;
   };
@@ -126,7 +128,9 @@ export class Checkout extends Component {
                   handleShippingDropdownChange={
                     this.handleShippingDropdownChange
                   }
+
                   handleBillingDropdownChange={this.handleBillingDropdownChange}
+                  handleSubmitButtonRef={this.handleSubmitButtonRef}
                   handleCheckboxChange={this.handleCheckboxChange}
                   checkBox={checkBox}
                 />
@@ -163,6 +167,7 @@ export class Checkout extends Component {
                 <CheckoutWidget
                   handleOrderSubmit={this.handleOrderSubmit}
                   subtotal={this.subtotal}
+                  submitButtonRef={this.submitButtonRef}
                 />
               </Sticky>
             </Grid.Column>
