@@ -35,6 +35,30 @@ const renderTextField = ({
     )} */}
   </Form.Field>
 );
+const renderSelectField = ({
+  input,
+  type,
+  label,
+  meta: { touched, error },
+  ...custom
+}) => (
+  <Form.Field>
+    <Select
+            control={Select}
+            label="State:"
+            options={stateOptions}
+            placeholder="State"
+          />
+    {/* {touched && error ? (
+      <Label basic color="red" pointing>
+        {error} {...input}
+        {...custom}
+      </Label>
+    ) : (
+      <div />
+    )} */}
+  </Form.Field>
+);
 
 let AddressForm = props => {
   const {
@@ -47,66 +71,61 @@ let AddressForm = props => {
     handleCheckboxChange,
     checkBox,
   } = props;
+
   return (
     <div>
       <Form onSubmit={handleOrderSubmit}>
         <Form.Group>
           <Field
-            name="username"
+            name="firstName"
             type="text"
             component={renderTextField}
-            label="Username"
-          />
-          {/* <Form.Input
-            required
             label="First name"
-            onChange={e => handleShippingChange(e, 'firstName')}
-            placeholder="First Name"
-            width={8}
           />
-          <Form.Input
-            required
+          <Field
+            name="lastName"
             label="Last Name"
-            onChange={e => handleShippingChange(e, 'lastName')}
+            component={renderTextField}
             placeholder="Last Name"
             width={8}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input
-            required
+          <Field
             label="Address line 1:"
-            onChange={e => handleShippingChange(e, 'addressLine1')}
+            name="addressLine1"
+            component={renderTextField}
             width={16}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input
+          <Field
+            name="addressLine2"
             label="Address line 2:"
-            onChange={e => handleShippingChange(e, 'addressLine2')}
+            component={renderTextField}
             width={16}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input
-            required
+          <Field
+            name="city"
             label="City:"
-            onChange={e => handleShippingChange(e, 'city')}
+            component={renderTextField}
             width={6}
           />
-          <Form.Input
-            required
+          <Field
+            name="state"
             control={Select}
             label="State:"
             options={stateOptions}
             placeholder="State"
-            onChange={handleShippingDropdownChange}
+            component={renderTextField}
             width={8}
           />
-          <Form.Input
-            required
+          <Field
+            name="zipcode"
             label="Zip Code:"
-            onChange={e => handleShippingChange(e, 'zipcode')}
+            component={renderTextField}
             width={2}
           />
         </Form.Group>
@@ -114,21 +133,23 @@ let AddressForm = props => {
           <Checkbox
             defaultChecked
             label="Billing address is same as shipping address."
-            onChange={handleCheckboxChange}
+            component={renderTextField}
           />
         </Form.Group>
-        {checkBox ? (
+        {/* {checkBox ? (
           <div />
         ) : (
           <div>
             <Form.Group>
-              <Form.Input
+              <Field
+                name=""
                 label="First name"
                 onChange={e => handleBillingChange(e, 'firstName')}
                 placeholder="First Name"
                 width={8}
               />
-              <Form.Input
+              <Field
+                name=""
                 label="Last Name"
                 onChange={e => handleBillingChange(e, 'lastName')}
                 placeholder="Last Name"
@@ -136,26 +157,30 @@ let AddressForm = props => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Input
+              <Field
+                name=""
                 label="Address line 1:"
                 onChange={e => handleBillingChange(e, 'addressLine1')}
                 width={16}
               />
             </Form.Group>
             <Form.Group>
-              <Form.Input
+              <Field
+                name=""
                 label="Address line 2:"
                 onChange={e => handleBillingChange(e, 'addressLine2')}
                 width={16}
               />
             </Form.Group>
             <Form.Group>
-              <Form.Input
+              <Field
+                name=""
                 label="City:"
                 onChange={e => handleBillingChange(e, 'city')}
                 width={6}
               />
-              <Form.Input
+              <Field
+                name=""
                 control={Select}
                 label="State:"
                 options={stateOptions}
@@ -163,18 +188,19 @@ let AddressForm = props => {
                 onChange={handleBillingDropdownChange}
                 width={8}
               />
-              <Form.Input
+              <Field
+                name=""
                 label="Zip Code:"
                 onChange={e => handleBillingChange(e, 'zipcode')}
                 width={2}
               />
             </Form.Group>
           </div>
-        )}
+        )} */}
         <Form.Group>
           <Button as="button" type="submit" ref={handleSubmitButtonRef}>
             Process Order
-          </Button> */}
+          </Button>
         </Form.Group>
       </Form>
     </div>

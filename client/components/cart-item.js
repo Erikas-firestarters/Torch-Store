@@ -84,7 +84,6 @@ class CartItem extends Component {
                 onSubmit={this.handleFieldQuantityChange}
               >
                 <Form.Field
-                  fluid
                   control="input"
                   placeholder={item.quantity}
                   name="quantity"
