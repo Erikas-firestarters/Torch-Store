@@ -19,7 +19,6 @@ import ReactDOM from 'react-dom';
 
 export const CartWidget = props => {
   const { cart, isOrder, handleOrderSubmit, subtotal, submitButtonRef } = props;
-  console.log('submit button ref', submitButtonRef);
   return (
     <div>
       <List divided relaxed>
