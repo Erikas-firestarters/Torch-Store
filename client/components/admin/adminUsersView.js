@@ -102,7 +102,7 @@ export class AdminUsersView extends React.Component {
             <label>Email</label>
             <input name="email" defaultValue={user.email} />
           </Form.Field>
-          <checkbox />
+          {this.checkbox()}
           <Modal.Actions>
             <Button color="green" type="submit" onClick={this.closer}>
             <Icon name="checkmark" />
