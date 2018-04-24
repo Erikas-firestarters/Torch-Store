@@ -7,6 +7,7 @@ import {
   Label,
   Sticky,
   Container,
+  Card,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, CartWidget } from '../components';
@@ -23,9 +24,11 @@ function Cart(props) {
     <Container>
       <Grid>
         <Grid.Column width={12}>
-          <Item.Group divided>
-            {cart.map(item => <CartItem key={item.id} item={item} />)}
-          </Item.Group>
+          <Grid divided="vertically">
+            {cart.map(item => (
+              <CartItem key={item.id} item={item} header="Cart" />
+            ))}
+          </Grid>
         </Grid.Column>
         <Grid.Column width={4}>
           <Sticky>
