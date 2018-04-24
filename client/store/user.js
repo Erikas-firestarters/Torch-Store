@@ -45,6 +45,9 @@ export const auth = (email, password, method, cart) => dispatch =>
             history.push('/home');
           });
         }
+        else {
+          dispatch(getCart())
+        }
       },
       authError => {
         // rare example: a good use cas e for parallel (non-catch) error handler
