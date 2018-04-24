@@ -30,21 +30,22 @@ export class AdminUsersView extends React.Component {
 
           {this.props.admin &&
             this.props.admin.map(user => (
-              <Grid key={user.id} columns={2}>
+              <Grid key={user.id} columns={3}>
               <Grid.Row >
               <Grid.Column >
                 {this.userModal(user)}
               </Grid.Column>
               <Grid.Column >
-                  <List.Header>
-                    {user.fullName !== null &&
-                      user.fullName !== 'null null' &&
-                      user.fullName}
-                  </List.Header>
-                  <List.Description>{user.email}</List.Description>
                   {user.isAdmin && <Label color={'red'}>Admin</Label>}
                 </Grid.Column>
-
+                <Grid.Column >
+                <List.Header>
+                  {user.fullName !== null &&
+                    user.fullName !== 'null null' &&
+                    user.fullName}
+                </List.Header>
+                <List.Description>{user.email}</List.Description>
+              </Grid.Column>
                 </Grid.Row>
                 <Divider />
                 </Grid>
