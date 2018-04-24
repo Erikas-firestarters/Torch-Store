@@ -54,6 +54,10 @@ export const emptyCart = () => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const emptyReduxCart = () => dispatch => {
+  return dispatch(empty())
+};
+
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
   if (!isLoggedIn) {
     dispatch(add(cartItem));

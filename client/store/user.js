@@ -34,19 +34,18 @@ export const auth = (email, password, method, cart) => dispatch =>
     .then(
       res => {
         dispatch(getUser(res.data));
-        if (cart.length) {
+        if (Array.isArray(cart) && cart.length) {
           let oldCart = cart.map(element => {
             element.productId = element.id;
             delete element.id;
-            return element
+            return element;
           });
           dispatch(emptyCart()).then(() => {
-            dispatch(transferCart(oldCart))
+            dispatch(transferCart(oldCart));
             history.push('/home');
           });
-        }
-        else {
-          dispatch(getCart())
+        } else {
+          dispatch(getCart());
         }
       },
       authError => {
