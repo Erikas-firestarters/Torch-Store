@@ -21,8 +21,6 @@ class ProductPage extends Component {
     const {product, match, cart, isLoggedIn, updateCartProduct, addProductToCart} = this.props;
 
     const cartHandler = (updatedProduct, quantity) => {
-      console.log('Product-page ',updatedProduct)
-      console.log('LOGGEDIN PAGE',isLoggedIn)
       let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
       if (cartItem.length) {
         cartItem = cartItem[0]
