@@ -24,9 +24,10 @@ router.post('/', adminsOnly, async (req, res, next) => {
 })
 
 
-router.delete('/', adminsOnly, async (req, res, next) => {
+router.delete('/:id', adminsOnly, async (req, res, next) => {
   try {
-    await Category.destroy(req.body);
+    const category = await Category.findById(req.params.id);
+    await category.destroy(req.body);
     res.sendStatus(204);
   }
   catch (err) {

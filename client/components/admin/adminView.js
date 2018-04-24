@@ -23,7 +23,7 @@ class AdminView extends Component {
   }
 
   render() {
-    const { admin, orders, products, categories } = this.props;
+    const { admin, orders, products } = this.props;
 
     return (
       <div className="admin">
@@ -68,9 +68,9 @@ class AdminView extends Component {
               <AdminOrdersView orders={orders} />
             )}
             {this.state.activeItem === 'Categories' && (
-              <AdminCategoriesView categories={categories} />
+              <AdminCategoriesView />
             )}
-            <Grid.Column stretched width={12} />
+            {/* <Grid.Column stretched width={12} /> */}
           </Grid.Row>
         </Grid>
       </div>

@@ -30,6 +30,7 @@ export class AdminUsersView extends React.Component {
 
           {this.props.admin &&
             this.props.admin.map(user => (
+
               <Grid stackable key={user.id} columns={3}>
               <Grid.Row >
               <Grid.Column >
@@ -58,6 +59,7 @@ export class AdminUsersView extends React.Component {
 
   checkbox () {
     return (<Segment>
+
           <Form.Field>
           Allow Admin Access:
         </Form.Field>
@@ -83,7 +85,7 @@ export class AdminUsersView extends React.Component {
   userModal (user) {
     return (<Modal
       align={'center'}
-      trigger={<Button open={this.state.open} invert color={'teal'}>Edit User</Button>}
+      trigger={<Button open={this.state.open} color={'teal'}>Edit User</Button>}
       closeIcon>
       <Header icon="user" content="Edit User" />
       <Modal.Content>
