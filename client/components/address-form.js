@@ -19,10 +19,12 @@ const renderTextField = ({
   input,
   type,
   label,
+  width,
   meta: { touched, error },
   ...custom
 }) => (
-  <Form.Input {...input} placeholder={label} />
+  <Form.Input {...input} placeholder={label} width={width} label={label} />
+
   // <Form.Field>
   //   {/* {touched && error ? (
   //     <Label basic color="red" pointing>
@@ -39,18 +41,22 @@ const renderStateDropdown = ({
   type,
   label,
   options,
+  width,
   meta: { touched, error },
   ...custom
 }) => (
   <Form.Select
     {...input}
+    label={label}
     onChange={(event, {value}) => input.onChange(value)}
     style={{ height: '38px', padding: 0 }}
     placeholder="State"
     search
     selection
     options={stateOptions}
+    width={width}
     autoComplete="true"
+
   />
 
   // <Form.Field>
@@ -71,25 +77,26 @@ const renderStateDropdown = ({
 );
 
 export const AddressForm = props => {
-  const {
-    handleShippingChange,
-    handleBillingChange,
-    handleShippingDropdownChange,
-    handleBillingDropdownChange,
-    handleSubmitButtonRef,
-    handleOrderSubmit,
-    handleCheckboxChange,
-    checkBox,
-  } = props;
+  // const {
+  //   handleShippingChange,
+  //   handleBillingChange,
+  //   handleShippingDropdownChange,
+  //   handleBillingDropdownChange,
+  //   handleSubmitButtonRef,
+  //   handleOrderSubmit,
+  //   handleCheckboxChange,
+  //   checkBox,
+  // } = props;
 
   return (
-    <div>
+    <Form.Field style={{width: '100%'}}>
       <Form.Group>
         <Field
           type="text"
           name="firstName"
           component={renderTextField}
           label="First name"
+          width={8}
         />
         <Field
           type="text"
@@ -142,18 +149,9 @@ export const AddressForm = props => {
           width={2}
         />
       </Form.Group>
-      <Form.Group grouped>
-        <Checkbox
-          defaultChecked
-          label="Billing address is same as shipping address."
-        />
-      </Form.Group>
-      <Form.Group>
-        <Button as="button" type="submit" ref={handleSubmitButtonRef}>
-          Process Order
-        </Button>
-      </Form.Group>
-    </div>
+
+    </Form.Field>
+
   );
 };
 

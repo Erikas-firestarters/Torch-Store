@@ -6,7 +6,8 @@ import {
   Sticky,
   Header,
   Container,
-  Form
+  Form,
+  Checkbox,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
@@ -19,36 +20,8 @@ export class Checkout extends Component {
   constructor() {
     super();
     this.state = {
-      shipping: {
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-      },
-      billing: {
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-      },
-      subtotal: 0,
       checkBox: true,
     };
-
-    this.handleShippingChange = this.handleShippingChange.bind(this);
-    this.handleBillingChange = this.handleBillingChange.bind(this);
-    this.handleBillingDropdownChange = this.handleBillingDropdownChange.bind(
-      this
-    );
-    this.handleShippingDropdownChange = this.handleShippingDropdownChange.bind(
-      this
-    );
     this.handleOrderSubmit = this.handleOrderSubmit.bind(this);
     this.handleSubmitButtonRef = this.handleSubmitButtonRef.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
@@ -78,26 +51,10 @@ export class Checkout extends Component {
     // }
   };
 
-  handleShippingChange(e, key) {
-    this.setState({
-      shipping: { ...this.state.shipping, [key]: e.target.value },
-    });
-  }
   handleCheckboxChange(e, { checked }) {
     this.setState({
       checkBox: checked,
     });
-  }
-  handleBillingChange(e, key) {
-    this.setState({
-      billing: { ...this.state.billing, [key]: e.target.value },
-    });
-  }
-  handleShippingDropdownChange(e, { value }) {
-    this.setState({ shipping: { ...this.state.shipping, state: value } });
-  }
-  handleBillingDropdownChange(e, { value }) {
-    this.setState({ billing: { ...this.state.billing, state: value } });
   }
   handleStickyContextRef = contextRef => this.setState({ contextRef });
 
@@ -126,31 +83,31 @@ export class Checkout extends Component {
                   Shipping:
                 </Header>
 
-
                 <Form onSubmit={this.handleOrderSubmit}>
                   <FormSection name="shipping">
-
                     <AddressForm />
                   </FormSection>
-                  {/* <FormSection name="billing">
-                    <Party />
-                  </FormSection> */}
-                  </Form>
+                  <Form.Group grouped>
+                    <Checkbox
+                      defaultChecked
+                      label="Billing and shipping address are the same."
+                      onChange={this.handleCheckboxChange}
+                    />
+                  </Form.Group>
+                  {!checkBox ? (
+                    <FormSection name="billing">
+                      <AddressForm />
+                    </FormSection>
+                  ) : (
+                    <div />
+                  )}
+                  <Form.Group>
+                    <Button as="button" type="submit">
+                      Process Order
+                    </Button>
+                  </Form.Group>
+                </Form>
                 {/* </form> */}
-
-                {/* <AddressForm
-                  handleShippingChange={this.handleShippingChange}
-                  handleBillingChange={this.handleBillingChange}
-                  handleShippingDropdownChange={
-                    this.handleShippingDropdownChange
-                  }
-
-                  handleBillingDropdownChange={this.handleBillingDropdownChange}
-                  handleSubmitButtonRef={this.handleSubmitButtonRef}
-                  handleCheckboxChange={this.handleCheckboxChange}
-                  handleOrderSubmit={this.handleOrderSubmit}
-                  checkBox={checkBox}
-                /> */}
               </Grid.Row>
               <Grid.Row>
                 <Header as="h4" textAlign="center">
