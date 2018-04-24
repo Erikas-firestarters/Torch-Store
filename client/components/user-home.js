@@ -9,7 +9,6 @@ import {
   Modal,
   Header,
 } from 'semantic-ui-react';
-import Email from './email';
 
 /**
  * COMPONENT

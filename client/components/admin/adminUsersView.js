@@ -2,16 +2,21 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, List, Modal, Button, Icon, Form } from 'semantic-ui-react';
+import { Segment, Radio, Header, List, Modal, Button, Icon, Form } from 'semantic-ui-react';
 import { updateUserInfo, deleteUserForever } from '../../store/admin';
 import history from '../../history'
 
 export class AdminUsersView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {open: false};
     this.onEditSubmit = this.onEditSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
   }
+
+  handleChange = (e, { value }) => this.setState({ value })
+  opener = () => this.setState({open: true})
+  closer = () => this.setState({open: false})
 
   render() {
     return (
@@ -31,31 +36,51 @@ export class AdminUsersView extends React.Component {
                   <List.Description>{user.isAdmin && 'Admin'}</List.Description>
                 </List.Content>
                 <Modal
-                  trigger={<Button color={'teal'}>Edit User</Button>}
+                  align={'center'}
+                  trigger={<Button open={this.state.open} onCLose color={'teal'}>Edit User</Button>}
                   closeIcon>
                   <Header icon="user" content="Edit User" />
                   <Modal.Content>
-                    <Form onSubmit={this.onEditSubmit}>
+                    <Form onSubmit={(e) => this.onEditSubmit(e, user.id)}>
                       <Form.Field>
-                        <label>Id</label>
-                        <input readOnly name="id" value={user.id} />
+                        <label>First Name</label>
+                        <input name="firstName" defaultValue={user.firstName} />
                       </Form.Field>
                       <Form.Field>
-                        <label>Name</label>
-                        <input name="fullName" defaultValue={user.fullName} />
+                        <label>Last Name</label>
+                        <input name="lastName" defaultValue={user.lastName} />
                       </Form.Field>
                       <Form.Field>
                         <label>Email</label>
                         <input name="email" defaultValue={user.email} />
                       </Form.Field>
+        <Segment>
                       <Form.Field>
-                        <label>Admin Access</label>
-                        <input name="isAdmin" defaultValue={user.isAdmin} />
-                      </Form.Field>
+          Allow Admin Access: <b>{this.state.value}</b>
+        </Form.Field>
+        <Form.Field>
+          <Radio
+            label="Yes"
+            name="radioGroup"
+            value={true}
+            checked={this.state.value === true}
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        <Form.Field>
+          <Radio
+            label="No"
+            name="radioGroup"
+            value={false}
+            checked={this.state.value === false}
+            onChange={this.handleChange}
+          />
+        </Form.Field>
+        </Segment>
                       <Modal.Actions>
-                        <Button color="green" type="submit">
+                        <Button color="green" type="submit" onClick={this.closer}>
                           <Icon name="checkmark" /> Commit Changes
-                        </Button>
+                        </Button >
                         <Button
                           onClick={() => {
                             this.props.deleteUserForever(user.id)}
@@ -74,16 +99,20 @@ export class AdminUsersView extends React.Component {
     );
   }
 
-  onEditSubmit = event => {
+  onEditSubmit (event, id) {
     event.preventDefault();
-    const { fullName, email, isAdmin, id } = event.target;
+    const { firstName, lastName, email, isAdmin } = event.target;
     const updatedUser = {
-      fullName: fullName.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
       email: email.value,
-      isAdmin: isAdmin.value
+      isAdmin: this.state.value,
     };
-    updateUserInfo(id.value, updatedUser);
-  };
+    console.log('things being passed in, ', id.value);
+    console.log('things being passed in, ', updatedUser);
+
+this.props.updateUserInfo(id, updatedUser);
+  }
 }
 
 const mapState = ({admin}) => ({admin});

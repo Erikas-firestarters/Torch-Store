@@ -8,6 +8,7 @@ const {
   Product,
 } = require('../db/models');
 const HttpError = require('../utils/HttpError');
+const {selfOrAdmin, adminsOnly} = require('../utils/gatekeeper');
 module.exports = router;
 
 router.param('id', (req, res, next, id) => {
@@ -20,23 +21,7 @@ router.param('id', (req, res, next, id) => {
     .catch(next);
 });
 
-// router.get('/', (req, res, next) => {
-//   User.findAll({
-//     // explicitly select only the id and email fields - even though
-//     // users' passwords are encrypted, it won't help if we just
-//     // send everything to anyone who asks!
-//     attributes: ['id', 'email'],
-//   })
-//     .then(users => res.json(users))
-//     .catch(next);
-// });
-router.post('/', (req, res, next) => {
-  User.create(req.body)
-    .then(user => res.json(user))
-    .catch(next);
-});
-
-router.get('/:id/orders', (req, res, next) => {
+router.get('/:id/orders', selfOrAdmin, (req, res, next) => {
   const { id } = req.requestedUser;
   Order.findAll({
     where: { userId: id },
@@ -48,7 +33,7 @@ router.get('/:id/orders', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id/orders/:orderId', (req, res, next) => {
+router.get('/:id/orders/:orderId', selfOrAdmin, (req, res, next) => {
   Order.findAll({
     where: { id: req.params.orderId },
     include: [{ model: OrderItem, include: [Product] }],
@@ -59,23 +44,14 @@ router.get('/:id/orders/:orderId', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id', (req, res, next) => {
-  req.requestedUser
-    .reload(User.options.scopes.safeUser())
-    .then(requestedUser => {
-      res.json(requestedUser);
-    })
-    .catch(next);
-});
-
-router.put('/:id', (req, res, next) => {
+router.put('/:id', adminsOnly, (req, res, next) => {
   req.requestedUser
     .update(req.body)
     .then(updatedUser => res.json(updatedUser))
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminsOnly, (req, res, next) => {
   req.requestedUser
     .destroy()
     .then(() => res.sendStatus(204))
