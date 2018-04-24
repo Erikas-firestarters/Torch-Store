@@ -61,7 +61,6 @@ router.post('/transfer', (req, res, next) => {
           CartItem.find({ where: { id: item.id }, include: [{all: true}] })
         )
       );
-      console.log('promise.all result ', result)
       res.json(result);
     })
     .catch(next);
