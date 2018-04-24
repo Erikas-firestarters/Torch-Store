@@ -34,7 +34,7 @@ class CartItem extends Component {
   };
 
   render() {
-    const { item, handleRemove, isLoggedIn, header } = this.props;
+    const { item, handleRemove, isLoggedIn, isCheckout } = this.props;
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
@@ -48,12 +48,13 @@ class CartItem extends Component {
       { key: 10, text: '10+', value: 10 },
     ];
     return (
-      <Grid>
+      <Grid celled="internally">
         <Grid.Row centered>
           <Grid.Column width={4}>
             <Header as="h4">{item.name}</Header>
           </Grid.Column>
           <Grid.Column width={10}>
+
             <Header as="h4">Description:</Header>
           </Grid.Column>
           <Grid.Column width={2}>

@@ -82,7 +82,6 @@ export class Checkout extends Component {
                 <Header as="h4" textAlign="center">
                   Shipping:
                 </Header>
-
                 <Form onSubmit={this.handleOrderSubmit}>
                   <FormSection name="shipping">
                     <AddressForm />
@@ -107,7 +106,6 @@ export class Checkout extends Component {
                     </Button>
                   </Form.Group>
                 </Form>
-                {/* </form> */}
               </Grid.Row>
               <Grid.Row>
                 <Header as="h4" textAlign="center">
@@ -121,7 +119,7 @@ export class Checkout extends Component {
                 {cart.length ? (
                   <Item.Group divided>
                     {cart.map(item => (
-                      <CartItem isOrder={true} key={item.id} item={item} />
+                      <CartItem isCheckout={true}  key={item.id} item={item} />
                     ))}
                   </Item.Group>
                 ) : (

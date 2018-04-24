@@ -26,7 +26,7 @@ function Cart(props) {
         <Grid.Column width={12}>
           <Grid divided="vertically">
             {cart.map(item => (
-              <CartItem key={item.id} item={item} header="Cart" />
+              <CartItem isCheckout={false} key={item.id} item={item} header="Cart" />
             ))}
           </Grid>
         </Grid.Column>
