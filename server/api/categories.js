@@ -15,7 +15,6 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    console.log(req.body)
     const newCategory = await Category.create(req.body);
     res.json(newCategory);
   }

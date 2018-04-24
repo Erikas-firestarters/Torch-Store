@@ -32,10 +32,7 @@ export const getCategories = () => dispatch =>
 export const addCategory = category => dispatch =>
   axios
     .post('/api/categories', category )
-    .then(res => {
-      console.log(res.data)
-      dispatch(addCat(res.data))
-    })
+    .then(res => dispatch(addCat(res.data)))
     .catch(err => console.error(err));
 
 export const removeCategory = id => dispatch =>
