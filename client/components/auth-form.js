@@ -70,7 +70,6 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      console.log('pre AUTH cart ', cart)
       let currCart = cart
       dispatch(auth(email, password, formName, currCart))
     }
