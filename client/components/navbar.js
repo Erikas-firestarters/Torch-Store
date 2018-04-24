@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+<<<<<<< HEAD
 import { logout } from '../store';
 import { Header, Menu, Label, Icon } from 'semantic-ui-react';
+=======
+import { logout, emptyCart } from '../store';
+import { Header, Menu, Label } from 'semantic-ui-react';
+>>>>>>> b9384af9b393a916924ba43da024a11599c13bde
 import SearchBar from './search';
 const resultRenderer = ({ name }) => <Label content={name} />;
 const Navbar = ({ handleClick, isLoggedIn, isAdmin, cart }) => (
@@ -76,6 +81,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
+      dispatch(emptyCart());
     },
   };
 };
