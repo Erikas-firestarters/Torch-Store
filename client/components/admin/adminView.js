@@ -7,6 +7,7 @@ import { fetchUsers } from '../../store';
 import AdminUsersView from './adminUsersView';
 import AdminProductsView from './adminProductsView';
 import AdminOrdersView from './adminOrdersView';
+import AdminCategoriesView from './adminCategoriesView';
 
 class AdminView extends Component {
   constructor() {
@@ -22,7 +23,7 @@ class AdminView extends Component {
   }
 
   render() {
-    const { admin } = this.props;
+    const { admin, orders, products, categories } = this.props;
 
     return (
       <div className="admin">
@@ -61,10 +62,13 @@ class AdminView extends Component {
               <AdminUsersView admin={admin} />
             )}
             {this.state.activeItem === 'Products' && (
-              <AdminProductsView products={this.state.products} />
+              <AdminProductsView products={products} />
             )}
             {this.state.activeItem === 'Orders' && (
-              <AdminOrdersView orders={this.state.orders} />
+              <AdminOrdersView orders={orders} />
+            )}
+            {this.state.activeItem === 'Categories' && (
+              <AdminCategoriesView categories={categories} />
             )}
             <Grid.Column stretched width={12} />
           </Grid.Row>
@@ -74,11 +78,12 @@ class AdminView extends Component {
   }
 }
 
-const mapState = ({ user, admin, orders, products }) => ({
+const mapState = ({ user, admin, orders, products, categories }) => ({
   user,
   admin,
   products,
   orders,
+  categories,
   isLoggedIn: !!user.id,
   isAdmin: !!user.isAdmin
 });
@@ -86,6 +91,7 @@ const mapState = ({ user, admin, orders, products }) => ({
 const mapDispatch = dispatch => ({
   fetchInitialData: () => {
     dispatch(fetchUsers());
+    // dispatch()
   }
 });
 
