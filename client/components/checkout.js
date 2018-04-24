@@ -52,7 +52,6 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    console.log('HANDLE ORDER SUBMIT EVENT CHECKOUT', e)
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { billing, shipping, checkBox } = this.state;
