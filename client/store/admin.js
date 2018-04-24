@@ -11,7 +11,6 @@ const deleteUser = id => ({type: DELETE_USER, id})
 
 
 export default function reducer(users = [], action) {
-  console.log('action, ', action);
   switch (action.type) {
     case GET_ALL_USERS:
       return action.users;
@@ -32,7 +31,6 @@ export const fetchUsers = () => dispatch => {
   }
 
 export const updateUserInfo = (id, user) => dispatch => {
-  console.log('HERE');
   axios.put(`/api/users/${id}`, user)
   .then( res => {
     dispatch(updateUser(res.data))
