@@ -8,11 +8,12 @@ import AdminUsersView from './adminUsersView';
 import AdminProductsView from './adminProductsView';
 import AdminOrdersView from './adminOrdersView';
 import AdminCategoriesView from './adminCategoriesView';
+import { fetchAllOrders } from '../../store/adminOrders';
 
 class AdminView extends Component {
   constructor() {
     super();
-    this.state = { activeItem: 'Users' };
+    this.state = { activeItem: 'Orders'};
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
@@ -23,7 +24,7 @@ class AdminView extends Component {
   }
 
   render() {
-    const { admin, orders, products, categories } = this.props;
+    const { admin, adminOrders, products, categories } = this.props;
 
     return (
       <div className="admin">
@@ -65,7 +66,7 @@ class AdminView extends Component {
               <AdminProductsView products={products} />
             )}
             {this.state.activeItem === 'Orders' && (
-              <AdminOrdersView orders={orders} />
+              <AdminOrdersView />
             )}
             {this.state.activeItem === 'Categories' && (
               <AdminCategoriesView categories={categories} />
@@ -91,7 +92,7 @@ const mapState = ({ user, admin, orders, products, categories }) => ({
 const mapDispatch = dispatch => ({
   fetchInitialData: () => {
     dispatch(fetchUsers());
-    // dispatch()
+    dispatch(fetchAllOrders())
   }
 });
 

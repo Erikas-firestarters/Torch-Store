@@ -83,7 +83,7 @@ export class AdminUsersView extends React.Component {
   userModal (user) {
     return (<Modal
       align={'center'}
-      trigger={<Button open={this.state.open} invert color={'teal'}>Edit User</Button>}
+      trigger={<Button open={this.state.open} color={'teal'}>Edit User</Button>}
       closeIcon>
       <Header icon="user" content="Edit User" />
       <Modal.Content>
@@ -100,7 +100,7 @@ export class AdminUsersView extends React.Component {
             <label>Email</label>
             <input name="email" defaultValue={user.email} />
           </Form.Field>
-          <checkbox />
+          {this.checkbox()}
           <Modal.Actions>
             <Button color="green" type="submit" onClick={this.closer}>
             <Icon name="checkmark" />
