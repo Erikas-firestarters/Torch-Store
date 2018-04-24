@@ -58,14 +58,8 @@ export class AdminUsersView extends React.Component {
 
   checkbox () {
     return (<Segment>
-<<<<<<< HEAD
           <Form.Field>
           Allow Admin Access:
-=======
-
-                      <Form.Field>
-          Allow Admin Access: <b>{this.state.value}</b>
->>>>>>> 1cc40bdd5fa26a6bb4ebc44b780ff00824a60f35
         </Form.Field>
         <Form.Field>
           <Radio
