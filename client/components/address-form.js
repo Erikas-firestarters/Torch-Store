@@ -55,7 +55,6 @@ export const AddressForm = props => {
         </Form.Group>
         <Form.Group>
           <Form.Input
-            required
             label="Address line 2:"
             onChange={e => handleShippingChange(e, 'addressLine2')}
             width={16}
