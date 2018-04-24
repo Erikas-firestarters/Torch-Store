@@ -9,7 +9,7 @@ const ADD_PRODUCT = 'ADD_PRODUCT';
 const productsState = [];
 
 const getProducts = (products) => ({type: GET_PRODUCTS, products});
-const removeProduct = (id) => ({type: REMOVE_PRODUCT}, id);
+const removeProduct = (id) => ({type: REMOVE_PRODUCT, id});
 const updateProduct = (product) => ({type: UPDATE_PRODUCT, product});
 const addProduct = (product) => ({type: ADD_PRODUCT, product});
 
@@ -34,7 +34,7 @@ export const postProduct = product => dispatch =>
 
 export const deleteProduct = id => dispatch =>
   axios
-    .delete(`/api/product/${id}`)
+    .delete(`/api/products/${id}`)
     .then(() => dispatch(removeProduct(id)))
     .catch(err => console.log(err));
 

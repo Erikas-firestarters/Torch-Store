@@ -21,6 +21,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.param('id', (req, res, next, id) => {
+  console.log(typeof id)
   Product.findById(id)
     .then(product => {
       if (!product) throw new HttpError(404);
@@ -33,13 +34,31 @@ router.param('id', (req, res, next, id) => {
 router.put('/:id', adminsOnly, (req, res, next) => {
   req.product
     .update(req.body)
-    .then(updatedUser => res.json(updatedUser))
+    .then(newProduct => Product.findById(newProduct.id, {
+      include: [{
+          model: Category,
+          as: 'categories',
+          required: false,
+          through: { attributes: [] },
+        }],
+    }))
+    .then(foundFullProduct => {
+      res.json(foundFullProduct)})
     .catch(next)
 });
 
 router.post('/', adminsOnly, (req, res, next) => {
   Product.create(req.body)
-    .then(newProduct => res.json(newProduct))
+    .then(newProduct => Product.findById(newProduct.id, {
+      include: [{
+          model: Category,
+          as: 'categories',
+          required: false,
+          through: { attributes: [] },
+        }],
+    }))
+    .then(foundFullProduct => {
+      res.json(foundFullProduct)})
     .catch(next)
 });
 

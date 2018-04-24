@@ -27,13 +27,13 @@ const AdminCategoriesView = props => {
       </Segment>
       <Header>Category List</Header>
       <Divider />
-      {categories.map(category => (
+      {categories && categories.map(category => (
         <Grid key={category.id} columns={2}>
           <Grid.Row>
             <Grid.Column>
               <List>
                 <List.Item>
-                  <List.Header>{capitalize(category.name)}</List.Header>
+                  <Header as="h3">{capitalize(category.name)}</Header>
                   <List.Item>
                     {countAllItems(products, category.id)} Products
                   </List.Item>
@@ -43,7 +43,7 @@ const AdminCategoriesView = props => {
             <Grid.Column>
               <Button
                 onClick={() => handleDelete(category.id)}
-                color="pink"
+                color="red"
                 size="mini"
               >
                 Delete Category
