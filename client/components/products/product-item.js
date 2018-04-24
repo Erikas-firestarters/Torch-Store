@@ -9,6 +9,7 @@ const ProductItem = props => {
   const { product, cart, updateCartProduct, addProductToCart, isLoggedIn } = props;
 
   const cartHandler = (updatedProduct, quantity) => {
+    console.log('Product-item ',updatedProduct)
     let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
     if (cartItem.length) {
       cartItem = cartItem[0]
