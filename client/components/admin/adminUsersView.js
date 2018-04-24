@@ -37,7 +37,7 @@ export class AdminUsersView extends React.Component {
                 </List.Content>
                 <Modal
                   align={'center'}
-                  trigger={<Button open={this.state.open} onCLose color={'teal'}>Edit User</Button>}
+                  trigger={<Button open={this.state.open} onClose={this.closer} color={'teal'}>Edit User</Button>}
                   closeIcon>
                   <Header icon="user" content="Edit User" />
                   <Modal.Content>
