@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { logout } from '../store';
+import { logout, emptyCart } from '../store';
 import { Header, Menu, Label } from 'semantic-ui-react';
 import SearchBar from './search';
 const resultRenderer = ({ name }) => <Label content={name} />
@@ -65,6 +65,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
+      dispatch(emptyCart());
     },
   };
 };
