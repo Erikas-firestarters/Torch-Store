@@ -22,6 +22,8 @@ export class AdminOrdersView extends Component {
       direction: null
     };
     this.orderModal = this.orderModal.bind(this);
+    this.onEditSubmit = this.onEditSubmit.bind(this)
+    this.onDelete = this.onDelete.bind(this)
   }
 
   handleSort = clickedColumn => () => {
@@ -50,6 +52,8 @@ export class AdminOrdersView extends Component {
         <Table sortable celled>
           <Table.Header>
             <Table.Row>
+
+
               <Table.HeaderCell
                 sorted={column === 'id' ? direction : null}
                 onClick={this.handleSort('id')}
@@ -90,7 +94,7 @@ export class AdminOrdersView extends Component {
                   <Table.Cell>
                     <Button
                       size="mini"
-                      onClick={() => this.props.deleteOrderForever(id)}
+                      onClick={() => this.onDelete(id)}
                       color="red"
                     >
                       <Icon name="remove circle" />
@@ -136,30 +140,26 @@ export class AdminOrdersView extends Component {
       >
         <Header icon="list layout" content="Change Status" />
         <Modal.Content>
-          <Segment>
+          <Segment >
             <Radio
               label="Created"
-              name="radioGroup"
               value="Created"
-              onChange={e => this.onEditSubmit(e, id)}
+              onClick={e => this.onEditSubmit(e, id)}
             />
             <Radio
               label="Processing"
-              name="radioGroup"
               value="Processing"
-              onChange={e => this.onEditSubmit(e, id)}
+              onClick={e => this.onEditSubmit(e, id)}
             />
             <Radio
               label="Cancelled"
-              name="radioGroup"
               value="Cancelled"
-              onChange={e => this.onEditSubmit(e, id)}
+              onClick={e => this.onEditSubmit(e, id)}
             />
             <Radio
               label="Complete"
-              name="radioGroup"
               value="Completed"
-              onChange={e => this.onEditSubmit(e, id)}
+              onClick={e => this.onEditSubmit(e, id)}
             />
           </Segment>
         </Modal.Content>
@@ -167,13 +167,21 @@ export class AdminOrdersView extends Component {
     );
   }
 
-  onEditSubmit(event, id) {
+  onEditSubmit(e, id) {
     event.preventDefault();
-    console.log('event ', event.target);
+    console.log('event ', e.target.label);
 
-    const { status } = event.target;
+    const { status } = e.target;
     const updatedOrder = { status: status.value };
     this.props.updateOrderInfo(id, updatedOrder);
+  }
+
+  onDelete(id) {
+    event.preventDefault();
+    this.props.deleteOrderForever(id)
+    this.setState({ data: this.props.adminOrders.filter(
+      order => order.id !== id
+    ) })
   }
 }
 
