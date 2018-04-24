@@ -28,25 +28,19 @@ export const me = () => dispatch =>
     .then(res => dispatch(getUser(res.data || defaultUser)))
     .catch(err => console.log(err));
 
-export const auth = (email, password, method, cart) => dispatch =>
+export const auth = (email, password, method, currCart) => dispatch =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then(
       res => {
         dispatch(getUser(res.data));
-        if (cart.length) {
-          let oldCart = cart.map(element => {
-            element.productId = element.id;
-            delete element.id;
-            return element
-          });
+        if (Array.isArray(currCart) && currCart.length) {
           dispatch(emptyCart()).then(() => {
-            dispatch(transferCart(oldCart))
+            dispatch(transferCart(currCart));
             history.push('/home');
           });
-        }
-        else {
-          dispatch(getCart())
+        } else {
+          dispatch(getCart());
         }
       },
       authError => {
