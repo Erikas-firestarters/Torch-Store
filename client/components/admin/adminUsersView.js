@@ -2,59 +2,63 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Radio, Header, List, Modal, Button, Icon, Form } from 'semantic-ui-react';
+import { Label, Divider, Grid, Segment, Radio, Header, List, Modal, Button, Icon, Form } from 'semantic-ui-react';
 import { updateUserInfo, deleteUserForever } from '../../store/admin';
 import history from '../../history'
 
 export class AdminUsersView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {openModal: false};
+
     this.onEditSubmit = this.onEditSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.opener = this.opener.bind(this);
+    this.closer = this.opener.bind(this);
+    this.Checkbox = this.Checkbox.bind(this);
+    this.userModal = this.userModal.bind(this);
   }
 
-  handleChange = (e, { value }) => this.setState({ value })
-  opener = () => this.setState({open: true})
-  closer = () => this.setState({open: false})
+  handleChange = (e, { value }) => this.setState({ value });
+  opener = () => this.setState({openModal: true});
+  closer = () => this.setState({openModal: false});
 
   render() {
     return (
       <div>
         <Header>User List</Header>
-        <List divided relaxed>
+
           {this.props.admin &&
             this.props.admin.map(user => (
-              <List.Item key={user.id}>
-                <List.Content>
-                  <List.Header>
-                    {user.fullName !== null &&
-                      user.fullName !== 'null null' &&
-                      user.fullName}
-                  </List.Header>
-                  <List.Description>{user.email}</List.Description>
-                  <List.Description>{user.isAdmin && 'Admin'}</List.Description>
-                </List.Content>
-                <Modal
-                  align={'center'}
-                  trigger={<Button open={this.state.open} onClose={this.closer} color={'teal'}>Edit User</Button>}
-                  closeIcon>
-                  <Header icon="user" content="Edit User" />
-                  <Modal.Content>
-                    <Form onSubmit={(e) => this.onEditSubmit(e, user.id)}>
-                      <Form.Field>
-                        <label>First Name</label>
-                        <input name="firstName" defaultValue={user.firstName} />
-                      </Form.Field>
-                      <Form.Field>
-                        <label>Last Name</label>
-                        <input name="lastName" defaultValue={user.lastName} />
-                      </Form.Field>
-                      <Form.Field>
-                        <label>Email</label>
-                        <input name="email" defaultValue={user.email} />
-                      </Form.Field>
-        <Segment>
+              <Grid key={user.id} columns={3}>
+              <Grid.Row >
+              <Grid.Column >
+                {this.userModal(user)}
+              </Grid.Column>
+              <Grid.Column >
+                  {user.isAdmin && <Label color={'red'}>Admin</Label>}
+                </Grid.Column>
+                <Grid.Column >
+                <List.Header>
+                  {user.fullName !== null &&
+                    user.fullName !== 'null null' &&
+                    user.fullName}
+                </List.Header>
+                <List.Description>{user.email}</List.Description>
+              </Grid.Column>
+                </Grid.Row>
+                <Divider />
+                </Grid>
+
+            ))}
+
+      </div>
+    );
+  }
+
+  Checkbox () {
+    return (<Segment>
+
                       <Form.Field>
           Allow Admin Access: <b>{this.state.value}</b>
         </Form.Field>
@@ -76,27 +80,46 @@ export class AdminUsersView extends React.Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        </Segment>
-                      <Modal.Actions>
-                        <Button color="green" type="submit" onClick={this.closer}>
-                          <Icon name="checkmark" /> Commit Changes
-                        </Button >
-                        <Button
-                          onClick={() => {
-                            this.props.deleteUserForever(user.id)}
-                          }
-                          color="red">
-                          <Icon name="remove user" /> Remove User
-                        </Button>
-                      </Modal.Actions>
-                    </Form>
-                  </Modal.Content>
-                </Modal>
-              </List.Item>
-            ))}
-        </List>
-      </div>
-    );
+        </Segment>)
+  }
+
+  userModal (user) {
+    return (<Modal
+      align={'center'}
+      trigger={<Button open={this.state.open} invert color={'teal'}>Edit User</Button>}
+      closeIcon>
+      <Header icon="user" content="Edit User" />
+      <Modal.Content>
+        <Form onSubmit={(e) => this.onEditSubmit(e, user.id)}>
+          <Form.Field>
+            <label>First Name</label>
+            <input name="firstName" defaultValue={user.firstName} />
+          </Form.Field>
+          <Form.Field>
+            <label>Last Name</label>
+            <input name="lastName" defaultValue={user.lastName} />
+          </Form.Field>
+          <Form.Field>
+            <label>Email</label>
+            <input name="email" defaultValue={user.email} />
+          </Form.Field>
+          <this.Checkbox />
+          <Modal.Actions>
+            <Button color="green" type="submit" onClick={this.closer}>
+            <Icon name="checkmark" />
+            Commit Changes
+            </Button>
+
+            <Button
+              onClick={() => this.props.deleteUserForever(user.id)}
+              color="red">
+              <Icon name="remove user" />
+              Remove User
+            </Button>
+          </Modal.Actions>
+        </Form>
+      </Modal.Content>
+    </Modal>)
   }
 
   onEditSubmit (event, id) {
@@ -108,10 +131,7 @@ export class AdminUsersView extends React.Component {
       email: email.value,
       isAdmin: this.state.value,
     };
-    console.log('things being passed in, ', id.value);
-    console.log('things being passed in, ', updatedUser);
-
-this.props.updateUserInfo(id, updatedUser);
+    this.props.updateUserInfo(id, updatedUser);
   }
 }
 

@@ -91,6 +91,7 @@ const mapState = ({ user, admin, orders, products, categories }) => ({
 const mapDispatch = dispatch => ({
   fetchInitialData: () => {
     dispatch(fetchUsers());
+    // dispatch()
   }
 });
 
