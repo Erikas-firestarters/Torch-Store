@@ -56,10 +56,8 @@ export const emptyCart = () => dispatch => {
 
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
   if (!isLoggedIn) {
-    console.log('NOt loggedin');
     dispatch(add(cartItem));
   } else {
-    console.log('YES loggedin');
 
     let backendItem = {};
     backendItem.quantity = cartItem.quantity;
@@ -76,14 +74,12 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
 
 export const transferCart = cart => dispatch => {
   let backendItem = {};
-  console.log('transfercart thunk ', cart);
   axios
     .post('/api/cart/transfer', cart)
     .then(res => {
       console.log('post request response ', res.data);
       if (Array.isArray(res.data)) {
         res.data.forEach(ele => {
-          console.log('transcart PRE ', ele);
           ele.productId = ele.id;
           ele.description = ele.product.description;
           ele.imageUrl = ele.product.imageUrl;
@@ -91,8 +87,7 @@ export const transferCart = cart => dispatch => {
           ele.name = ele.product.name;
           ele.price = ele.product.price;
           ele.cartItemId = ele.id
-          //delete ele.product
-          console.log('transcart POST', ele);
+          delete ele.product
           return ele;
         });
       } else {
@@ -103,7 +98,7 @@ export const transferCart = cart => dispatch => {
         res.data.name = res.data.product.name;
         res.data.price = res.data.product.price;
         res.cartItemId = res.id
-        //delete res.data.product
+        delete res.data.product
       }
       return dispatch(setCart(res.data || defaultCart));
     })
@@ -115,7 +110,6 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
     dispatch(update(cartItem));
   } else {
     let backendItem = {};
-    console.log()
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
     backendItem.id = cartItem.cartItemId;
