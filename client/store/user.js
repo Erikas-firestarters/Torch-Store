@@ -41,6 +41,7 @@ export const auth = (email, password, method, currCart) => dispatch =>
           });
         } else {
           dispatch(getCart());
+          history.push('/home');
         }
       },
       authError => {
