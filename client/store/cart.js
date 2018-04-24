@@ -115,6 +115,7 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
     dispatch(update(cartItem));
   } else {
     let backendItem = {};
+    console.log()
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
     backendItem.id = cartItem.cartItemId;
