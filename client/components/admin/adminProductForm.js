@@ -72,6 +72,7 @@ const mapDispatch = (dispatch, ownProps) => ({
   handleSubmit(e, id, product) {
     e.preventDefault();
     dispatch(editProduct(id, product));
+    ownProps.closeFunc();
     // ownProps.history.push(`/campus/${id}`);
   },
 });
