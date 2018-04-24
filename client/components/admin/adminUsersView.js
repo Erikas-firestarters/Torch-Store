@@ -15,7 +15,7 @@ export class AdminUsersView extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.opener = this.opener.bind(this);
     this.closer = this.opener.bind(this);
-    this.Checkbox = this.Checkbox.bind(this);
+    this.checkbox = this.checkbox.bind(this);
     this.userModal = this.userModal.bind(this);
   }
 
@@ -30,7 +30,7 @@ export class AdminUsersView extends React.Component {
 
           {this.props.admin &&
             this.props.admin.map(user => (
-              <Grid key={user.id} columns={3}>
+              <Grid stackable key={user.id} columns={3}>
               <Grid.Row >
               <Grid.Column >
                 {this.userModal(user)}
@@ -56,18 +56,16 @@ export class AdminUsersView extends React.Component {
     );
   }
 
-  Checkbox () {
+  checkbox () {
     return (<Segment>
-
-                      <Form.Field>
-          Allow Admin Access: <b>{this.state.value}</b>
+          <Form.Field>
+          Allow Admin Access:
         </Form.Field>
         <Form.Field>
           <Radio
             label="Yes"
             name="radioGroup"
-            value={true}
-            checked={this.state.value === true}
+            value="true"
             onChange={this.handleChange}
           />
         </Form.Field>
@@ -75,8 +73,7 @@ export class AdminUsersView extends React.Component {
           <Radio
             label="No"
             name="radioGroup"
-            value={false}
-            checked={this.state.value === false}
+            value=""
             onChange={this.handleChange}
           />
         </Form.Field>
@@ -103,7 +100,7 @@ export class AdminUsersView extends React.Component {
             <label>Email</label>
             <input name="email" defaultValue={user.email} />
           </Form.Field>
-          <this.Checkbox />
+          <checkbox />
           <Modal.Actions>
             <Button color="green" type="submit" onClick={this.closer}>
             <Icon name="checkmark" />
@@ -124,12 +121,14 @@ export class AdminUsersView extends React.Component {
 
   onEditSubmit (event, id) {
     event.preventDefault();
+    let adminValue;
     const { firstName, lastName, email, isAdmin } = event.target;
+    // !this.state.value ? admin
     const updatedUser = {
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
-      isAdmin: this.state.value,
+      isAdmin: !!this.state.value,
     };
     this.props.updateUserInfo(id, updatedUser);
   }

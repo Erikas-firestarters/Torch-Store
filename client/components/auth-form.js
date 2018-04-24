@@ -14,7 +14,7 @@ const AuthForm = (props) => {
       <div className="column">
       <h2 className="ui image header">
         <div className="content">
-          Log-in to your account
+        {displayName} to your account
         </div>
       </h2>
       <form onSubmit={(e) => handleSubmit(e, cart)} name={name} className="ui large form">
