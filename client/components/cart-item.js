@@ -27,7 +27,6 @@ class CartItem extends Component {
   handleDropdownQuantityChange = (e, { value }) => {
     const { isLoggedIn, item } = this.props;
     const quantity = value ? value : e.target.value;
-    console.log(item)
     this.props.handleDispatchUpdate(item, quantity, isLoggedIn);
   };
 
@@ -76,7 +75,7 @@ class CartItem extends Component {
                       <Form.Field
                         label="Quantity"
                         control="input"
-                        placeholder="test"
+                        placeholder={item.quantity}
                         name="quantity"
                       />
                       <Button size="tiny" type="submit">
