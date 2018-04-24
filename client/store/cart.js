@@ -81,12 +81,31 @@ export const transferCart = cart => dispatch => {
     .post('/api/cart/transfer', cart)
     .then(res => {
       console.log('post request response ', res.data);
-      res.data.forEach(ele => {
-        ele.cartItemId = ele.id;
-        console.log('transcart ', ele)
-        return ele;
-      });
-      return dispatch(setCart(cart || defaultCart));
+      if (Array.isArray(res.data)) {
+        res.data.forEach(ele => {
+          console.log('transcart PRE ', ele);
+          ele.productId = ele.id;
+          ele.description = ele.product.description;
+          ele.imageUrl = ele.product.imageUrl;
+          ele.inventory = ele.product.inventory;
+          ele.name = ele.product.name;
+          ele.price = ele.product.price;
+          ele.cartItemId = ele.id
+          //delete ele.product
+          console.log('transcart POST', ele);
+          return ele;
+        });
+      } else {
+        res.data.productId = res.data.id;
+        res.data.description = res.data.product.description;
+        res.data.imageUrl = res.data.product.imageUrl;
+        res.data.inventory = res.data.product.inventory;
+        res.data.name = res.data.product.name;
+        res.data.price = res.data.product.price;
+        res.cartItemId = res.id
+        //delete res.data.product
+      }
+      return dispatch(setCart(res.data || defaultCart));
     })
     .catch(err => console.log(err));
 };
@@ -96,9 +115,9 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
     dispatch(update(cartItem));
   } else {
     let backendItem = {};
-    backendItem.quantity = cartItem.quantity;
-    backendItem.productId = cartItem.id;
-    backendItem.id = cartItem.cartItemId;
+    backendItem.quantity = cartItem[0].quantity;
+    backendItem.productId = cartItem[0].id;
+    backendItem.id = cartItem[0].cartItemId;
     axios
       .put('/api/cart', backendItem)
       .then(() => dispatch(update(cartItem || defaultCart)))
@@ -106,7 +125,7 @@ export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
   }
 };
 export const finalizeOrder = order => dispatch => {
-  return axios
+  axios
     .post('/api/order', order)
     .then(() => dispatch(init([])))
     .catch(err => console.log(err));

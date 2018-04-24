@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { CartItem, Product } = require('../db/models');
+const { CartItem, Product, Category } = require('../db/models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 module.exports = router;
@@ -51,12 +51,18 @@ router.post('/', (req, res, next) => {
 
 router.post('/transfer', (req, res, next) => {
   req.body.forEach(element => {
-    element.userId = req.session.passport.user
-    return element
+    element.userId = req.session.passport.user;
+    return element;
   });
-  CartItem.bulkCreate(req.body, { individualHooks: true})
-    .then(newCart => {
-      return res.json(newCart)
+  CartItem.bulkCreate(req.body, { individualHooks: true })
+    .then(async newCart => {
+      let result = await Promise.all(
+        newCart.map(item =>
+          CartItem.find({ where: { id: item.id }, include: [{all: true}] })
+        )
+      );
+      console.log('promise.all result ', result)
+      res.json(result);
     })
     .catch(next);
 });
