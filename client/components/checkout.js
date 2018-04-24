@@ -132,6 +132,7 @@ export class Checkout extends Component {
                   handleBillingDropdownChange={this.handleBillingDropdownChange}
                   handleSubmitButtonRef={this.handleSubmitButtonRef}
                   handleCheckboxChange={this.handleCheckboxChange}
+                  handleOrderSubmit={this.handleOrderSubmit}
                   checkBox={checkBox}
                 />
               </Grid.Row>
