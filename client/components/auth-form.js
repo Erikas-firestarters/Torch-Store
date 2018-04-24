@@ -17,6 +17,9 @@ const AuthForm = (props) => {
         {displayName} to your account
         </div>
       </h2>
+      {error && error.response && <div className="ui error message">
+        <div> {error.response.data} </div>
+      </div>}
       <form onSubmit={(e) => handleSubmit(e, cart)} name={name} className="ui large form">
 
         <div className="ui left icon input">
@@ -30,8 +33,6 @@ const AuthForm = (props) => {
         <div>
           <button type="submit" className="ui fluid large teal submit button">{displayName}</button>
         </div>
-        <div className="ui error message">
-        {error && error.response && <div> {error.response.data} </div>}</div>
       </form>
       <a className="ui large teal submit button" href="/auth/google">{displayName} with Google</a>
     </div>
