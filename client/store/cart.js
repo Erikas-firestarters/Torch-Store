@@ -55,14 +55,13 @@ export const emptyCart = () => dispatch => {
 };
 
 export const emptyReduxCart = () => dispatch => {
-  return dispatch(empty())
+  return dispatch(empty());
 };
 
 export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
   if (!isLoggedIn) {
     dispatch(add(cartItem));
   } else {
-
     let backendItem = {};
     backendItem.quantity = cartItem.quantity;
     backendItem.productId = cartItem.id;
@@ -77,36 +76,24 @@ export const addCartItem = (cartItem, isLoggedIn) => dispatch => {
 };
 
 export const transferCart = cart => dispatch => {
-  let backendItem = {};
   axios
     .post('/api/cart/transfer', cart)
     .then(res => {
-      console.log('post request response ', res.data);
-      if (Array.isArray(res.data)) {
         res.data.forEach(ele => {
-          ele.productId = ele.id;
           ele.description = ele.product.description;
           ele.imageUrl = ele.product.imageUrl;
           ele.inventory = ele.product.inventory;
           ele.name = ele.product.name;
           ele.price = ele.product.price;
-          ele.cartItemId = ele.id
-          delete ele.product
+          ele.cartItemId = ele.id;
+          ele.id = ele.productId
+          delete ele.productId
+          delete ele.product;
           return ele;
         });
-      } else {
-        res.data.productId = res.data.id;
-        res.data.description = res.data.product.description;
-        res.data.imageUrl = res.data.product.imageUrl;
-        res.data.inventory = res.data.product.inventory;
-        res.data.name = res.data.product.name;
-        res.data.price = res.data.product.price;
-        res.cartItemId = res.id
-        delete res.data.product
+        return dispatch(setCart(res.data || defaultCart));
       }
-      return dispatch(setCart(res.data || defaultCart));
-    })
-    .catch(err => console.log(err));
+    );
 };
 
 export const updateCartItem = (cartItem, isLoggedIn) => dispatch => {
