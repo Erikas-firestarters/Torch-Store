@@ -3,15 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Divider, Button, Header, List, Segment } from 'semantic-ui-react';
 import { removeCategory } from '../../store';
 import AdminCategoryForm from './adminCategoryForm';
-
-const capitalize = string => {
-  return string
-    .split(' ')
-    .map(word => {
-      return `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`;
-    })
-    .join(' ');
-};
+import {capitalize} from '../../../server/utils/helperFunctions';
 
 const countAllItems = (products, catId) => {
   const findCategoryMatch = product => {

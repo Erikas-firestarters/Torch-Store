@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Menu, Sticky } from 'semantic-ui-react';
 import { getCategories, setActiveCategory, removeActiveCategory } from '../store';
 import history from '../history'
-import {NavLink} from 'react-router';
-
+import {capitalize} from '../../server/utils/helperFunctions'
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +41,7 @@ class Sidebar extends Component {
           {this.props.categories.map(category => (
             <Menu.Item
               key={category.id}
-              name={category.name}
+              name={capitalize(category.name)}
               active={this.props.activeCategory.name === category.name}
               onClick={(e) => this.handleClick(e, {name: category.name, id: category.id})}
             />
