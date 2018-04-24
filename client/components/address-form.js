@@ -14,8 +14,29 @@ import {
 } from 'semantic-ui-react';
 import NumberFormat from 'react-number-format';
 import stateOptions from './all-states';
+import { Field, reduxForm } from 'redux-form';
 
-export const AddressForm = props => {
+const renderTextField = ({
+  input,
+  type,
+  label,
+  meta: { touched, error },
+  ...custom
+}) => (
+  <Form.Field>
+    <input type={type} placeholder={label} />
+    {/* {touched && error ? (
+      <Label basic color="red" pointing>
+        {error} {...input}
+        {...custom}
+      </Label>
+    ) : (
+      <div />
+    )} */}
+  </Form.Field>
+);
+
+let AddressForm = props => {
   const {
     handleShippingChange,
     handleBillingChange,
@@ -30,7 +51,13 @@ export const AddressForm = props => {
     <div>
       <Form onSubmit={handleOrderSubmit}>
         <Form.Group>
-          <Form.Input
+          <Field
+            name="username"
+            type="text"
+            component={renderTextField}
+            label="Username"
+          />
+          {/* <Form.Input
             required
             label="First name"
             onChange={e => handleShippingChange(e, 'firstName')}
@@ -147,11 +174,13 @@ export const AddressForm = props => {
         <Form.Group>
           <Button as="button" type="submit" ref={handleSubmitButtonRef}>
             Process Order
-          </Button>
+          </Button> */}
         </Form.Group>
       </Form>
     </div>
   );
 };
+
+AddressForm = reduxForm({form: 'address'})(AddressForm)
 
 export default AddressForm;

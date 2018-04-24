@@ -52,26 +52,27 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    const { subtotal } = this;
-    const { user, cart, submitOrder, deleteBackendCart } = this.props;
-    const { billing, shipping, checkBox } = this.state;
-    billing.fullName = `${billing.firstName} ${billing.lastName}`;
-    shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
-    const order = {
-      billing: checkBox ? shipping : billing,
-      shipping,
-      user,
-      subtotal,
-      tax: subtotal * 0.1,
-      cart,
-    };
-    try {
-      await submitOrder(order);
-      if (user.id)  deleteBackendCart();
-      history.push('/home');
-    } catch (err) {
-      console.err(err);
-    }
+    console.log(e)
+    // const { subtotal } = this;
+    // const { user, cart, submitOrder, deleteBackendCart } = this.props;
+    // const { billing, shipping, checkBox } = this.state;
+    // billing.fullName = `${billing.firstName} ${billing.lastName}`;
+    // shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
+    // const order = {
+    //   billing: checkBox ? shipping : billing,
+    //   shipping,
+    //   user,
+    //   subtotal,
+    //   tax: subtotal * 0.1,
+    //   cart,
+    // };
+    // try {
+    //   await submitOrder(order);
+    //   if (user.id)  deleteBackendCart();
+    //   history.push('/home');
+    // } catch (err) {
+    //   console.err(err);
+    // }
   };
 
   handleShippingChange(e, key) {
