@@ -181,6 +181,7 @@ const mapState = ({ cart, user }) => ({ cart, user });
 
 const mapDispatch = dispatch => ({
   submitOrder(order) {
+    dispatch(emptyCart());
     return dispatch(finalizeOrder(order));
   },
   deleteBackendCart() {
