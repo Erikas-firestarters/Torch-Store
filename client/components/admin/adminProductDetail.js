@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, Icon} from 'semantic-ui-react';
+import {Button, Modal, Icon, Image} from 'semantic-ui-react';
 import AdminProductForm from './adminProductForm.js'
 
 const ProductDetail = props => {
@@ -14,9 +14,8 @@ const ProductDetail = props => {
     >
       <Modal.Header>{product.name}</Modal.Header>
       <Modal.Content image>
-        <Image wrapped size="large" src={product.imageUrl} />
         <Modal.Description>
-          <AdminProductForm />
+          <AdminProductForm product={product} />
         </Modal.Description>
       </Modal.Content>
     </Modal>

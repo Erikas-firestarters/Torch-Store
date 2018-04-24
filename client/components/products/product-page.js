@@ -19,6 +19,7 @@ class ProductPage extends Component {
   }
   render() {
     const cartHandler = () => {};
+    console.log(this.props.match.params.id)
     const {product, match} = this.props;
     return (
       <Grid>
