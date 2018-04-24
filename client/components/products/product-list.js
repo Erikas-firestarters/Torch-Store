@@ -9,7 +9,7 @@ import Sidebar from '../sidebar';
 
 class ProductList extends Component {
   findCategoryMatch (products, catId) {
-    var match = (elem) => elem.id === catId;
+    let match = (elem) => elem.id === catId;
     return products.filter(product => product.categories.some(match)
     )
   }
@@ -18,7 +18,7 @@ class ProductList extends Component {
     const { products, activeCategory } = this.props;
     const subRoute = this.props.match.params.type || '';
     return (
-      <Grid>
+      <Grid >
         <Grid.Row columns={2}>
           <Grid.Column width={2} stretched>
             <div className="sidebar">
@@ -26,7 +26,7 @@ class ProductList extends Component {
             </div>
           </Grid.Column>
           <Grid.Column width={14}>
-            <Grid>
+            <Grid stackable>
             <Grid.Row columns={3} centered>
               {subRoute ?
                 this.findCategoryMatch(products, activeCategory.id)
