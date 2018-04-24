@@ -6,11 +6,14 @@ import {
   Sticky,
   Header,
   Container,
+  Form
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
 import { finalizeOrder, emptyCart } from '../store';
 import history from '../history';
+import { Field, reduxForm, FormSection } from 'redux-form';
+import stateOptions from './all-states';
 
 export class Checkout extends Component {
   constructor() {
@@ -52,7 +55,7 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    console.log(e)
+    console.log(e.target);
     // const { subtotal } = this;
     // const { user, cart, submitOrder, deleteBackendCart } = this.props;
     // const { billing, shipping, checkBox } = this.state;
@@ -122,7 +125,20 @@ export class Checkout extends Component {
                 <Header as="h4" textAlign="center">
                   Shipping:
                 </Header>
-                <AddressForm
+
+
+                <Form onSubmit={this.handleOrderSubmit}>
+                  <FormSection name="shipping">
+
+                    <AddressForm />
+                  </FormSection>
+                  {/* <FormSection name="billing">
+                    <Party />
+                  </FormSection> */}
+                  </Form>
+                {/* </form> */}
+
+                {/* <AddressForm
                   handleShippingChange={this.handleShippingChange}
                   handleBillingChange={this.handleBillingChange}
                   handleShippingDropdownChange={
@@ -134,7 +150,7 @@ export class Checkout extends Component {
                   handleCheckboxChange={this.handleCheckboxChange}
                   handleOrderSubmit={this.handleOrderSubmit}
                   checkBox={checkBox}
-                />
+                /> */}
               </Grid.Row>
               <Grid.Row>
                 <Header as="h4" textAlign="center">
@@ -189,5 +205,7 @@ const mapDispatch = dispatch => ({
     return dispatch(emptyCart());
   },
 });
+
+Checkout = reduxForm({ form: 'checkout' })(Checkout);
 
 export default connect(mapState, mapDispatch)(Checkout);
