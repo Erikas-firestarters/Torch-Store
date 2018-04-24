@@ -31,7 +31,7 @@ export class AdminUsersView extends React.Component {
           {this.props.admin &&
             this.props.admin.map(user => (
               <Grid key={user.id} columns={3}>
-              <Grid.Row >
+              <Grid.Row>
               <Grid.Column >
                 {this.userModal(user)}
               </Grid.Column>
@@ -58,35 +58,34 @@ export class AdminUsersView extends React.Component {
 
   Checkbox () {
     return (<Segment>
-
-                      <Form.Field>
-          Allow Admin Access: <b>{this.state.value}</b>
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            label="Yes"
-            name="radioGroup"
-            value={true}
-            checked={this.state.value === true}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            label="No"
-            name="radioGroup"
-            value={false}
-            checked={this.state.value === false}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        </Segment>)
+      <Form.Field>
+        Allow Admin Access: <b>{this.state.value}</b>
+      </Form.Field>
+      <Form.Field>
+        <Radio
+          label="Yes"
+          name="radioGroup"
+          value={true}
+          checked={this.state.value === true}
+          onChange={this.handleChange}
+        />
+      </Form.Field>
+      <Form.Field>
+        <Radio
+          label="No"
+          name="radioGroup"
+          value={false}
+          checked={this.state.value === false}
+          onChange={this.handleChange}
+        />
+      </Form.Field>
+      </Segment>)
   }
 
   userModal (user) {
     return (<Modal
       align={'center'}
-      trigger={<Button open={this.state.open} invert color={'teal'}>Edit User</Button>}
+      trigger={<Button open={this.state.open} color={'teal'}>Edit User</Button>}
       closeIcon>
       <Header icon="user" content="Edit User" />
       <Modal.Content>
