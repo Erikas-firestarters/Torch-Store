@@ -29,6 +29,7 @@ class Sidebar extends Component {
 
   render() {
     return (
+      <div>
       <Menu vertical fluid>
         <Sticky>
           <Menu.Item
@@ -48,6 +49,7 @@ class Sidebar extends Component {
           ))}
         </Sticky>
       </Menu>
+      </div>
     );
   }
 }

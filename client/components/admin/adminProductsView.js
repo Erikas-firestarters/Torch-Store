@@ -23,6 +23,7 @@ const AdminProductsView = props => {
                 <List>
                   <List.Item>
                     <Header as="h3">{product.name}</Header>
+                    <List.Header>Categories:</List.Header>
                     <List>{viewCategories(product.categories)}</List>
                   </List.Item>
                 </List>
