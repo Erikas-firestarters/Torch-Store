@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 
-import {
-  Button,
-  Item,
-  Grid,
-  Icon,
-  Label,
-  Sticky,
-  Container,
-  Card,
-} from 'semantic-ui-react';
+import { Grid, Sticky, Container, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, CartWidget } from '../components';
-import { NavLink } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
 
 export class Cart extends Component {
   constructor() {
@@ -35,30 +24,38 @@ export class Cart extends Component {
     return (
       <Container className="checkout-cart">
         <div ref={this.handleStickyContextRef}>
-          <Grid>
-            <Grid.Column width={12}>
-              <Grid divided="vertically">
-                {cart.map(item => (
-                  <CartItem
-                    isCheckout={false}
-                    key={item.id}
-                    item={item}
-                    header="Cart"
-                  />
-                ))}
-              </Grid>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Sticky
-                bottomOffset={50}
-                context={contextRef}
-                offset={50}
-                pushing
-              >
-                <CartWidget subtotal={subtotal} />
-              </Sticky>
-            </Grid.Column>
-          </Grid>
+          {cart.length ? (
+            <Grid>
+              <Grid.Column width={12}>
+                <Grid divided="vertically">
+                  {cart.map(item => (
+                    <CartItem
+                      isCheckout={false}
+                      key={item.id}
+                      item={item}
+                      header="Cart"
+                    />
+                  ))}
+                </Grid>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Sticky
+                  bottomOffset={50}
+                  context={contextRef}
+                  offset={50}
+                  pushing
+                >
+                  <CartWidget subtotal={subtotal} />
+                </Sticky>
+              </Grid.Column>
+            </Grid>
+          ) : (
+            <div className="center">
+            <Header as="h2">
+              There are no items in your cart.
+            </Header>
+            </div>
+          )}
         </div>
       </Container>
     );
