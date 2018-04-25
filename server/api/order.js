@@ -51,7 +51,7 @@ router.post('/', async (req, res, next) => {
       <br><hr>
       <h3>Subtotal: $${order.subtotal}</h3>
       <h3>Tax: $${order.tax}</h3>
-      <h3>Total: $${order.subtotal + order.tax}</h3>
+      <h3>Total: $${Number(order.subtotal) + Number(order.tax)}</h3>
       </ul>`
 
 
