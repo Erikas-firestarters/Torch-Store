@@ -52,6 +52,8 @@ router.post('/', (req, res, next) => {
 router.post('/transfer', (req, res, next) => {
   req.body.forEach(element => {
     element.userId = req.session.passport.user;
+    element.productId = element.id
+    delete element.id
     return element;
   });
   CartItem.bulkCreate(req.body, { individualHooks: true })

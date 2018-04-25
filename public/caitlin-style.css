@@ -3,18 +3,23 @@
 .product-list-item {
   margin: 3vh;
 }
-
 .main {
-  /* margin-top: 5rem; */
+  width: 100%;
 }
-
 .sidebar {
   border-right: 2px solid #c3c3c3;
-  /* width: 15vw; */
-  min-width: 7vw;
+  width: 12vw;
+  min-width: 12vw;
   height: 100%;
 }
 
 .admin {
   margin-left: 2vw;
+}
+.submit-category {
+  margin-top: 4vh;
+}
+
+.checkout-cart {
+  margin-top: 6vh;
 }

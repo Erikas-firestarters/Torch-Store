@@ -69,9 +69,9 @@ class AdminView extends Component {
               <AdminOrdersView />
             )}
             {this.state.activeItem === 'Categories' && (
-              <AdminCategoriesView categories={categories} />
+              <AdminCategoriesView />
             )}
-            <Grid.Column stretched width={12} />
+            {/* <Grid.Column stretched width={12} /> */}
           </Grid.Row>
         </Grid>
       </div>

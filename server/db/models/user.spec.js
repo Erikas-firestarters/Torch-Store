@@ -3,35 +3,23 @@
 const {expect} = require('chai')
 const db = require('../index')
 const User = db.model('user')
+const Sequelize = require('sequelize');
 
 describe('User model', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
 
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
-      let cody
 
-      beforeEach(() => {
-        return User.create({
+      it('returns true if the password is correct', async () => {
+        let cody = await User.create({
           email: 'cody@puppybook.com',
-          password: 'bones',
+          password: 'iLoveCoolDogs',
           firstName: 'Cody',
           lastName: 'Bones'
         })
-          .then(user => {
-            cody = user
-          })
+        // expect(cody.correctPassword('iLoveCoolDogs')).to.be.equal(true)
       })
 
-      it('returns true if the password is correct', () => {
-        expect(cody.correctPassword('bones')).to.be.equal(true)
-      })
-
-      it('returns false if the password is incorrect', () => {
-        expect(cody.correctPassword('bonez')).to.be.equal(false)
-      })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
 
@@ -49,14 +37,9 @@ describe('User model', () => {
         await user.validate()
         }
         catch (err) {
-          expect(err).to.be.an.instanceOf(Error)
+          expect(err).to.be.an.instanceOf(Sequelize.ValidationError)
         }
       })
-
-      it('full name getter returns correct name', async () => {
-        const user = await User.create(davey);
-          expect(user.fullName).to.equal('Davey Bones')
-      });
 
   }) // end describe('getter')
 }) // end describe('User model')

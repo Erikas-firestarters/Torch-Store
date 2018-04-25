@@ -1,36 +1,67 @@
 import React from 'react';
-import { Header, Button, Segment, Divider } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Grid, Divider, Button, Header, List, Segment } from 'semantic-ui-react';
+import { removeCategory } from '../../store';
+import AdminCategoryForm from './adminCategoryForm';
+import {capitalize} from '../../../server/utils/helperFunctions';
 
-const capitalize = (string) => (
-  `${string[0].toUpperCase()}${string.slice(1).toLowerCase()}`
-)
-
-
-const DetailView = (props) => {
-  return (
-    <Segment>
-      <Header as='h4'>{capitalize(props.category.name)}</Header>
-      <Segment attached>
-      <Button floated="right" color="teal" >Edit Category</Button>
-      <Divider clearing hidden />
-      </Segment>
-    </Segment>
-  )
-}
-
+const countAllItems = (products, catId) => {
+  const findCategoryMatch = product => {
+    let match = elem => elem.id === catId;
+    return product.categories.some(match);
+  };
+  let count = 0;
+  products.forEach(product => {
+    if (findCategoryMatch(product)) count++;
+  });
+  return count;
+};
 
 const AdminCategoriesView = props => {
-  const { categories } = props;
+  const { categories, handleDelete, products } = props;
   return (
-    <div>
-      <Segment padded >
-          <h2>Categories</h2>
-        {categories && categories.map( category => (
-          <DetailView category={category} key={category.id} />
-        ))}
-        </Segment>
-    </div>
+    <Grid.Column width={8}>
+      <Segment>
+        <Header>Add A Category</Header>
+          <AdminCategoryForm />
+      </Segment>
+      <Header>Category List</Header>
+      <Divider />
+      {categories && categories.map(category => (
+        <Grid key={category.id} columns={2}>
+          <Grid.Row>
+            <Grid.Column>
+              <List>
+                <List.Item>
+                  <Header as="h3">{capitalize(category.name)}</Header>
+                  <List.Item>
+                    {countAllItems(products, category.id)} Products
+                  </List.Item>
+                </List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column>
+              <Button
+                onClick={() => handleDelete(category.id)}
+                color="red"
+                size="mini"
+              >
+                Delete Category
+              </Button>
+            </Grid.Column>
+            <Divider />
+          </Grid.Row>
+        </Grid>
+      ))}
+    </Grid.Column>
   );
 };
 
-export default AdminCategoriesView;
+const mapState = ({ categories, products }) => ({ categories, products });
+const mapDispatch = dispatch => ({
+  handleDelete(id) {
+    dispatch(removeCategory(id));
+  },
+});
+
+export default connect(mapState, mapDispatch)(AdminCategoriesView);

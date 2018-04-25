@@ -4,19 +4,20 @@
 // import React from 'react'
 // import enzyme, {shallow} from 'enzyme'
 // import Adapter from 'enzyme-adapter-react-16'
-// import {UserHome} from './user-home'
+// import {NavBar} from './NavBar'
 
 // const adapter = new Adapter()
 // enzyme.configure({adapter})
 
-// describe('UserHome', () => {
-//   let userHome
+// describe.only('NavBar', () => {
+//   let navBar
 
 //   beforeEach(() => {
-//     userHome = shallow(<UserHome email={'cody@email.com'} />)
+//     navBar = shallow(<NavBar isLoggedIn={true} />)
 //   })
 
-//   it('renders the email in an h3', () => {
-//     expect(userHome.find('h3').text()).to.be.equal('Welcome, cody@email.com')
+//   xit('shows the logout link when logged in', () => {
+//     expect(navBar.find('[name="logout"]').to.have.length(1)
+//     )
 //   })
 // })
