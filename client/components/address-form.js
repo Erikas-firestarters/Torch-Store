@@ -1,58 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Button,
-  Grid,
-  Icon,
-  Label,
-  Sticky,
-  Header,
-  Form,
-  Dropdown,
-  Select,
-  Checkbox,
-  FormSelect,
-} from 'semantic-ui-react';
-import NumberFormat from 'react-number-format';
+import { Form } from 'semantic-ui-react';
 import stateOptions from './all-states';
 import { Field } from 'redux-form';
-import {
-  InputField,
-  CheckboxField,
-  SelectField,
-  UploadField,
-  Upload,
-} from 'react-semantic-redux-form';
+import { InputField } from 'react-semantic-redux-form';
 
-const renderTextField = ({
-  input,
-  name,
-  type,
-  label,
-  width,
-  meta: { touched, error },
-  ...custom
-}) => (
-  // <div>
-  //   <label>{label}</label>
-  //   <div>
-  //     <input {...input} placeholder={label} type={type} />
-  //     {touched && (error && <span>{error}</span>)}
-  //   </div>
-  // </div>
-  <Form.Input
-    name={name}
-    {...input}
-    placeholder={label}
-    width={width}
-    label={label}
-  />
-  // {touched && (error && {error})}
-);
 const renderStateDropdown = ({
   input,
   label,
-  options,
   width,
   meta: { touched, error },
   ...custom
@@ -69,65 +24,22 @@ const renderStateDropdown = ({
     width={width}
     autoComplete="true"
   />
-
-  // <Form.Field>
-  //   <select className="ui search dropdown">
-  //     {stateOptions.map(state => (<option key={state.key} value={state.value}>{state.text}</option>))}
-  //   </select>
-  //   {/* <Select /> */}
-
-  //   {/* {touched && error ? (
-  //     <Label basic color="red" pointing>
-  //       {error} {...input}
-  //       {...custom}
-  //     </Label>
-  //   ) : (
-  //     <div />
-  //   )} */}
-  // </Form.Field>
 );
 
 export const AddressForm = props => {
-  const { checkout } = props.formState;
-  console.log('ADDRESSFORM', checkout);
   return (
-    // <div style={{ width: '100%' }}>
-    //     <Field
-    //       type="text"
-    //       name="firstName"
-    //       component={InputField}
-    //       label="First name"
-    //       placeholder="First name"
-    //       width={8}
-    //       error
-    //     />
-    //   <Field
-    //     type="text"
-    //     name="lastName"
-    //     label="Last Name"
-    //     component={InputField}
-    //     placeholder="Last Name"
-    //     width={8}
-    //   />
-    // </div>
-
     <Form.Field style={{ width: '100%' }}>
       <Form.Group>
-          <Field
-            required
-            type="text"
-            name="firstName"
-            component={InputField}
-            label="First name"
-            placeholder="First name"
-            width={8}
-          />
-          {checkout &&
-          checkout.syncErrors &&
-          checkout.fields.shipping['firstName'] &&
-          checkout.syncErrors['firstName'] ? (
-            <span> {checkout.syncErrors['firstName']} </span>
-          ) : null}
+        <Field
+          required
+          type="text"
+          name="firstName"
+          component={InputField}
+          label="First name"
+          placeholder="First name"
+          width={8}
+        />
+
         <Field
           required
           type="text"
@@ -144,12 +56,11 @@ export const AddressForm = props => {
           type="text"
           label="Email:"
           name="email"
+          placeholder="username@domain.com"
           component={InputField}
           width={16}
         />
-        {checkout && checkout.syncErrors && checkout.syncErrors['email'] ? (
-          <span> {checkout.syncErrors['email']} </span>
-        ) : null}
+
       </Form.Group>
       <Form.Group>
         <Field
@@ -157,6 +68,7 @@ export const AddressForm = props => {
           type="text"
           label="Address line 1:"
           name="addressLine1"
+          placeholder="Address line 1:"
           component={InputField}
           width={16}
         />
@@ -166,6 +78,7 @@ export const AddressForm = props => {
           type="text"
           name="addressLine2"
           label="Address line 2:"
+          placeholder="Address line 2:"
           component={InputField}
           width={16}
         />
@@ -176,6 +89,7 @@ export const AddressForm = props => {
           type="text"
           name="city"
           label="City:"
+          placeholder="City:"
           component={InputField}
           width={6}
         />
@@ -185,16 +99,18 @@ export const AddressForm = props => {
           type="select"
           name="state"
           label="State:"
+          placeholder="State:"
           component={renderStateDropdown}
-          width={8}
+          width={6}
         />
         <Field
           required
           type="text"
           name="zipcode"
           label="Zip Code:"
+          placeholder="Zip Code:"
           component={InputField}
-          width={2}
+          width={4}
         />
       </Form.Group>
     </Form.Field>

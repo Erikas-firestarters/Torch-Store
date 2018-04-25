@@ -28,10 +28,7 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    console.log('ORDER SUBMITTED')
     const { billing, shipping } = this.props.formState.checkout.values;
-    console.log('billing', billing)
-    console.log('shipping', shipping)
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { checkBox } = this.state;
@@ -48,7 +45,7 @@ export class Checkout extends Component {
     try {
       await submitOrder(order);
       if (user.id) {
-        deleteBackendCart();
+        await deleteBackendCart();
         history.push('/home');
       } else {
         history.push('/')
@@ -70,8 +67,7 @@ export class Checkout extends Component {
   };
   render() {
     const { contextRef, checkBox } = this.state;
-    const { cart, formState} = this.props;
-    console.log('form state', formState)
+    const { cart } = this.props;
     this.subtotal = cart.reduce(
       (total, item) => total + parseFloat(item.price) * item.quantity,
       0
