@@ -34,7 +34,7 @@ class CartItem extends Component {
   };
 
   render() {
-    const { item, handleRemove, isLoggedIn, header } = this.props;
+    const { item, handleRemove, isLoggedIn, isCheckout } = this.props;
     const options = [
       { key: 1, text: '1', value: 1 },
       { key: 2, text: '2', value: 2 },
@@ -48,7 +48,7 @@ class CartItem extends Component {
       { key: 10, text: '10+', value: 10 },
     ];
     return (
-      <Grid>
+      <Grid celled>
         <Grid.Row centered>
           <Grid.Column width={4}>
             <Header as="h4">{item.name}</Header>
@@ -67,7 +67,6 @@ class CartItem extends Component {
           <Grid.Column width={10}>{item.description}</Grid.Column>
           <Grid.Column width={2}>
             {item.quantity < 10 ? (
-              // <Grid.Column floated="right" width={2}>
               <Dropdown
                 floated="right"
                 compact
@@ -77,33 +76,30 @@ class CartItem extends Component {
                 onChange={this.handleDropdownQuantityChange}
               />
             ) : (
-              // </Grid.Column>
               <Form
-                size="tiny"
+                size="large"
                 floated="right"
                 onSubmit={this.handleFieldQuantityChange}
               >
                 <Form.Field
-                  fluid
                   control="input"
                   placeholder={item.quantity}
                   name="quantity"
                 />
-                <Button size="tiny" type="submit">
+                <Button size="mini" type="submit">
                   update
                 </Button>
               </Form>
             )}
             <Grid.Row>
-              <Button.Group floated="right">
                 <Button
+                  compact
                   size="mini"
-                  icon="remove"
-                  floated="right"
                   color="red"
                   onClick={() => handleRemove(item, isLoggedIn)}
-                />
-              </Button.Group>
+                >
+                 remove
+                </Button>
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

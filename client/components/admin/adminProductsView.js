@@ -5,7 +5,7 @@ import AdminProductDetail from './adminProductDetail';
 const viewCategories = categories => {
   if (!categories.length) return <span />
   return categories.map(category => (
-  <List.Item key={categories.id}><Icon name="right triangle" />{category.name}</List.Item>)
+  <List.Item key={category.id}><Icon name="right triangle" />{category.name}</List.Item>)
   )
 };
 

@@ -23,3 +23,7 @@
 .checkout-cart {
   margin-top: 6vh;
 }
+.center {
+  text-align: center;
+  margin: auto 0;
+}

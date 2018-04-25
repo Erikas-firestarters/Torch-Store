@@ -1,157 +1,122 @@
 import React from 'react';
-import {
-  Button,
-  Item,
-  Grid,
-  Icon,
-  Label,
-  Sticky,
-  Header,
-  Form,
-  Dropdown,
-  Select,
-  Checkbox,
-} from 'semantic-ui-react';
-import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+import { Form } from 'semantic-ui-react';
 import stateOptions from './all-states';
+import { Field } from 'redux-form';
+import { InputField } from 'react-semantic-redux-form';
+
+const renderStateDropdown = ({
+  input,
+  label,
+  width,
+  meta: { touched, error },
+  ...custom
+}) => (
+  <Form.Select
+    {...input}
+    label={label}
+    onChange={(event, { value }) => input.onChange(value)}
+    style={{ height: '38px', padding: 0 }}
+    placeholder="State"
+    search
+    selection
+    options={stateOptions}
+    width={width}
+    autoComplete="true"
+  />
+);
 
 export const AddressForm = props => {
-  const {
-    handleShippingChange,
-    handleBillingChange,
-    handleShippingDropdownChange,
-    handleBillingDropdownChange,
-    handleSubmitButtonRef,
-    handleOrderSubmit,
-    handleCheckboxChange,
-    checkBox,
-  } = props;
   return (
-    <div>
-      <Form onSubmit={handleOrderSubmit}>
-        <Form.Group>
-          <Form.Input
-            required
-            label="First name"
-            onChange={e => handleShippingChange(e, 'firstName')}
-            placeholder="First Name"
-            width={8}
-          />
-          <Form.Input
-            required
-            label="Last Name"
-            onChange={e => handleShippingChange(e, 'lastName')}
-            placeholder="Last Name"
-            width={8}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            required
-            label="Address line 1:"
-            onChange={e => handleShippingChange(e, 'addressLine1')}
-            width={16}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            label="Address line 2:"
-            onChange={e => handleShippingChange(e, 'addressLine2')}
-            width={16}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
-            required
-            label="City:"
-            onChange={e => handleShippingChange(e, 'city')}
-            width={6}
-          />
-          <Form.Input
-            required
-            control={Select}
-            label="State:"
-            options={stateOptions}
-            placeholder="State"
-            onChange={handleShippingDropdownChange}
-            width={8}
-          />
-          <Form.Input
-            required
-            label="Zip Code:"
-            onChange={e => handleShippingChange(e, 'zipcode')}
-            width={2}
-          />
-        </Form.Group>
-        <Form.Group grouped>
-          <Checkbox
-            defaultChecked
-            label="Billing address is same as shipping address."
-            onChange={handleCheckboxChange}
-          />
-        </Form.Group>
-        {checkBox ? (
-          <div />
-        ) : (
-          <div>
-            <Form.Group>
-              <Form.Input
-                label="First name"
-                onChange={e => handleBillingChange(e, 'firstName')}
-                placeholder="First Name"
-                width={8}
-              />
-              <Form.Input
-                label="Last Name"
-                onChange={e => handleBillingChange(e, 'lastName')}
-                placeholder="Last Name"
-                width={8}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Input
-                label="Address line 1:"
-                onChange={e => handleBillingChange(e, 'addressLine1')}
-                width={16}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Input
-                label="Address line 2:"
-                onChange={e => handleBillingChange(e, 'addressLine2')}
-                width={16}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Input
-                label="City:"
-                onChange={e => handleBillingChange(e, 'city')}
-                width={6}
-              />
-              <Form.Input
-                control={Select}
-                label="State:"
-                options={stateOptions}
-                placeholder="State"
-                onChange={handleBillingDropdownChange}
-                width={8}
-              />
-              <Form.Input
-                label="Zip Code:"
-                onChange={e => handleBillingChange(e, 'zipcode')}
-                width={2}
-              />
-            </Form.Group>
-          </div>
-        )}
-        <Form.Group>
-          <Button as="button" type="submit" ref={handleSubmitButtonRef}>
-            Process Order
-          </Button>
-        </Form.Group>
-      </Form>
-    </div>
+    <Form.Field style={{ width: '100%' }}>
+      <Form.Group>
+        <Field
+          required
+          type="text"
+          name="firstName"
+          component={InputField}
+          label="First name"
+          placeholder="First name"
+          width={8}
+        />
+
+        <Field
+          required
+          type="text"
+          name="lastName"
+          label="Last Name"
+          component={InputField}
+          placeholder="Last Name"
+          width={8}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Field
+          required
+          type="text"
+          label="Email:"
+          name="email"
+          placeholder="username@domain.com"
+          component={InputField}
+          width={16}
+        />
+
+      </Form.Group>
+      <Form.Group>
+        <Field
+          required
+          type="text"
+          label="Address line 1:"
+          name="addressLine1"
+          placeholder="Address line 1:"
+          component={InputField}
+          width={16}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Field
+          type="text"
+          name="addressLine2"
+          label="Address line 2:"
+          placeholder="Address line 2:"
+          component={InputField}
+          width={16}
+        />
+      </Form.Group>
+      <Form.Group style={{ height: '66px' }}>
+        <Field
+          required
+          type="text"
+          name="city"
+          label="City:"
+          placeholder="City:"
+          component={InputField}
+          width={6}
+        />
+
+        <Field
+          required
+          type="select"
+          name="state"
+          label="State:"
+          placeholder="State:"
+          component={renderStateDropdown}
+          width={6}
+        />
+        <Field
+          required
+          type="text"
+          name="zipcode"
+          label="Zip Code:"
+          placeholder="Zip Code:"
+          component={InputField}
+          width={4}
+        />
+      </Form.Group>
+    </Form.Field>
   );
 };
 
-export default AddressForm;
+const mapState = ({ form: formState }) => ({ formState });
+const mapDispatch = null;
+export default connect(mapState, mapDispatch)(AddressForm);

@@ -6,56 +6,33 @@ import {
   Sticky,
   Header,
   Container,
+  Form,
+  Checkbox,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
 import { finalizeOrder, emptyCart, emptyReduxCart } from '../store';
 import history from '../history';
+import { reduxForm, FormSection } from 'redux-form';
 
 export class Checkout extends Component {
   constructor() {
     super();
     this.state = {
-      shipping: {
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-      },
-      billing: {
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-      },
-      subtotal: 0,
       checkBox: true,
-    };
 
-    this.handleShippingChange = this.handleShippingChange.bind(this);
-    this.handleBillingChange = this.handleBillingChange.bind(this);
-    this.handleBillingDropdownChange = this.handleBillingDropdownChange.bind(
-      this
-    );
-    this.handleShippingDropdownChange = this.handleShippingDropdownChange.bind(
-      this
-    );
+    };
     this.handleOrderSubmit = this.handleOrderSubmit.bind(this);
     this.handleSubmitButtonRef = this.handleSubmitButtonRef.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   handleOrderSubmit = async e => {
+    const { billing, shipping } = this.props.formState.checkout.values;
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
-    const { billing, shipping, checkBox } = this.state;
-    billing.fullName = `${billing.firstName} ${billing.lastName}`;
+    const { checkBox } = this.state;
+    if (billing) billing.fullName = `${billing.firstName} ${billing.lastName}`;
     shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
     const order = {
       billing: checkBox ? shipping : billing,
@@ -66,34 +43,22 @@ export class Checkout extends Component {
       cart,
     };
     try {
-      await submitOrder(order, this.props.isLoggedIn);
-      if (user.id) deleteBackendCart();
-      history.push('/home');
+      await submitOrder(order);
+      if (user.id) {
+        await deleteBackendCart();
+        history.push('/home');
+      } else {
+        history.push('/')
+      }
     } catch (err) {
       console.err(err);
     }
   };
 
-  handleShippingChange(e, key) {
-    this.setState({
-      shipping: { ...this.state.shipping, [key]: e.target.value },
-    });
-  }
   handleCheckboxChange(e, { checked }) {
     this.setState({
       checkBox: checked,
     });
-  }
-  handleBillingChange(e, key) {
-    this.setState({
-      billing: { ...this.state.billing, [key]: e.target.value },
-    });
-  }
-  handleShippingDropdownChange(e, { value }) {
-    this.setState({ shipping: { ...this.state.shipping, state: value } });
-  }
-  handleBillingDropdownChange(e, { value }) {
-    this.setState({ billing: { ...this.state.billing, state: value } });
   }
   handleStickyContextRef = contextRef => this.setState({ contextRef });
 
@@ -108,75 +73,89 @@ export class Checkout extends Component {
       0
     );
     return (
-      <Container>
-        <div ref={this.handleStickyContextRef}>
-          <Grid>
-            <Grid.Column width={12}>
-              <Grid.Row>
-                <Header as="h2" textAlign="center">
-                  Checkout
-                </Header>
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Shipping:
-                </Header>
-                <AddressForm
-                  handleShippingChange={this.handleShippingChange}
-                  handleBillingChange={this.handleBillingChange}
-                  handleShippingDropdownChange={
-                    this.handleShippingDropdownChange
-                  }
-                  handleBillingDropdownChange={this.handleBillingDropdownChange}
-                  handleSubmitButtonRef={this.handleSubmitButtonRef}
-                  handleCheckboxChange={this.handleCheckboxChange}
-                  handleOrderSubmit={this.handleOrderSubmit}
-                  checkBox={checkBox}
-                />
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Payment information:
-                </Header>
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Review and confirm order:
-                </Header>
-                {cart.length ? (
-                  <Item.Group divided>
-                    {cart.map(item => (
-                      <CartItem isOrder={true} key={item.id} item={item} />
-                    ))}
-                  </Item.Group>
-                ) : (
-                  <Header as="h4" textAlign="center">
-                    No items in cart
+      <div className="checkout-cart">
+        <Container>
+          <div ref={this.handleStickyContextRef}>
+            <Grid>
+              <Grid.Column width={12}>
+                <Grid.Row>
+                  <Header as="h2" textAlign="center">
+                    Checkout
                   </Header>
-                )}
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Sticky
-                bottomOffset={50}
-                context={contextRef}
-                offset={50}
-                pushing
-              >
-                <CheckoutWidget
-                  handleOrderSubmit={this.handleOrderSubmit}
-                  subtotal={this.subtotal}
-                  submitButtonRef={this.submitButtonRef}
-                />
-              </Sticky>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </Container>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as="h4" textAlign="center">
+                    Shipping:
+                  </Header>
+                  <Form onSubmit={this.handleOrderSubmit}>
+                    <FormSection name="shipping">
+                      <AddressForm />
+                    </FormSection>
+                    <Form.Group grouped>
+                      <Checkbox
+                        defaultChecked
+                        label="Billing and shipping address are the same."
+                        onChange={this.handleCheckboxChange}
+                      />
+                    </Form.Group>
+                    {!checkBox ? (
+                      <FormSection name="billing">
+                        <AddressForm />
+                      </FormSection>
+                    ) : (
+                      <div />
+                    )}
+                    <Form.Group>
+                      <Button as="button" type="submit" ref={this.handleSubmitButtonRef}>
+                        Process Order
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as="h4" textAlign="center">
+                    Payment information:
+                  </Header>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as="h4" textAlign="center">
+                    Review and confirm order:
+                  </Header>
+                  {cart.length ? (
+                    <Item.Group divided>
+                      {cart.map(item => (
+                        <CartItem isCheckout={true} key={item.id} item={item} />
+                      ))}
+                    </Item.Group>
+                  ) : (
+                    <Header as="h4" textAlign="center">
+                      No items in cart
+                    </Header>
+                  )}
+                </Grid.Row>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Sticky
+                  bottomOffset={50}
+                  context={contextRef}
+                  offset={50}
+                  pushing
+                >
+                  <CheckoutWidget
+                    handleOrderSubmit={this.handleOrderSubmit}
+                    subtotal={this.subtotal}
+                    submitButtonRef={this.submitButtonRef}
+                  />
+                </Sticky>
+              </Grid.Column>
+            </Grid>
+          </div>
+        </Container>
+      </div>
     );
   }
 }
-const mapState = ({ cart, user }) => ({ cart, user, isLoggedIn: !!user.id });
+const mapState = ({ cart, user, form: formState }) => ({ cart, user, formState });
 
 const mapDispatch = dispatch => ({
   submitOrder(order, isLoggedIn) {
@@ -188,5 +167,7 @@ const mapDispatch = dispatch => ({
     return dispatch(emptyCart());
   },
 });
+
+Checkout = reduxForm({ form: 'checkout' })(Checkout);
 
 export default connect(mapState, mapDispatch)(Checkout);
