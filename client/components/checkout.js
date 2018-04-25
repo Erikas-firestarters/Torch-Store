@@ -37,7 +37,7 @@ export class Checkout extends Component {
     const { subtotal } = this;
     const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { checkBox } = this.state;
-    // billing.fullName = `${billing.firstName} ${billing.lastName}`;
+    if (billing) billing.fullName = `${billing.firstName} ${billing.lastName}`;
     shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
     const order = {
       billing: checkBox ? shipping : billing,
@@ -48,7 +48,6 @@ export class Checkout extends Component {
       cart,
     };
     try {
-<<<<<<< HEAD
       await submitOrder(order);
       if (user.id) {
         deleteBackendCart();
@@ -56,11 +55,6 @@ export class Checkout extends Component {
       } else {
         history.push('/')
       }
-=======
-      await submitOrder(order, this.props.isLoggedIn);
-      if (user.id) deleteBackendCart();
-      history.push('/home');
->>>>>>> b5dae02f3a6a5beea4217f062686bb202caef1a7
     } catch (err) {
       console.err(err);
     }
