@@ -14,7 +14,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, cart }) => {
         <div>
           {/* The navbar will show these links after you log in */}
           <Menu>
-            <Menu.Item>
+            <Menu.Item as={NavLink} to="/products">
               <img src="https://vignette.wikia.nocookie.net/elderscrolls/images/9/93/TESV_Torch.png/revision/latest?cb=20120619180715" />
             </Menu.Item>
             <Menu.Item as={NavLink} to="/products" name="Shop Torches" link />
