@@ -9,7 +9,8 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
-import { finalizeOrder } from '../store';
+import { finalizeOrder, emptyCart } from '../store';
+import history from '../history';
 
 export class Checkout extends Component {
   constructor() {
@@ -50,9 +51,9 @@ export class Checkout extends Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
-  handleOrderSubmit = e => {
+  handleOrderSubmit = async e => {
     const { subtotal } = this;
-    const { user, cart } = this.props;
+    const { user, cart, submitOrder, deleteBackendCart } = this.props;
     const { billing, shipping, checkBox } = this.state;
     billing.fullName = `${billing.firstName} ${billing.lastName}`;
     shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
@@ -64,7 +65,13 @@ export class Checkout extends Component {
       tax: subtotal * 0.1,
       cart,
     };
-    this.props.submitOrder(order);
+    try {
+      await submitOrder(order);
+      if (user.id)  deleteBackendCart();
+      history.push('/home');
+    } catch (err) {
+      console.err(err);
+    }
   };
 
   handleShippingChange(e, key) {
@@ -89,6 +96,7 @@ export class Checkout extends Component {
     this.setState({ billing: { ...this.state.billing, state: value } });
   }
   handleStickyContextRef = contextRef => this.setState({ contextRef });
+
   handleSubmitButtonRef = submitButtonRef => {
     this.submitButtonRef = submitButtonRef;
   };
@@ -119,8 +127,11 @@ export class Checkout extends Component {
                   handleShippingDropdownChange={
                     this.handleShippingDropdownChange
                   }
+
                   handleBillingDropdownChange={this.handleBillingDropdownChange}
+                  handleSubmitButtonRef={this.handleSubmitButtonRef}
                   handleCheckboxChange={this.handleCheckboxChange}
+                  handleOrderSubmit={this.handleOrderSubmit}
                   checkBox={checkBox}
                 />
               </Grid.Row>
@@ -156,6 +167,7 @@ export class Checkout extends Component {
                 <CheckoutWidget
                   handleOrderSubmit={this.handleOrderSubmit}
                   subtotal={this.subtotal}
+                  submitButtonRef={this.submitButtonRef}
                 />
               </Sticky>
             </Grid.Column>
@@ -169,7 +181,11 @@ const mapState = ({ cart, user }) => ({ cart, user });
 
 const mapDispatch = dispatch => ({
   submitOrder(order) {
+    dispatch(emptyCart());
     return dispatch(finalizeOrder(order));
+  },
+  deleteBackendCart() {
+    return dispatch(emptyCart());
   },
 });
 

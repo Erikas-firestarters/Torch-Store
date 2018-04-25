@@ -7,17 +7,20 @@ import {auth} from '../store'
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const {name, displayName, handleSubmit, error} = props
+  const {name, displayName, handleSubmit, error, cart} = props
 
   return (
     <div className="ui middle aligned center aligned grid">
       <div className="column">
       <h2 className="ui image header">
         <div className="content">
-          Log-in to your account
+        {displayName} to your account
         </div>
       </h2>
-      <form onSubmit={handleSubmit} name={name} className="ui large form">
+      {error && error.response && <div className="ui error message">
+        <div> {error.response.data} </div>
+      </div>}
+      <form onSubmit={(e) => handleSubmit(e, cart)} name={name} className="ui large form">
 
         <div className="ui left icon input">
           <i className="user icon" />
@@ -30,8 +33,6 @@ const AuthForm = (props) => {
         <div>
           <button type="submit" className="ui fluid large teal submit button">{displayName}</button>
         </div>
-        <div className="ui error message">
-        {error && error.response && <div> {error.response.data} </div>}</div>
       </form>
       <a className="ui large teal submit button" href="/auth/google">{displayName} with Google</a>
     </div>
@@ -50,7 +51,8 @@ const mapLogin = (state) => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    cart: state.cart
   }
 }
 
@@ -64,12 +66,13 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit (evt) {
+    handleSubmit (evt, cart) {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      let currCart = cart
+      dispatch(auth(email, password, formName, currCart))
     }
   }
 }

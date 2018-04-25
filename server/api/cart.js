@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { CartItem, Product } = require('../db/models');
+const { CartItem, Product, Category } = require('../db/models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 module.exports = router;
@@ -20,6 +20,16 @@ router.get('/', (req, res, next) => {
     .then(cart => res.json(cart))
     .catch(next);
 });
+//deletes ALL cart items for the current user
+router.delete('/', (req, res, next) => {
+  const userId = req.session.passport.user;
+  CartItem.destroy({
+    where: { userId: userId },
+  })
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
 router.delete('/:cartItemId', (req, res, next) => {
   req.body.userId = req.session.passport.user;
   const { userId } = req.body;
@@ -36,6 +46,25 @@ router.post('/', (req, res, next) => {
   req.body.userId = req.session.passport.user;
   CartItem.create(req.body)
     .then(newCartItem => res.json(newCartItem))
+    .catch(next);
+});
+
+router.post('/transfer', (req, res, next) => {
+  req.body.forEach(element => {
+    element.userId = req.session.passport.user;
+    element.productId = element.id
+    delete element.id
+    return element;
+  });
+  CartItem.bulkCreate(req.body, { individualHooks: true })
+    .then(async newCart => {
+      let result = await Promise.all(
+        newCart.map(item =>
+          CartItem.find({ where: { id: item.id }, include: [{all: true}] })
+        )
+      );
+      res.json(result);
+    })
     .catch(next);
 });
 

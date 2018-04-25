@@ -18,7 +18,7 @@ const defaultCategories = [];
  */
 const getCats = categories => ({ type: GET_CATEGORIES, categories });
 const addCat = category => ({ type: ADD_CATEGORY, category });
-const removeCat = category => ({ type: REMOVE_CATEGORY, category });
+const removeCat = id => ({ type: REMOVE_CATEGORY, id });
 
 /**
  * THUNK CREATORS
@@ -31,14 +31,14 @@ export const getCategories = () => dispatch =>
 
 export const addCategory = category => dispatch =>
   axios
-    .post('/api/admin/categories', { category })
+    .post('/api/categories', category )
     .then(res => dispatch(addCat(res.data)))
     .catch(err => console.error(err));
 
-export const removeCategory = category => dispatch =>
+export const removeCategory = id => dispatch =>
   axios
-    .delete('/api/admin/categories', { category })
-    .then(res => dispatch(removeCat(res.data)))
+    .delete(`/api/categories/${id}`)
+    .then(() => dispatch(removeCat(id)))
     .catch(err => console.log(err));
 
 /**
@@ -49,9 +49,9 @@ export default function(state = defaultCategories, action) {
     case GET_CATEGORIES:
       return action.categories;
     case ADD_CATEGORY:
-      return action.category;
+      return [action.category, ...state];
     case REMOVE_CATEGORY:
-      return action.category;
+      return state.filter(category => category.id !== action.id)
     default:
       return state;
   }

@@ -31,12 +31,14 @@ export const AddressForm = props => {
       <Form onSubmit={handleOrderSubmit}>
         <Form.Group>
           <Form.Input
+            required
             label="First name"
             onChange={e => handleShippingChange(e, 'firstName')}
             placeholder="First Name"
             width={8}
           />
           <Form.Input
+            required
             label="Last Name"
             onChange={e => handleShippingChange(e, 'lastName')}
             placeholder="Last Name"
@@ -45,6 +47,7 @@ export const AddressForm = props => {
         </Form.Group>
         <Form.Group>
           <Form.Input
+            required
             label="Address line 1:"
             onChange={e => handleShippingChange(e, 'addressLine1')}
             width={16}
@@ -59,11 +62,13 @@ export const AddressForm = props => {
         </Form.Group>
         <Form.Group>
           <Form.Input
+            required
             label="City:"
             onChange={e => handleShippingChange(e, 'city')}
             width={6}
           />
           <Form.Input
+            required
             control={Select}
             label="State:"
             options={stateOptions}
@@ -72,6 +77,7 @@ export const AddressForm = props => {
             width={8}
           />
           <Form.Input
+            required
             label="Zip Code:"
             onChange={e => handleShippingChange(e, 'zipcode')}
             width={2}
@@ -139,9 +145,9 @@ export const AddressForm = props => {
           </div>
         )}
         <Form.Group>
-          {/* <Button as="button" type="submit" ref={handleSubmitButtonRef}>
+          <Button as="button" type="submit" ref={handleSubmitButtonRef}>
             Process Order
-          </Button> */}
+          </Button>
         </Form.Group>
       </Form>
     </div>

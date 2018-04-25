@@ -9,7 +9,6 @@ import {
   Modal,
   Header,
 } from 'semantic-ui-react';
-import Email from './email';
 
 /**
  * COMPONENT
@@ -87,7 +86,6 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   fetchInitialData: id => {
     dispatch(fetchOrders(id));
-    dispatch(getCart());
   }
 });
 
