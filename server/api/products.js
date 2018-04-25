@@ -90,7 +90,6 @@ router.get('/:id/reviews', (req, res, next) => {
 });
 
 router.post('/:id/reviews', (req, res, next) => {
-  console.log(req.body)
   Review.create(req.body)
     .then(review => {
       res.json(review);
