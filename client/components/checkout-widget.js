@@ -18,7 +18,7 @@ import NumberFormat from 'react-number-format';
 import ReactDOM from 'react-dom';
 
 export const CartWidget = props => {
-  const { cart, isOrder, handleOrderSubmit, subtotal, submitButtonRef } = props;
+  const { subtotal, submitButtonRef } = props;
   return (
     <div>
       <List divided relaxed>
@@ -72,7 +72,7 @@ export const CartWidget = props => {
         <Button
           fluid
           attached="bottom"
-          onClick={() => d}
+          onClick={() => simulateClick(submitButtonRef)}
         >
           Process order
         </Button>

@@ -13,9 +13,7 @@ import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
 import { finalizeOrder, emptyCart, emptyReduxCart } from '../store';
 import history from '../history';
-import { Field, reduxForm, FormSection } from 'redux-form';
-import stateOptions from './all-states';
-import {validate, warn} from './form-validation';
+import { reduxForm, FormSection } from 'redux-form';
 
 export class Checkout extends Component {
   constructor() {
@@ -112,7 +110,7 @@ export class Checkout extends Component {
                       <div />
                     )}
                     <Form.Group>
-                      <Button as="button" type="submit">
+                      <Button as="button" type="submit" ref={this.handleSubmitButtonRef}>
                         Process Order
                       </Button>
                     </Form.Group>
@@ -174,6 +172,6 @@ const mapDispatch = dispatch => ({
   },
 });
 
-Checkout = reduxForm({ form: 'checkout', validate, warn })(Checkout);
+Checkout = reduxForm({ form: 'checkout' })(Checkout);
 
 export default connect(mapState, mapDispatch)(Checkout);

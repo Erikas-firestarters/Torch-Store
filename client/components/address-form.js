@@ -114,13 +114,13 @@ export const AddressForm = props => {
     <Form.Field style={{ width: '100%' }}>
       <Form.Group>
           <Field
+            required
             type="text"
             name="firstName"
             component={InputField}
             label="First name"
             placeholder="First name"
             width={8}
-            error
           />
           {checkout &&
           checkout.syncErrors &&
@@ -129,6 +129,7 @@ export const AddressForm = props => {
             <span> {checkout.syncErrors['firstName']} </span>
           ) : null}
         <Field
+          required
           type="text"
           name="lastName"
           label="Last Name"
@@ -139,6 +140,7 @@ export const AddressForm = props => {
       </Form.Group>
       <Form.Group>
         <Field
+          required
           type="text"
           label="Email:"
           name="email"
@@ -151,6 +153,7 @@ export const AddressForm = props => {
       </Form.Group>
       <Form.Group>
         <Field
+          required
           type="text"
           label="Address line 1:"
           name="addressLine1"
@@ -169,6 +172,7 @@ export const AddressForm = props => {
       </Form.Group>
       <Form.Group style={{ height: '66px' }}>
         <Field
+          required
           type="text"
           name="city"
           label="City:"
@@ -177,6 +181,7 @@ export const AddressForm = props => {
         />
 
         <Field
+          required
           type="select"
           name="state"
           label="State:"
@@ -184,6 +189,7 @@ export const AddressForm = props => {
           width={8}
         />
         <Field
+          required
           type="text"
           name="zipcode"
           label="Zip Code:"
