@@ -180,14 +180,11 @@ const mapState = ({ cart, user }) => ({ cart, user, isLoggedIn: !!user.id });
 
 const mapDispatch = dispatch => ({
   submitOrder(order, isLoggedIn) {
-    console.log('submit empty cart');
     if (isLoggedIn) dispatch(emptyCart());
     else dispatch(emptyReduxCart());
     return dispatch(finalizeOrder(order));
   },
   deleteBackendCart() {
-    console.log('backend empty cart');
-
     return dispatch(emptyCart());
   },
 });
