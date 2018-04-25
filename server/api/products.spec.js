@@ -9,11 +9,9 @@ const Review = db.model('review')
 
 
 describe('Product routes', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-
+  beforeEach(async () => {
+    await db.sync({force: true})
   })
-
   describe('/api/products/', () => {
     const newProduct = {
       name: 'El Flamo',
