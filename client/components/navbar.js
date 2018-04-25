@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { logout } from '../store';
 import { Header, Menu, Label, Icon } from 'semantic-ui-react';
 =======
 import { logout, emptyCart } from '../store';
+=======
+import { logout, emptyReduxCart } from '../store';
+>>>>>>> b5dae02f3a6a5beea4217f062686bb202caef1a7
 import { Header, Menu, Label } from 'semantic-ui-react';
 >>>>>>> b9384af9b393a916924ba43da024a11599c13bde
 import SearchBar from './search';
@@ -81,7 +85,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
-      dispatch(emptyCart());
+      dispatch(emptyReduxCart());
     },
   };
 };
