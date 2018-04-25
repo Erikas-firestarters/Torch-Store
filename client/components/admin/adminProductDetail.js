@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import AdminProductForm from './adminProductForm.js';
 import {deleteProduct} from '../../store';
 
+
 class ProductDetail extends Component {
   constructor() {
     super();
@@ -17,6 +18,7 @@ class ProductDetail extends Component {
     const { product, handleDelete } = this.props;
     return (
       <div>
+
         <Modal
           trigger={
             <Button icon color="green" size="mini" onClick={this.handleOpen}>

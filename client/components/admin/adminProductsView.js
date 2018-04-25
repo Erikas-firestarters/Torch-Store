@@ -1,6 +1,7 @@
 import React from 'react';
-import { Header, List, Icon, Grid, Divider } from 'semantic-ui-react';
+import { Header, List, Icon, Grid, Divider, Segment } from 'semantic-ui-react';
 import AdminProductDetail from './adminProductDetail';
+import AdminProductAddForm from './adminProductAddForm';
 
 const viewCategories = categories => {
   if (!categories.length) return <span />
@@ -12,7 +13,11 @@ const viewCategories = categories => {
 const AdminProductsView = props => {
   const { products } = props;
   return (
-    <div>
+    <Grid.Column width={10}>
+      <Segment>
+        <Header>Add A Product</Header>
+      <AdminProductAddForm />
+      </Segment>
       <Header>Products List</Header>
       <Divider />
       {products &&
@@ -35,7 +40,7 @@ const AdminProductsView = props => {
             </Grid.Row>
           </Grid>
         ))}
-    </div>
+    </Grid.Column>
   );
 };
 
