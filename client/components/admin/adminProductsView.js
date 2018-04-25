@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, List, Icon, Grid, Divider } from 'semantic-ui-react';
+import { Header, List, Icon, Grid, Divider, Segment } from 'semantic-ui-react';
 import AdminProductDetail from './adminProductDetail';
 import AdminProductAddForm from './adminProductAddForm';
 
@@ -13,9 +13,9 @@ const viewCategories = categories => {
 const AdminProductsView = props => {
   const { products } = props;
   return (
-    <Grid.Column width={8}>
+    <Grid.Column width={10}>
       <Segment>
-        <Header>Add A Category</Header>
+        <Header>Add A Product</Header>
       <AdminProductAddForm />
       </Segment>
       <Header>Products List</Header>
