@@ -35,7 +35,6 @@ export const updateOrderInfo = (id, order) => dispatch => {
   axios
   .put(`/api/admin/orders/${id}`, order)
   .then( res => {
-    console.log('HELPP')
     dispatch(editOrder(res.data))})
   .catch(err => console.error('editing order was unsuccessful', err))
 }
