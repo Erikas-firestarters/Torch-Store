@@ -7,7 +7,7 @@ import ProductForm, {
   ProductDescription,
 } from './product-view-parts';
 import Sidebar from '../sidebar';
-import {fetchProduct, removeActiveCategory} from '../../store';
+import {fetchProduct, removeActiveCategory, addCartItem, updateCartItem} from '../../store';
 
 class ProductPage extends Component {
   componentDidMount () {
@@ -18,8 +18,20 @@ class ProductPage extends Component {
     }
   }
   render() {
-    const cartHandler = () => {};
-    const {product, match} = this.props;
+    const {product, match, cart, isLoggedIn, updateCartProduct, addProductToCart} = this.props;
+
+    const cartHandler = (updatedProduct, quantity) => {
+      let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
+      if (cartItem.length) {
+        cartItem = cartItem[0]
+        cartItem.quantity += quantity;
+        updateCartProduct(cartItem, isLoggedIn);
+      } else {
+        updatedProduct.quantity = Number(quantity);
+        addProductToCart(updatedProduct, isLoggedIn);
+      }
+    }
+
     return (
       <Grid>
         <Grid.Row columns={2}>
@@ -56,14 +68,20 @@ class ProductPage extends Component {
     );
   }
 }
-const mapState = ({ product, activeCategory }) => ({ product, activeCategory });
+const mapState = ({ user, product, activeCategory, cart }) => ({ product, activeCategory, cart, isLoggedIn: !!user.id });
 const mapDispatch = dispatch => ({
   fetchInitialData(id) {
     dispatch(fetchProduct(id))
   },
   removeCat() {
     dispatch(removeActiveCategory());
-  }
+  },
+  addProductToCart(product, loggedIn) {
+    dispatch(addCartItem(product, loggedIn));
+  },
+  updateCartProduct(product, loggedIn) {
+    dispatch(updateCartItem(product, loggedIn));
+  },
 });
 
 
