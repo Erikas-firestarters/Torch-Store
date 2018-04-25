@@ -3,15 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Divider, Button, Header, List, Segment } from 'semantic-ui-react';
 import { removeCategory } from '../../store';
 import AdminCategoryForm from './adminCategoryForm';
-
-const capitalize = string => {
-  return string
-    .split(' ')
-    .map(word => {
-      return `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`;
-    })
-    .join(' ');
-};
+import {capitalize} from '../../../server/utils/helperFunctions';
 
 const countAllItems = (products, catId) => {
   const findCategoryMatch = product => {
@@ -35,13 +27,13 @@ const AdminCategoriesView = props => {
       </Segment>
       <Header>Category List</Header>
       <Divider />
-      {categories.map(category => (
+      {categories && categories.map(category => (
         <Grid key={category.id} columns={2}>
           <Grid.Row>
             <Grid.Column>
               <List>
                 <List.Item>
-                  <List.Header>{capitalize(category.name)}</List.Header>
+                  <Header as="h3">{capitalize(category.name)}</Header>
                   <List.Item>
                     {countAllItems(products, category.id)} Products
                   </List.Item>
@@ -51,7 +43,7 @@ const AdminCategoriesView = props => {
             <Grid.Column>
               <Button
                 onClick={() => handleDelete(category.id)}
-                color="pink"
+                color="red"
                 size="mini"
               >
                 Delete Category

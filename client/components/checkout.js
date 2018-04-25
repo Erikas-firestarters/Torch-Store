@@ -11,7 +11,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
-import { finalizeOrder, emptyCart } from '../store';
+import { finalizeOrder, emptyCart, emptyReduxCart } from '../store';
 import history from '../history';
 import { Field, reduxForm, FormSection } from 'redux-form';
 import stateOptions from './all-states';
@@ -48,6 +48,7 @@ export class Checkout extends Component {
       cart,
     };
     try {
+<<<<<<< HEAD
       await submitOrder(order);
       if (user.id) {
         deleteBackendCart();
@@ -55,6 +56,11 @@ export class Checkout extends Component {
       } else {
         history.push('/')
       }
+=======
+      await submitOrder(order, this.props.isLoggedIn);
+      if (user.id) deleteBackendCart();
+      history.push('/home');
+>>>>>>> b5dae02f3a6a5beea4217f062686bb202caef1a7
     } catch (err) {
       console.err(err);
     }
@@ -164,8 +170,9 @@ export class Checkout extends Component {
 const mapState = ({ cart, user, form: formState }) => ({ cart, user, formState });
 
 const mapDispatch = dispatch => ({
-  submitOrder(order) {
-    dispatch(emptyCart());
+  submitOrder(order, isLoggedIn) {
+    if (isLoggedIn) dispatch(emptyCart());
+    else dispatch(emptyReduxCart());
     return dispatch(finalizeOrder(order));
   },
   deleteBackendCart() {

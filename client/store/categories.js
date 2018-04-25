@@ -51,7 +51,7 @@ export default function(state = defaultCategories, action) {
     case ADD_CATEGORY:
       return [action.category, ...state];
     case REMOVE_CATEGORY:
-      return state.filter( category => category.id !== action.id)
+      return state.filter(category => category.id !== action.id)
     default:
       return state;
   }

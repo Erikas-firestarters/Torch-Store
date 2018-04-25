@@ -115,6 +115,7 @@ export const finalizeOrder = order => dispatch => {
     .post('/api/order', order)
     .then(() => dispatch(init([])))
     .catch(err => console.log(err));
+  history.push('/products');
 };
 
 /**
