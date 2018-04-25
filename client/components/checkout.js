@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { CartItem, AddressForm, CheckoutWidget } from '../components';
-import { finalizeOrder, emptyCart } from '../store';
+import { finalizeOrder, emptyCart, emptyReduxCart } from '../store';
 import history from '../history';
 
 export class Checkout extends Component {
@@ -66,8 +66,8 @@ export class Checkout extends Component {
       cart,
     };
     try {
-      await submitOrder(order);
-      if (user.id)  deleteBackendCart();
+      await submitOrder(order, this.props.isLoggedIn);
+      if (user.id) deleteBackendCart();
       history.push('/home');
     } catch (err) {
       console.err(err);
@@ -127,7 +127,6 @@ export class Checkout extends Component {
                   handleShippingDropdownChange={
                     this.handleShippingDropdownChange
                   }
-
                   handleBillingDropdownChange={this.handleBillingDropdownChange}
                   handleSubmitButtonRef={this.handleSubmitButtonRef}
                   handleCheckboxChange={this.handleCheckboxChange}
@@ -177,14 +176,18 @@ export class Checkout extends Component {
     );
   }
 }
-const mapState = ({ cart, user }) => ({ cart, user });
+const mapState = ({ cart, user }) => ({ cart, user, isLoggedIn: !!user.id });
 
 const mapDispatch = dispatch => ({
-  submitOrder(order) {
-    dispatch(emptyCart());
+  submitOrder(order, isLoggedIn) {
+    console.log('submit empty cart');
+    if (isLoggedIn) dispatch(emptyCart());
+    else dispatch(emptyReduxCart());
     return dispatch(finalizeOrder(order));
   },
   deleteBackendCart() {
+    console.log('backend empty cart');
+
     return dispatch(emptyCart());
   },
 });

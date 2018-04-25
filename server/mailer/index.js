@@ -39,7 +39,7 @@ const clientSecret = '2oX5I5V-t12hWkk8Ww6cGLzx'
 
 /* eslint no-console: 0 */
 
-'use strict';
+//'use strict';
 
 const nodemailer = require('nodemailer');
 
