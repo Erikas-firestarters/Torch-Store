@@ -33,20 +33,20 @@ const renderTextField = ({
   meta: { touched, error },
   ...custom
 }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched && (error && <span>{error}</span>)}
-    </div>
-  </div>
-  // <Form.Input
-  //   name={name}
-  //   {...input}
-  //   placeholder={label}
-  //   width={width}
-  //   label={label}
-  // />
+  // <div>
+  //   <label>{label}</label>
+  //   <div>
+  //     <input {...input} placeholder={label} type={type} />
+  //     {touched && (error && <span>{error}</span>)}
+  //   </div>
+  // </div>
+  <Form.Input
+    name={name}
+    {...input}
+    placeholder={label}
+    width={width}
+    label={label}
+  />
   // {touched && (error && {error})}
 );
 const renderStateDropdown = ({
@@ -91,6 +91,26 @@ export const AddressForm = props => {
   const { checkout } = props.formState;
   console.log('ADDRESSFORM', checkout);
   return (
+    // <div style={{ width: '100%' }}>
+    //     <Field
+    //       type="text"
+    //       name="firstName"
+    //       component={InputField}
+    //       label="First name"
+    //       placeholder="First name"
+    //       width={8}
+    //       error
+    //     />
+    //   <Field
+    //     type="text"
+    //     name="lastName"
+    //     label="Last Name"
+    //     component={InputField}
+    //     placeholder="Last Name"
+    //     width={8}
+    //   />
+    // </div>
+
     <Form.Field style={{ width: '100%' }}>
       <Form.Group>
           <Field
@@ -98,10 +118,16 @@ export const AddressForm = props => {
             name="firstName"
             component={InputField}
             label="First name"
+            placeholder="First name"
             width={8}
             error
           />
-        {checkout && checkout.syncErrors && checkout.syncErrors['firstName'] ? <span> {checkout.syncErrors['firstName']} </span> : null}
+          {checkout &&
+          checkout.syncErrors &&
+          checkout.fields.shipping['firstName'] &&
+          checkout.syncErrors['firstName'] ? (
+            <span> {checkout.syncErrors['firstName']} </span>
+          ) : null}
         <Field
           type="text"
           name="lastName"
@@ -119,6 +145,9 @@ export const AddressForm = props => {
           component={InputField}
           width={16}
         />
+        {checkout && checkout.syncErrors && checkout.syncErrors['email'] ? (
+          <span> {checkout.syncErrors['email']} </span>
+        ) : null}
       </Form.Group>
       <Form.Group>
         <Field
