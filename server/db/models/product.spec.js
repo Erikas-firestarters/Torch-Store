@@ -5,9 +5,6 @@ const db = require('../index')
 const Product = db.model('product')
 
 describe('Product model', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
 
   describe('check product values', () => {
     let tiki;
@@ -22,7 +19,7 @@ describe('Product model', () => {
           tiki = product;
         })
     })
-    it('name to equel...', () => {
+    it('name to equal...', () => {
       expect(tiki.name).to.equal('Tiki Torch')
     })
     it('Product description to contain...', () => {
