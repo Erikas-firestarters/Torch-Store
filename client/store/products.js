@@ -30,7 +30,6 @@ export const postProduct = product => dispatch =>
   axios
     .post('/api/products', product )
     .then(res => {
-      console.log(res.data)
       dispatch(addProduct(res.data))})
     .catch(err => console.error(err));
 
