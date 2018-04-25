@@ -19,7 +19,6 @@ class ProductPage extends Component {
   }
   render() {
     const {product, match, cart, isLoggedIn, updateCartProduct, addProductToCart} = this.props;
-
     const cartHandler = (updatedProduct, quantity) => {
       let cartItem = cart.filter(prod => prod.id === updatedProduct.id);
       if (cartItem.length) {
@@ -31,7 +30,6 @@ class ProductPage extends Component {
         addProductToCart(updatedProduct, isLoggedIn);
       }
     }
-
     return (
       <Grid>
         <Grid.Row columns={2}>
