@@ -72,7 +72,7 @@ export const CartWidget = props => {
         <Button
           fluid
           attached="bottom"
-          onClick={() => simulateClick(submitButtonRef)}
+          onClick={() => d}
         >
           Process order
         </Button>

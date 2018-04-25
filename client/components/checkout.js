@@ -28,7 +28,7 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    console.log(e.target);
+    const { billing, shipping } = this.props.form.checkout.values;
     // const { subtotal } = this;
     // const { user, cart, submitOrder, deleteBackendCart } = this.props;
     // const { billing, shipping, checkBox } = this.state;
@@ -69,87 +69,89 @@ export class Checkout extends Component {
       0
     );
     return (
-      <Container>
-        <div ref={this.handleStickyContextRef}>
-          <Grid>
-            <Grid.Column width={12}>
-              <Grid.Row>
-                <Header as="h2" textAlign="center">
-                  Checkout
-                </Header>
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Shipping:
-                </Header>
-                <Form onSubmit={this.handleOrderSubmit}>
-                  <FormSection name="shipping">
-                    <AddressForm />
-                  </FormSection>
-                  <Form.Group grouped>
-                    <Checkbox
-                      defaultChecked
-                      label="Billing and shipping address are the same."
-                      onChange={this.handleCheckboxChange}
-                    />
-                  </Form.Group>
-                  {!checkBox ? (
-                    <FormSection name="billing">
+      <div className="checkout-cart">
+        <Container>
+          <div ref={this.handleStickyContextRef}>
+            <Grid>
+              <Grid.Column width={12}>
+                <Grid.Row>
+                  <Header as="h2" textAlign="center">
+                    Checkout
+                  </Header>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as="h4" textAlign="center">
+                    Shipping:
+                  </Header>
+                  <Form onSubmit={this.handleOrderSubmit}>
+                    <FormSection name="shipping">
                       <AddressForm />
                     </FormSection>
-                  ) : (
-                    <div />
-                  )}
-                  <Form.Group>
-                    <Button as="button" type="submit">
-                      Process Order
-                    </Button>
-                  </Form.Group>
-                </Form>
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Payment information:
-                </Header>
-              </Grid.Row>
-              <Grid.Row>
-                <Header as="h4" textAlign="center">
-                  Review and confirm order:
-                </Header>
-                {cart.length ? (
-                  <Item.Group divided>
-                    {cart.map(item => (
-                      <CartItem isCheckout={true}  key={item.id} item={item} />
-                    ))}
-                  </Item.Group>
-                ) : (
+                    <Form.Group grouped>
+                      <Checkbox
+                        defaultChecked
+                        label="Billing and shipping address are the same."
+                        onChange={this.handleCheckboxChange}
+                      />
+                    </Form.Group>
+                    {!checkBox ? (
+                      <FormSection name="billing">
+                        <AddressForm />
+                      </FormSection>
+                    ) : (
+                      <div />
+                    )}
+                    <Form.Group>
+                      <Button as="button" type="submit">
+                        Process Order
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </Grid.Row>
+                <Grid.Row>
                   <Header as="h4" textAlign="center">
-                    No items in cart
+                    Payment information:
                   </Header>
-                )}
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Sticky
-                bottomOffset={50}
-                context={contextRef}
-                offset={50}
-                pushing
-              >
-                <CheckoutWidget
-                  handleOrderSubmit={this.handleOrderSubmit}
-                  subtotal={this.subtotal}
-                  submitButtonRef={this.submitButtonRef}
-                />
-              </Sticky>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </Container>
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as="h4" textAlign="center">
+                    Review and confirm order:
+                  </Header>
+                  {cart.length ? (
+                    <Item.Group divided>
+                      {cart.map(item => (
+                        <CartItem isCheckout={true} key={item.id} item={item} />
+                      ))}
+                    </Item.Group>
+                  ) : (
+                    <Header as="h4" textAlign="center">
+                      No items in cart
+                    </Header>
+                  )}
+                </Grid.Row>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Sticky
+                  bottomOffset={50}
+                  context={contextRef}
+                  offset={50}
+                  pushing
+                >
+                  <CheckoutWidget
+                    handleOrderSubmit={this.handleOrderSubmit}
+                    subtotal={this.subtotal}
+                    submitButtonRef={this.submitButtonRef}
+                  />
+                </Sticky>
+              </Grid.Column>
+            </Grid>
+          </div>
+        </Container>
+      </div>
     );
   }
 }
-const mapState = ({ cart, user }) => ({ cart, user });
+const mapState = ({ cart, user, form }) => ({ cart, user, form });
 
 const mapDispatch = dispatch => ({
   submitOrder(order) {

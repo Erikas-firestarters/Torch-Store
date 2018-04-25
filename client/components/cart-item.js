@@ -48,13 +48,12 @@ class CartItem extends Component {
       { key: 10, text: '10+', value: 10 },
     ];
     return (
-      <Grid celled="internally">
+      <Grid celled="externally">
         <Grid.Row centered>
           <Grid.Column width={4}>
             <Header as="h4">{item.name}</Header>
           </Grid.Column>
           <Grid.Column width={10}>
-
             <Header as="h4">Description:</Header>
           </Grid.Column>
           <Grid.Column width={2}>
@@ -68,7 +67,6 @@ class CartItem extends Component {
           <Grid.Column width={10}>{item.description}</Grid.Column>
           <Grid.Column width={2}>
             {item.quantity < 10 ? (
-              // <Grid.Column floated="right" width={2}>
               <Dropdown
                 floated="right"
                 compact
@@ -78,9 +76,8 @@ class CartItem extends Component {
                 onChange={this.handleDropdownQuantityChange}
               />
             ) : (
-              // </Grid.Column>
               <Form
-                size="tiny"
+                size="large"
                 floated="right"
                 onSubmit={this.handleFieldQuantityChange}
               >
@@ -89,21 +86,24 @@ class CartItem extends Component {
                   placeholder={item.quantity}
                   name="quantity"
                 />
-                <Button size="tiny" type="submit">
+                <Button size="mini" type="submit">
                   update
                 </Button>
               </Form>
             )}
             <Grid.Row>
-              <Button.Group floated="right">
+              {/* <Button.Group floated="bottom"> */}
                 <Button
+                  fitted
+                  compact
                   size="mini"
-                  icon="remove"
-                  floated="right"
                   color="red"
+                  floated="bottom"
                   onClick={() => handleRemove(item, isLoggedIn)}
-                />
-              </Button.Group>
+                >
+                 remove
+                </Button>
+              {/* </Button.Group> */}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

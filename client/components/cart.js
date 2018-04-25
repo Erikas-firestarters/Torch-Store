@@ -21,7 +21,7 @@ function Cart(props) {
     0
   );
   return (
-    <Container>
+    <Container className="checkout-cart">
       <Grid>
         <Grid.Column width={12}>
           <Grid divided="vertically">
