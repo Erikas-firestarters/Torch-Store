@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Menu, Sticky } from 'semantic-ui-react';
-import { getCategories, setActiveCategory, removeActiveCategory } from '../store';
-import history from '../history'
-import {capitalize} from '../../server/utils/helperFunctions'
+import {
+  getCategories,
+  setActiveCategory,
+  removeActiveCategory,
+} from '../store';
+import history from '../history';
+import { capitalize } from '../../server/utils/helperFunctions';
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +18,7 @@ class Sidebar extends Component {
   }
   componentDidMount() {
     if (this.props.activeCategory.name === '') {
-      this.props.setActiveCategory({name: 'All Products', id: 0});
+      this.props.setActiveCategory({ name: 'All Products', id: 0 });
     }
   }
   componentWillUnMount() {
@@ -28,15 +32,20 @@ class Sidebar extends Component {
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
   render() {
+    const { contextRef } = this.props;
     return (
-      <div>
       <Menu vertical fluid>
-        <Sticky>
+        <Sticky
+          context={contextRef}
+          bottomOffset={50}
+          offset={50}
+          pushing
+        >
           <Menu.Item
             key="00"
             name="All Products"
             active={this.props.activeCategory.name === 'All Products'}
-            onClick={(e) => this.handleClick(e, {name: 'All Products', id: 0})}
+            onClick={e => this.handleClick(e, { name: 'All Products', id: 0 })}
             link
           />
           {this.props.categories.map(category => (
@@ -44,12 +53,13 @@ class Sidebar extends Component {
               key={category.id}
               name={capitalize(category.name)}
               active={this.props.activeCategory.name === category.name}
-              onClick={(e) => this.handleClick(e, {name: category.name, id: category.id})}
+              onClick={e =>
+                this.handleClick(e, { name: category.name, id: category.id })
+              }
             />
           ))}
         </Sticky>
       </Menu>
-      </div>
     );
   }
 }
@@ -57,7 +67,10 @@ class Sidebar extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({ categories, activeCategory }) => ({ categories, activeCategory });
+const mapState = ({ categories, activeCategory }) => ({
+  categories,
+  activeCategory,
+});
 
 const mapDispatch = { getCategories, setActiveCategory, removeActiveCategory };
 
