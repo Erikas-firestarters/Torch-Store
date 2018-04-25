@@ -41,7 +41,6 @@ export const updateUserInfo = (id, user) => dispatch => {
 export const deleteUserForever = id => dispatch => {
   return axios.delete(`/api/users/${id}`)
   .then( () => {
-
     return dispatch(deleteUser(id))})
   .catch(err => console.error('removing user was unsuccesful', err))
 }

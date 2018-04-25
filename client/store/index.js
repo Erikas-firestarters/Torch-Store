@@ -13,8 +13,9 @@ import userOrders from './userOrders'
 import cart from './cart';
 import reviews from './view-reviews';
 import admin from './admin';
+import adminOrders from './adminOrders'
 
-const reducer = combineReducers({ user, userOrders, categories, product, products, activeCategory, cart, reviews, admin});
+const reducer = combineReducers({ user, userOrders, categories, product, products, activeCategory, cart, reviews, admin, adminOrders});
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -43,3 +44,4 @@ export * from './cart'
 export * from './userOrders';
 export * from './view-reviews';
 export * from './admin';
+export * from './adminOrders';
