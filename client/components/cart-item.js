@@ -48,7 +48,7 @@ class CartItem extends Component {
       { key: 10, text: '10+', value: 10 },
     ];
     return (
-      <Grid celled="externally">
+      <Grid celled>
         <Grid.Row centered>
           <Grid.Column width={4}>
             <Header as="h4">{item.name}</Header>
@@ -92,18 +92,14 @@ class CartItem extends Component {
               </Form>
             )}
             <Grid.Row>
-              {/* <Button.Group floated="bottom"> */}
                 <Button
-                  fitted
                   compact
                   size="mini"
                   color="red"
-                  floated="bottom"
                   onClick={() => handleRemove(item, isLoggedIn)}
                 >
                  remove
                 </Button>
-              {/* </Button.Group> */}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

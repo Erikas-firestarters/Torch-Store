@@ -15,12 +15,14 @@ import { finalizeOrder, emptyCart } from '../store';
 import history from '../history';
 import { Field, reduxForm, FormSection } from 'redux-form';
 import stateOptions from './all-states';
+import {validate, warn} from './form-validation';
 
 export class Checkout extends Component {
   constructor() {
     super();
     this.state = {
       checkBox: true,
+
     };
     this.handleOrderSubmit = this.handleOrderSubmit.bind(this);
     this.handleSubmitButtonRef = this.handleSubmitButtonRef.bind(this);
@@ -28,7 +30,8 @@ export class Checkout extends Component {
   }
 
   handleOrderSubmit = async e => {
-    const { billing, shipping } = this.props.form.checkout.values;
+    console.log('ORDER SUBMITTED')
+    const { billing, shipping } = this.props.formState.checkout.values;
     // const { subtotal } = this;
     // const { user, cart, submitOrder, deleteBackendCart } = this.props;
     // const { billing, shipping, checkBox } = this.state;
@@ -151,7 +154,7 @@ export class Checkout extends Component {
     );
   }
 }
-const mapState = ({ cart, user, form }) => ({ cart, user, form });
+const mapState = ({ cart, user, form: formState }) => ({ cart, user, formState });
 
 const mapDispatch = dispatch => ({
   submitOrder(order) {
@@ -163,6 +166,6 @@ const mapDispatch = dispatch => ({
   },
 });
 
-Checkout = reduxForm({ form: 'checkout' })(Checkout);
+Checkout = reduxForm({ form: 'checkout', validate, warn })(Checkout);
 
 export default connect(mapState, mapDispatch)(Checkout);

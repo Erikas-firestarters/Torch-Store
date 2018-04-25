@@ -17,28 +17,18 @@ import { Field } from 'redux-form';
 
 const renderTextField = ({
   input,
-  type,
+  name,
   label,
   width,
   meta: { touched, error },
   ...custom
 }) => (
-  <Form.Input {...input} placeholder={label} width={width} label={label} />
-
-  // <Form.Field>
-  //   {/* {touched && error ? (
-  //     <Label basic color="red" pointing>
-  //       {error} {...input}
-  //       {...custom}
-  //     </Label>
-  //   ) : (
-  //     <div />
-  //   )} */}
-  // </Form.Field>
+  <Form.Input name={name} {...input} placeholder={label} width={width} label={label}>
+    {touched && (error && <span>{error}</span>)}
+  </Form.Input>
 );
 const renderStateDropdown = ({
   input,
-  type,
   label,
   options,
   width,
@@ -48,7 +38,7 @@ const renderStateDropdown = ({
   <Form.Select
     {...input}
     label={label}
-    onChange={(event, {value}) => input.onChange(value)}
+    onChange={(event, { value }) => input.onChange(value)}
     style={{ height: '38px', padding: 0 }}
     placeholder="State"
     search
@@ -56,7 +46,6 @@ const renderStateDropdown = ({
     options={stateOptions}
     width={width}
     autoComplete="true"
-
   />
 
   // <Form.Field>
@@ -77,19 +66,9 @@ const renderStateDropdown = ({
 );
 
 export const AddressForm = props => {
-  // const {
-  //   handleShippingChange,
-  //   handleBillingChange,
-  //   handleShippingDropdownChange,
-  //   handleBillingDropdownChange,
-  //   handleSubmitButtonRef,
-  //   handleOrderSubmit,
-  //   handleCheckboxChange,
-  //   checkBox,
-  // } = props;
 
   return (
-    <Form.Field style={{width: '100%'}}>
+    <Form.Field style={{ width: '100%' }}>
       <Form.Group>
         <Field
           type="text"
@@ -105,6 +84,15 @@ export const AddressForm = props => {
           component={renderTextField}
           placeholder="Last Name"
           width={8}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Field
+          type="text"
+          label="Address line 1:"
+          name="email"
+          component={renderTextField}
+          width={16}
         />
       </Form.Group>
       <Form.Group>
@@ -149,9 +137,7 @@ export const AddressForm = props => {
           width={2}
         />
       </Form.Group>
-
     </Form.Field>
-
   );
 };
 
