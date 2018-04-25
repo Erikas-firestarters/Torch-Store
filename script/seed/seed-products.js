@@ -15,7 +15,7 @@ function doTimes(n, fn) {
 
 function randProduct() {
   const product = {
-    name: faker.commerce.productName(),
+    name: `${faker.commerce.productName()} Torch`,
     description: faker.lorem.paragraph(),
     price: faker.commerce.price(),
     inventory: faker.random.number(),
