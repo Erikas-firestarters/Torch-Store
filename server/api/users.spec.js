@@ -9,7 +9,7 @@ const Cart = db.model('cart');
 const CartItem = db.model('cartItem');
 const Product = db.model('product');
 
-describe('User routes', () => {
+describe.only('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
