@@ -15,7 +15,7 @@ import reviews from './view-reviews';
 import admin from './admin';
 import { reducer as formReducer } from 'redux-form'
 import adminOrders from './adminOrders'
-const reducer = combineReducers({ form: formReducer, user, userOrders, categories, product, products, activeCategory, cart, reviews, admin});
+const reducer = combineReducers({ form: formReducer, user, userOrders, categories, product, products, activeCategory, cart, reviews, admin, adminOrders});
 
 
 const middleware = composeWithDevTools(

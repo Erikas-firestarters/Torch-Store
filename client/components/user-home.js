@@ -39,7 +39,7 @@ export class UserHome extends React.Component {
             {this.props.orders &&
               this.props.orders.map(order => (
                 <Segment key={order.id}>
-                  <p>Order Date: {Date(order.createdAt)}</p>
+                  <p>Order Date: {order.createdAt.slice(0, 10)}</p>
                   <p>Total: ${Number(order.subtotal) + Number(order.tax)}</p>
                   <p>Status: {order.status}</p>
                   <Modal trigger={<Button>Show Order</Button>}>
@@ -47,7 +47,7 @@ export class UserHome extends React.Component {
                     <Modal.Content image>
                       <Modal.Description>
                         <Header>Order Date</Header>
-                        <p>{Date(order.createdAt)}</p>
+                        <p>{order.createdAt.slice(0, 10)}</p>
                         <Header>Order Items</Header>
                         {order.orderItems &&
                           order.orderItems.map(items => (

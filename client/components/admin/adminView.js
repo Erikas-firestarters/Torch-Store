@@ -79,7 +79,8 @@ class AdminView extends Component {
   }
 }
 
-const mapState = ({ user, admin, orders, products, categories }) => ({
+const mapState = ({ adminOrders, user, admin, orders, products, categories }) => ({
+  adminOrders,
   user,
   admin,
   products,
