@@ -31,10 +31,12 @@ export const fetchAllOrders = () => dispatch => {
   .catch(err => console.error('fetching orders was unsuccessful', err))
 }
 
-export const orderEditor = (id, order) => dispatch => {
+export const updateOrderInfo = (id, order) => dispatch => {
   axios
-  .get(`/api/admin/orders/${id}`, order)
-  .then( res => dispatch(editOrder(res.data)))
+  .put(`/api/admin/orders/${id}`, order)
+  .then( res => {
+    console.log('HELPP')
+    dispatch(editOrder(res.data))})
   .catch(err => console.error('editing order was unsuccessful', err))
 }
 

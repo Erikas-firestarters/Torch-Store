@@ -27,7 +27,7 @@ router.get('/orders', adminsOnly, (req, res, next) => {
 
 router.put('/orders/:orderId', adminsOnly, (req, res, next) => {
   Order.findById(req.params.orderId)
-  .update(req.body)
+  .then(result => result.update(req.body))
   .then(order => res.json(order))
   .catch(next)
 })

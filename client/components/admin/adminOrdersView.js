@@ -8,10 +8,16 @@ import {
   Button,
   Modal,
   Radio,
-  Segment
+  Form,
+  Checkbox,
+  Popup,
+  Grid
 } from 'semantic-ui-react';
 import _ from 'lodash';
 import { updateOrderInfo, deleteOrderForever } from '../../store/';
+import NumberFormat from 'react-number-format';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
+
 
 export class AdminOrdersView extends Component {
   constructor(props) {
@@ -19,12 +25,14 @@ export class AdminOrdersView extends Component {
     this.state = {
       column: null,
       data: this.props.adminOrders,
-      direction: null
+      direction: null,
+      buttonColor: { Created: 'green', Processing: 'blue', Cancelled: 'red', Completed: 'teal'}
     };
-    this.orderModal = this.orderModal.bind(this);
+    this.orderModal2 = this.orderModal2.bind(this);
     this.onEditSubmit = this.onEditSubmit.bind(this)
     this.onDelete = this.onDelete.bind(this)
   }
+
 
   handleSort = clickedColumn => () => {
     const { column, data, direction } = this.state;
@@ -81,16 +89,20 @@ export class AdminOrdersView extends Component {
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
             {_ &&
               _.map(data, ({ id, total, userId, status }) => (
                 <Table.Row key={id}>
-
                   <Table.Cell>{id}</Table.Cell>
-                  <Table.Cell>{total}</Table.Cell>
+                  <Table.Cell>
+                    <NumberFormat
+                  value={parseFloat(total * 0.1).toFixed(2)}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'$'}
+                /></Table.Cell>
                   <Table.Cell>{userId}</Table.Cell>
-                  <Table.Cell>{this.orderModal(status, id)}</Table.Cell>
+                  <Table.Cell>{this.orderModal2(status, id)}</Table.Cell>
                   <Table.Cell>
                     <Button
                       size="mini"
@@ -127,53 +139,61 @@ export class AdminOrdersView extends Component {
     );
   }
 
-  orderModal(status, id) {
+
+  orderModal2(status, id) {
+    let colorSet = status => {
+      return `this.state.buttonColor.${status}`
+    }
     return (
-      <Modal
-        align={'center'}
-        trigger={
-          <Button open={this.state.open} size="mini" color="green">
-            {status}
-          </Button>
-        }
-        closeIcon
-      >
-        <Header icon="list layout" content="Change Status" />
-        <Modal.Content>
-          <Segment >
-            <Radio
-              label="Created"
-              value="Created"
-              onClick={e => this.onEditSubmit(e, id)}
-            />
-            <Radio
-              label="Processing"
-              value="Processing"
-              onClick={e => this.onEditSubmit(e, id)}
-            />
-            <Radio
-              label="Cancelled"
-              value="Cancelled"
-              onClick={e => this.onEditSubmit(e, id)}
-            />
-            <Radio
-              label="Complete"
-              value="Completed"
-              onClick={e => this.onEditSubmit(e, id)}
-            />
-          </Segment>
-        </Modal.Content>
-      </Modal>
-    );
+    <Popup
+    trigger={<Button color={colorSet(status)} size="mini">{status}</Button>}
+    flowing
+    hoverable
+  >
+    <Grid centered divided columns={4}>
+      <Grid.Column textAlign="center">
+        <Button
+        id={id}
+        value="Cancelled"
+        color="red"
+        size="mini"
+        onClick={this.onEditSubmit}>Cancelled</Button>
+      </Grid.Column>
+      <Grid.Column textAlign="center">
+        <Button
+        id={id}
+        value="Completed"
+        color="blue"
+        size="mini"
+        onClick={this.onEditSubmit}>Completed</Button>
+      </Grid.Column>
+      <Grid.Column textAlign="center">
+        <Button
+        id={id}
+        value="Created"
+        color="green"
+        size="mini"
+        onClick={this.onEditSubmit}>Created</Button>
+      </Grid.Column>
+      <Grid.Column textAlign="center">
+        <Button
+        id={id}
+        value="Cancelled"
+        color="teal"
+        size="mini"
+        onClick={this.onEditSubmit}>Processing</Button>
+      </Grid.Column>
+    </Grid>
+  </Popup>)
   }
 
-  onEditSubmit(e, id) {
+  onEditSubmit(e, data) {
     event.preventDefault();
-    console.log('event ', e.target.label);
-
-    const { status } = e.target;
-    const updatedOrder = { status: status.value };
-    this.props.updateOrderInfo(id, updatedOrder);
+    const thisID = data.id;
+    const thisStatus = data.value
+    console.log(thisStatus)
+    this.props.updateOrderInfo(thisID && thisID, { status: thisStatus});
+    this.setState({ data: this.props.adminOrders })
   }
 
   onDelete(id) {
