@@ -14,8 +14,9 @@ import cart from './cart';
 import reviews from './view-reviews';
 import admin from './admin';
 import { reducer as formReducer } from 'redux-form'
-
+import adminOrders from './adminOrders'
 const reducer = combineReducers({ form: formReducer, user, userOrders, categories, product, products, activeCategory, cart, reviews, admin});
+
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -44,3 +45,4 @@ export * from './cart'
 export * from './userOrders';
 export * from './view-reviews';
 export * from './admin';
+export * from './adminOrders';
