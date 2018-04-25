@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Button,
   Grid,
@@ -10,22 +11,43 @@ import {
   Dropdown,
   Select,
   Checkbox,
+  FormSelect,
 } from 'semantic-ui-react';
 import NumberFormat from 'react-number-format';
 import stateOptions from './all-states';
 import { Field } from 'redux-form';
+import {
+  InputField,
+  CheckboxField,
+  SelectField,
+  UploadField,
+  Upload,
+} from 'react-semantic-redux-form';
 
 const renderTextField = ({
   input,
   name,
+  type,
   label,
   width,
   meta: { touched, error },
   ...custom
 }) => (
-  <Form.Input name={name} {...input} placeholder={label} width={width} label={label}>
-    {touched && (error && <span>{error}</span>)}
-  </Form.Input>
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} />
+      {touched && (error && <span>{error}</span>)}
+    </div>
+  </div>
+  // <Form.Input
+  //   name={name}
+  //   {...input}
+  //   placeholder={label}
+  //   width={width}
+  //   label={label}
+  // />
+  // {touched && (error && {error})}
 );
 const renderStateDropdown = ({
   input,
@@ -66,22 +88,25 @@ const renderStateDropdown = ({
 );
 
 export const AddressForm = props => {
-
+  const { checkout } = props.formState;
+  console.log('ADDRESSFORM', checkout);
   return (
     <Form.Field style={{ width: '100%' }}>
       <Form.Group>
-        <Field
-          type="text"
-          name="firstName"
-          component={renderTextField}
-          label="First name"
-          width={8}
-        />
+          <Field
+            type="text"
+            name="firstName"
+            component={InputField}
+            label="First name"
+            width={8}
+            error
+          />
+        {checkout && checkout.syncErrors && checkout.syncErrors['firstName'] ? <span> {checkout.syncErrors['firstName']} </span> : null}
         <Field
           type="text"
           name="lastName"
           label="Last Name"
-          component={renderTextField}
+          component={InputField}
           placeholder="Last Name"
           width={8}
         />
@@ -89,9 +114,9 @@ export const AddressForm = props => {
       <Form.Group>
         <Field
           type="text"
-          label="Address line 1:"
+          label="Email:"
           name="email"
-          component={renderTextField}
+          component={InputField}
           width={16}
         />
       </Form.Group>
@@ -100,7 +125,7 @@ export const AddressForm = props => {
           type="text"
           label="Address line 1:"
           name="addressLine1"
-          component={renderTextField}
+          component={InputField}
           width={16}
         />
       </Form.Group>
@@ -109,7 +134,7 @@ export const AddressForm = props => {
           type="text"
           name="addressLine2"
           label="Address line 2:"
-          component={renderTextField}
+          component={InputField}
           width={16}
         />
       </Form.Group>
@@ -118,7 +143,7 @@ export const AddressForm = props => {
           type="text"
           name="city"
           label="City:"
-          component={renderTextField}
+          component={InputField}
           width={6}
         />
 
@@ -133,7 +158,7 @@ export const AddressForm = props => {
           type="text"
           name="zipcode"
           label="Zip Code:"
-          component={renderTextField}
+          component={InputField}
           width={2}
         />
       </Form.Group>
@@ -141,4 +166,6 @@ export const AddressForm = props => {
   );
 };
 
-export default AddressForm;
+const mapState = ({ form: formState }) => ({ formState });
+const mapDispatch = null;
+export default connect(mapState, mapDispatch)(AddressForm);

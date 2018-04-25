@@ -32,26 +32,32 @@ export class Checkout extends Component {
   handleOrderSubmit = async e => {
     console.log('ORDER SUBMITTED')
     const { billing, shipping } = this.props.formState.checkout.values;
-    // const { subtotal } = this;
-    // const { user, cart, submitOrder, deleteBackendCart } = this.props;
-    // const { billing, shipping, checkBox } = this.state;
+    console.log('billing', billing)
+    console.log('shipping', shipping)
+    const { subtotal } = this;
+    const { user, cart, submitOrder, deleteBackendCart } = this.props;
+    const { checkBox } = this.state;
     // billing.fullName = `${billing.firstName} ${billing.lastName}`;
-    // shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
-    // const order = {
-    //   billing: checkBox ? shipping : billing,
-    //   shipping,
-    //   user,
-    //   subtotal,
-    //   tax: subtotal * 0.1,
-    //   cart,
-    // };
-    // try {
-    //   await submitOrder(order);
-    //   if (user.id)  deleteBackendCart();
-    //   history.push('/home');
-    // } catch (err) {
-    //   console.err(err);
-    // }
+    shipping.fullName = `${shipping.firstName} ${shipping.lastName}`;
+    const order = {
+      billing: checkBox ? shipping : billing,
+      shipping,
+      user,
+      subtotal,
+      tax: subtotal * 0.1,
+      cart,
+    };
+    try {
+      await submitOrder(order);
+      if (user.id) {
+        deleteBackendCart();
+        history.push('/home');
+      } else {
+        history.push('/')
+      }
+    } catch (err) {
+      console.err(err);
+    }
   };
 
   handleCheckboxChange(e, { checked }) {
@@ -66,7 +72,8 @@ export class Checkout extends Component {
   };
   render() {
     const { contextRef, checkBox } = this.state;
-    const { cart } = this.props;
+    const { cart, formState} = this.props;
+    console.log('form state', formState)
     this.subtotal = cart.reduce(
       (total, item) => total + parseFloat(item.price) * item.quantity,
       0
