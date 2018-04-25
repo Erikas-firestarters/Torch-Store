@@ -8,21 +8,29 @@ import Sidebar from '../sidebar';
 
 
 class ProductList extends Component {
+  constructor () {
+    super()
+    this.state = {
+    }
+  }
   findCategoryMatch (products, catId) {
     let match = (elem) => elem.id === catId;
     return products.filter(product => product.categories.some(match)
     )
   }
+  handleStickyContextRef = contextRef => this.setState({ contextRef });
 
   render() {
+    const { contextRef } = this.state;
     const { products, activeCategory } = this.props;
     const subRoute = this.props.match.params.type || '';
     return (
+      <div ref={this.handleStickyContextRef}>
       <Grid >
         <Grid.Row columns={2}>
           <Grid.Column width={2} stretched>
             <div className="sidebar">
-              <Sidebar />
+              <Sidebar contextRef={contextRef} />
             </div>
           </Grid.Column>
           <Grid.Column width={14}>
@@ -51,6 +59,7 @@ class ProductList extends Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
+      </div>
     );
   }
 }
