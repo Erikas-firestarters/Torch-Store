@@ -29,7 +29,9 @@ export const editProduct = (id, product) => dispatch =>
 export const postProduct = product => dispatch =>
   axios
     .post('/api/products', product )
-    .then(res => dispatch(addProduct(res.data)))
+    .then(res => {
+      console.log(res.data)
+      dispatch(addProduct(res.data))})
     .catch(err => console.error(err));
 
 export const deleteProduct = id => dispatch =>
