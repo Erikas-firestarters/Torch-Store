@@ -21,14 +21,23 @@ router.get('/', async (req, res, next) => {
 });
 
 router.param('id', (req, res, next, id) => {
-  console.log(typeof id)
-  Product.findById(id)
+  Product.findById(id, {
+    include: [{
+      model: Category,
+      as: 'categories',
+      required: false,
+      through: { attributes: [] },
+    }],
+  })
     .then(product => {
       if (!product) throw new HttpError(404);
       req.product = product;
       next();
     })
     .catch(next);
+});
+router.get('/:id', (req, res, next) => {
+  res.json(req.product)
 });
 
 router.put('/:id', adminsOnly, (req, res, next) => {
