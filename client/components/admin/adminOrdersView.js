@@ -16,8 +16,6 @@ import {
 import _ from 'lodash';
 import { updateOrderInfo, deleteOrderForever } from '../../store/';
 import NumberFormat from 'react-number-format';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
-
 
 export class AdminOrdersView extends Component {
   constructor(props) {
@@ -141,12 +139,19 @@ export class AdminOrdersView extends Component {
 
 
   orderModal2(status, id) {
-    let colorSet = status => {
-      return `this.state.buttonColor.${status}`
-    }
+    let colorSet = () => {
+      switch (status){
+        case 'Created': return <Button color="green" size="mini">{status}</Button>;
+        case 'Completed': return <Button color="blue" size="mini">{status}</Button>;
+        case 'Cancelled': return <Button color="red" size="mini">{status}</Button>;
+        case 'Processing': return <Button color="teal" size="mini">{status}</Button>;
+        default: return <Button color="grey" size="mini">{status}</Button>
+      }
+  }
+
     return (
     <Popup
-    trigger={<Button color={colorSet(status)} size="mini">{status}</Button>}
+    trigger={colorSet(status)}
     flowing
     hoverable
   >
@@ -178,7 +183,7 @@ export class AdminOrdersView extends Component {
       <Grid.Column textAlign="center">
         <Button
         id={id}
-        value="Cancelled"
+        value="Processing"
         color="teal"
         size="mini"
         onClick={this.onEditSubmit}>Processing</Button>
@@ -191,9 +196,9 @@ export class AdminOrdersView extends Component {
     event.preventDefault();
     const thisID = data.id;
     const thisStatus = data.value
-    console.log(thisStatus)
     this.props.updateOrderInfo(thisID && thisID, { status: thisStatus});
-    this.setState({ data: this.props.adminOrders })
+
+    setTimeout(() => this.setState({ data: this.props.adminOrders }), 500)
   }
 
   onDelete(id) {
