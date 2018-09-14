@@ -3,7 +3,7 @@ An e-commerce platform offering a variety of torches products directly to consum
 
 Built as a group project at Fullstack Academy.
 
-torch-store.herokuapp.com
+www.torch-store.herokuapp.com
 
 ## Built With
 
