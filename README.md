@@ -3,6 +3,8 @@ An e-commerce platform offering a variety of torches products directly to consum
 
 Built as a group project at Fullstack Academy.
 
+torch-store.herokuapp.com
+
 ## Built With
 
 PostgreSQL - Database used for all user and trip information
@@ -20,7 +22,7 @@ Express.js - Web app framework
 Mocha & Chai- Testing framework
 
 ## Team Members
-Richard Liang
-Roman Zalov
-Caitlin Trussell
-Samuel Kogan
+* Richard Liang
+* Roman Zalov
+* Caitlin Trussell
+* Samuel Kogan
