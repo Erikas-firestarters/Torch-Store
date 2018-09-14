@@ -22,7 +22,7 @@ Express.js - Web app framework
 Mocha & Chai- Testing framework
 
 ## Team Members
-* Richard Liang
-* Roman Zalov
+* Daniel Simandl
+* Josh Remaley
 * Caitlin Trussell
 * Samuel Kogan
